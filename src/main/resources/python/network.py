@@ -108,10 +108,9 @@ class ModelStub(BaseModel):
     pass
 
 
+# 只有暂停和继续是新开一个线程
+# 简便处理，没有session id，一条连接走到底。即一个ModelServer的实例就对应一个model，一条连接
 class ModelServer(TCPServer):
-    # 实现model带有返回值
-    class ModelWrapper(Model):
-
     def __init__(self):
         super().__init__()
         self.model = None
@@ -129,14 +128,47 @@ class ModelServer(TCPServer):
                 print(e)
                 break
 
-    def process(self, data) -> bytes:
-        data = json.load(data)
-        # TODO
-        Thread(target=self.mapping[data['type']], kwargs=data['args'] + {'queue': self.queue}).start()
+    def return_err(self, e: Error, data):
+        data['args'] = {
+            "err": str(e)
+        }
+        return
 
-    def process_new_model(self, queue:queue.Queue):
-        pass
-    def process_predict(self,queue:queue.Queue):
+    def process(self, data) -> bytes:
+        try:
+            data = json.load(data)
+            type = data['args']
+            if self.model is None:
+                self.model = self.process_new_model(data['name'])
+            # TODO
+            Thread(target=self.mapping[data['type']], kwargs=data['args'] + {'queue': self.queue}).start()
+
+        except Error as e:
+            self.return_err(e, data)
+
+    def process_new_model(self, name):
+        # TODO model文件扫描规则
+        return ModelStub()
+
+    def process_predict(self, queue: queue.Queue):
+        queue.put(self.model.predict())
+
+    def process_train(self, queue: queue.Queue):
+        queue.put(self.model.predict())
+
+    def process_stop(self, queue: queue.Queue):
+        queue.put(self.model.predict())
+
+    def process_pause(self, queue: queue.Queue):
+        queue.put(self.model.predict())
+
+    def process_continue(self, queue: queue.Queue):
+        queue.put(self.model.predict())
+
+    def process_load(self, queue: queue.Queue):
+        queue.put(self.model.predict())
+
+    def process_get_percentage(self, queue: queue.Queue):
         queue.put(self.model.predict())
 
 
@@ -148,4 +180,4 @@ class OperationType:
     TRAIN = 0x4
     PREDICT = 0x5
     GET_TRAINING_PERCENTAGE = 0x6
-    NEW_MODEL = 0x7
+    # NEW_MODEL = 0x7

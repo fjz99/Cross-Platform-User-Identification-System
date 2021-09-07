@@ -1,0 +1,69 @@
+package edu.nwpu.cpuis.model;
+
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.Lifecycle;
+import org.springframework.context.SmartLifecycle;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
+
+import javax.annotation.PostConstruct;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * python源文件目录为python/model/
+ * 配置文件前缀为 models.definition
+ *
+ * @author fujiazheng
+ * @date 2021/9/7 20:23
+ */
+@ConfigurationProperties(prefix = "models")
+@Component
+@Data
+@Validated
+@Slf4j
+public class ModelDefinition {
+    @NotNull
+    private Map<String, SingleModel> definition;
+
+
+    @PostConstruct
+    private void setData() {
+        for (Map.Entry<String, SingleModel> entry : definition.entrySet ()) {
+            final SingleModel model = entry.getValue ();
+            if (!StageHolder.data.containsKey (model.getStage ())) {
+                StageHolder.data.put (model.getStage (), new ArrayList<> ());
+            }
+            StageHolder.data.get (model.getStage ()).add (model);
+        }
+    }
+
+    public List<SingleModel> getByStage(int stage) {
+        return StageHolder.data.get (stage);
+    }
+
+    //奇怪的设计。。
+    @Data
+    private static class StageHolder {
+        private static Map<Integer, List<SingleModel>> data = new HashMap<> ();
+    }
+
+    @Data
+    public static class SingleModel {
+        @NotBlank
+        private String name;
+        @Pattern(regexp = ".*\\.py")
+        private String scriptSource;
+        @NotNull
+        private int stage;
+        private Map<String, String> attributes;
+    }
+}
