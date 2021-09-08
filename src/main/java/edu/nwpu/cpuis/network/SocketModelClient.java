@@ -22,7 +22,6 @@ import java.net.InetSocketAddress;
  *
  * @author fujiazheng
  * @see edu.nwpu.cpuis.network.ModelClient
- * @date 2021/9/6 15:54
  */
 @Slf4j
 public class SocketModelClient implements ModelClient {

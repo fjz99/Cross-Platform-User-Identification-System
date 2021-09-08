@@ -69,7 +69,7 @@
 
     <build>
         <plugins>
-            <!--            生成 git.properties-->
+            <!--生成 git.properties-->
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>

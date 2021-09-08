@@ -3,9 +3,6 @@ package edu.nwpu.cpuis.model;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.Lifecycle;
-import org.springframework.context.SmartLifecycle;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
@@ -19,11 +16,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * python源文件目录为python/model/
- * 配置文件前缀为 models.definition
+ * python源文件目录为python/model/ <br/>
+ * 配置文件前缀为 "models.definition"
  *
  * @author fujiazheng
- * @date 2021/9/7 20:23
  */
 @ConfigurationProperties(prefix = "models")
 @Component
@@ -48,6 +44,10 @@ public class ModelDefinition {
 
     public List<SingleModel> getByStage(int stage) {
         return StageHolder.data.get (stage);
+    }
+
+    public Map<Integer, List<SingleModel>> getAll() {
+        return StageHolder.data;
     }
 
     //奇怪的设计。。

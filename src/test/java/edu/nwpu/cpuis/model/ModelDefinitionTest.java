@@ -10,7 +10,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE
-        ,properties = {"models.definition.test.scriptSource=123"})
+        , properties = {"models.definition.test.scriptSource=123"})
 class ModelDefinitionTest {
     @Autowired
     private ModelDefinition definition;
@@ -23,11 +23,6 @@ class ModelDefinitionTest {
     public void test() {
         System.out.println (definition);
         System.out.println (definition.getByStage (1));
-
-        System.setProperty ("models.definition.test.scriptSource", "123");
-        applicationContext.stop ();
-        applicationContext.start ();
-        System.out.println (applicationContext.getBean (ModelDefinition.class));
     }
 
 }

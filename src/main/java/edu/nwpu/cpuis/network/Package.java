@@ -13,7 +13,6 @@ import java.util.Map;
  * 报文实体类,看起来像rpc
  * @author fujiazheng
  * @see OperationType
- * @date 2021/9/6 20:16
  */
 @Builder
 @AllArgsConstructor
