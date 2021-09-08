@@ -13,7 +13,10 @@ import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.AttributeKey;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.net.InetSocketAddress;
 
 /**
@@ -25,24 +28,23 @@ import java.net.InetSocketAddress;
  */
 @Slf4j
 public class SocketModelClient implements ModelClient {
-    private final String host;
-    private final int port;
+    @Value ("${socket.host}")
+    private String host;
+    @Value ("${socket.port}")
+    private int port;
     private EventLoopGroup group;
     private ChannelFuture future;
 
-    public SocketModelClient(String host, int port) {
-        this.host = host;
-        this.port = port;
-        log.info ("SocketModelClient init for {}:{}", host, port);
+    public SocketModelClient() {
     }
 
-    @Override
+    @PreDestroy
     public void shutdown() throws InterruptedException {
         group.shutdownGracefully ().sync ();
         log.info ("SocketModelClient {}:{} shutdown", host, port);
     }
 
-    @Override
+    @PostConstruct
     public void start() throws Exception {
         group = new NioEventLoopGroup ();
         Bootstrap b = new Bootstrap ();
@@ -60,6 +62,7 @@ public class SocketModelClient implements ModelClient {
                     }
                 });
         future = b.connect ().sync ();
+        log.info ("SocketModelClient init for {}:{}", host, port);
     }
 
     @Override

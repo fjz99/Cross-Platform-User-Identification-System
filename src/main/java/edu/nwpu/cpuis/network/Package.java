@@ -11,6 +11,7 @@ import java.util.Map;
 
 /**
  * 报文实体类,看起来像rpc
+ *
  * @author fujiazheng
  * @see OperationType
  */
@@ -19,7 +20,8 @@ import java.util.Map;
 @NoArgsConstructor
 @Data
 public class Package {
-    private String name;
+    private int sessionId;
+    private String name;//可以是空，因为有sessionId
     private OperationType type;
     private Map<String, Object> args;
 

@@ -1,21 +1,21 @@
 package edu.nwpu.cpuis.network;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 
+@SpringBootTest
 class SocketModelClientTest {
 
     @Test
     void send() throws Exception {
-        ModelClient client = new SocketModelClient ("127.0.0.1", 8888);
-        client.start ();
-        System.out.println (client.send (new Package ("das", OperationType.PAUSE, new HashMap<String, Object> () {
+        ModelClient client = new SocketModelClient ();
+        System.out.println (client.send (new Package (-1, "das", OperationType.PAUSE, new HashMap<String, Object> () {
             {
                 put ("abc", 123);
             }
         })));
-        client.shutdown ();
     }
 }
 
