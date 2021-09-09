@@ -1,5 +1,9 @@
 package edu.nwpu.cpuis.network;
 
+/**
+ * 连接的建立和关闭需要自己进行
+ * @author fujiazheng
+ */
 @FunctionalInterface
 public interface ModelClient {
     /**

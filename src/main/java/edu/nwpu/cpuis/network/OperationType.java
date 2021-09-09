@@ -2,6 +2,9 @@ package edu.nwpu.cpuis.network;
 
 import lombok.Getter;
 
+/**
+ * @author fujiazheng
+ */
 @Getter
 public enum OperationType {
     PAUSE (0x0),
