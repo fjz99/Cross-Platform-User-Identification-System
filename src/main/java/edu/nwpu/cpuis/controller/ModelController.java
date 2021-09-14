@@ -3,6 +3,7 @@ package edu.nwpu.cpuis.controller;
 import edu.nwpu.cpuis.entity.Response;
 import edu.nwpu.cpuis.model.BasicModel;
 import edu.nwpu.cpuis.model.ModelDefinition;
+import io.swagger.annotations.ApiOperation;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ import java.util.Collections;
 @RequestMapping("/model")
 public class ModelController {
     @Resource
-    BasicModel basicModel;
+    private BasicModel basicModel;
     @Resource
     private ModelDefinition definition;
 
