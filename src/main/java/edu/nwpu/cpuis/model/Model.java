@@ -8,11 +8,11 @@ import java.util.List;
  * @author fujiazheng
  */
 public interface Model<A, B> {
-    void train(List<String> files, String name);
+    boolean train(List<String> files, String name);
 
     boolean load(String name);
 
-    boolean destroy();
+    boolean destroy(String name);
 
-    B predict(A data);
+    B predict(A data, String name);
 }

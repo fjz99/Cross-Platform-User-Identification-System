@@ -6,6 +6,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -16,24 +17,27 @@ import java.util.Map;
 
 /**
  * @author fujiazheng
- * @date 2021/9/14 14:35
  */
 @Component
 @Slf4j
 public final class PythonUtils implements ApplicationContextAware {
-    private static final Map<String, ProcessWrapper> processes = new HashMap<> ();
+    private static final Map<String, ProcessWrapperTrain> trainProcesses = new HashMap<> ();
+    private static final Map<String, ProcessWrapperPredict> predictProcesses = new HashMap<> ();//?
     private static ApplicationContext context;
+    private static ThreadPoolTaskExecutor executor;
 
-    private PythonUtils() {
+
+    private PythonUtils(ThreadPoolTaskExecutor executor) {
+        PythonUtils.executor = executor;
     }
 
     public static ProcessWrapperTrain runScript(String algoName, String sourceName, Map<String, String> args) {
         try {
             String cmd = buildCmd (args, sourceName);
-            log.info ("script cmd {}", cmd);
+            log.info ("run script cmd '{}'", cmd);
             Process exec = Runtime.getRuntime ().exec (cmd);
             ProcessWrapperTrain wrapper = new ProcessWrapperTrain (exec, algoName);
-            processes.put (algoName, wrapper);
+            trainProcesses.put (algoName, wrapper);
             return wrapper;
         } catch (IOException e) {
             e.printStackTrace ();
@@ -49,8 +53,8 @@ public final class PythonUtils implements ApplicationContextAware {
         return sb.toString ();
     }
 
-    public static ProcessWrapper getProcess(String name) {
-        return processes.getOrDefault (name, null);
+    public static ProcessWrapperTrain getTrainProcess(String name) {
+        return trainProcesses.getOrDefault (name, null);
     }
 
     @Override
@@ -73,14 +77,13 @@ public final class PythonUtils implements ApplicationContextAware {
             this.process = process;
             reader = new BufferedReader (new InputStreamReader (process.getInputStream ()));
             daemon = getDaemon ();
-            daemon.start ();
+            executor.submit (daemon);
         }
 
         abstract protected Thread getDaemon();
 
         public void kill() {
             process.destroy ();
-            PythonUtils.processes.remove (name);
         }
     }
 
@@ -115,7 +118,10 @@ public final class PythonUtils implements ApplicationContextAware {
                                 if (percentage != 100) {
                                     shutDownReason = -1;
                                     log.error ("err max percentage is: {}", percentage);
-                                } else shutDownReason = 0;
+                                } else {
+                                    shutDownReason = 0;
+                                    log.info ("train model {} success", name);
+                                }
                             } else {
                                 shutDownReason = -1;
                                 log.error ("err input: {}", s);
@@ -125,15 +131,21 @@ public final class PythonUtils implements ApplicationContextAware {
                 } catch (IOException e) {
                     e.printStackTrace ();
                     shutDownReason = -1;
-                    PythonUtils.processes.remove (name);
+                    PythonUtils.trainProcesses.remove (name);
                     log.error ("err stop process :" + e.getMessage ());
                 }
             });
         }
+
+        @Override
+        public void kill() {
+            super.kill ();
+            trainProcesses.remove (name);
+        }
     }
 
     //TODO
-    public static class ProcessWrapperPredict extends ProcessWrapper{
+    public static class ProcessWrapperPredict extends ProcessWrapper {
 
         public ProcessWrapperPredict(Process process, String name) {
             super (process, name);

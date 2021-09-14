@@ -6,5 +6,5 @@ package edu.nwpu.cpuis.model;
  * @author fujiazheng
  */
 public interface CheckableModel<A, B> extends Model<A, B>{
-    double getPercentage(String name);
+    Double getPercentage(String name);
 }
