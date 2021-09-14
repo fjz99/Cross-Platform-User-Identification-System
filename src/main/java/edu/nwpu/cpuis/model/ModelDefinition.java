@@ -61,7 +61,9 @@ public class ModelDefinition {
         @NotBlank
         private String name;
         @Pattern(regexp = ".*\\.py")
-        private String scriptSource;
+        private String trainSource;
+        @Pattern(regexp = ".*\\.py")
+        private String predictSource;
         @NotNull
         private int stage;
         private Map<String, String> attributes;
