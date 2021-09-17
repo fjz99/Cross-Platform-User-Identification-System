@@ -3,7 +3,6 @@ package edu.nwpu.cpuis.controller;
 import edu.nwpu.cpuis.entity.Response;
 import edu.nwpu.cpuis.model.BasicModel;
 import edu.nwpu.cpuis.model.ModelDefinition;
-import io.swagger.annotations.ApiOperation;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +15,7 @@ import java.util.Collections;
  */
 @RestController
 @RequestMapping("/model")
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class ModelController {
     @Resource
     private BasicModel basicModel;
@@ -50,7 +50,8 @@ public class ModelController {
     }
 
     @GetMapping("/{name}/train")
-    public Response<?> train(@PathVariable @NotBlank String name, @NotBlank String file) {
+    public Response<?> train(@PathVariable @NotBlank String name,
+                             @RequestParam @NotBlank String file) {
         if (basicModel.train (Collections.singletonList (file), name)) {
             return Response.ok ("训练开始");
         } else return Response.fail ("模型已存在");

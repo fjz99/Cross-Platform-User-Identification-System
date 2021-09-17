@@ -22,13 +22,18 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
         this.definition = definition;
     }
 
+    /**
+     * @param dirs 文件夹，2个
+     * @param name
+     * @return
+     */
     @Override
-    public boolean train(List<String> files, String name) {
+    public boolean train(List<String> dirs, String name) {
         PythonUtils.ProcessWrapper process = PythonUtils.getTrainProcess (name);
         if (process == null) {
             final ModelDefinition.SingleModel singleModel = definition.getDefinition ().get (name);
-            Map<String, String> map = new HashMap<> ();
-            map.put ("file", "123.txt");
+            Map<String, Object> map = new HashMap<> ();
+            map.put ("dirs", dirs);
             PythonUtils.runScript (name, singleModel.getTrainSource (), map);
             return true;
         } else {

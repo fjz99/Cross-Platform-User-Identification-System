@@ -9,33 +9,31 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.validation.annotation.Validated;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class PythonUtilsTest {
 
-    @Value("classpath*:/**/demo-train.py")
-    private Resource[] resource;
     @Autowired
     private ApplicationContext applicationContext;
     @Autowired
     private ModelDefinition modelDefinition;
 
     @Test
-    void runScript() throws InterruptedException {
-        Map<String, String> args = new HashMap<> ();
-        args.put ("file", "123.txt");
-        PythonUtils.ProcessWrapperTrain demo = PythonUtils.runScript ("demo", "demo-train.py", args);
+    void runScript() {
+        Map<String, Object> args = new HashMap<> ();
+        args.put ("dirs", new ArrayList<String> () {{
+            add ("abc.txt");
+            add ("def.txt");
+        }});
+        PythonUtils.ProcessWrapperTrain demo = PythonUtils.runScript ("demo", "train-template.py", args);
         while (demo.getPercentage () != 100) {
             System.out.println (demo.getPercentage ());
         }
@@ -46,10 +44,10 @@ class PythonUtilsTest {
     @Test
     void test() throws IOException {
         ResourcePatternResolver context = new PathMatchingResourcePatternResolver ();
-        context.getResources ("classpath:/**/demo-train.py");
-        String path = resource[0].getFile ().getPath ();
+        String path=context.getResources ("classpath:/**/train-template.py")[0].getFile ().getPath ();
+//        String path = resource[0].getFile ().getPath ();
         System.out.println (path);
-        String x = "python " + path + " --file=123.txt";
+        String x = "python " + path + " --dirs=[123.txt,456.txt]";
         System.out.println (x);
         Process process = Runtime.getRuntime ().exec (x);
         BufferedReader reader = new BufferedReader (new InputStreamReader (process.getInputStream ()));
@@ -61,13 +59,27 @@ class PythonUtilsTest {
     }
 
     @Test
+    void testOutput(){
+        Map<String, Object> args = new HashMap<> ();
+        args.put ("dirs", new ArrayList<String> () {{
+            add ("abc.txt");
+            add ("def.txt");
+        }});
+        PythonUtils.ProcessWrapperTrain demo = PythonUtils.runScript ("demo", "demo-train.py", args);
+        while (demo.getState () != PythonUtils.ProcessWrapper.State.SUCCESS_TOP) ;
+        System.out.println (demo.getPercentage ());
+        System.out.println (demo.getState ());
+        System.out.println (demo.getOutput ());
+    }
+
+    @Test
     public void getPath() throws IOException {
         System.out.println (applicationContext.getResource ("classpath*:/python/model/*.py"));
         System.out.println (Arrays.toString (applicationContext.getResources ("classpath*:/python/model/*.py")));
     }
 
     @Test
-    public void test1() throws IOException {
+    public void test1() {
         System.out.println (modelDefinition);
     }
 

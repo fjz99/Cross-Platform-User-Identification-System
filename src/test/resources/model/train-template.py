@@ -44,10 +44,8 @@ class YourModel(TrainBase):
 
     # 训练的输出，如果是没有参数的，输出即为匹配的结果、用户筛选结果
     # 如果没有输出，则不要写这个
-    def output(self):
-        return {'a': 1, 'b': {
-            'c': [1, 2, 3]
-        }}
+    # def output(self):
+    #     pass
 
 
 if __name__ == '__main__':
