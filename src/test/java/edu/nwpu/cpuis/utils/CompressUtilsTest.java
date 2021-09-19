@@ -1,5 +1,6 @@
 package edu.nwpu.cpuis.utils;
 
+import edu.nwpu.cpuis.utils.compress.CompressUtils;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,4 +1,4 @@
-package edu.nwpu.cpuis.utils;
+package edu.nwpu.cpuis.utils.compress;
 
 import com.github.junrar.Archive;
 import com.github.junrar.UnrarCallback;

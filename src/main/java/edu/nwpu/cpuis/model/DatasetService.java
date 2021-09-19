@@ -1,17 +1,21 @@
 package edu.nwpu.cpuis.model;
 
-import edu.nwpu.cpuis.utils.CompressUtils;
+import edu.nwpu.cpuis.utils.compress.CompressService;
+import edu.nwpu.cpuis.utils.compress.CompressUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -26,6 +30,8 @@ public class DatasetService {
     @Value("${file.tempdir}")
     @NotNull
     private String tempDir;
+    @Resource
+    private List<CompressService> serviceList;
 
     public boolean uploadInput(MultipartFile file, String datasetName) throws IOException {
         String path = generateDatasetLocation (datasetName);
@@ -46,20 +52,31 @@ public class DatasetService {
         return baseLocation.endsWith ("/") ? baseLocation + datasetName + "/" : baseLocation + "/" + datasetName + "/";
     }
 
-    private void decompress(MultipartFile file, String path) throws IOException {
+    private boolean decompress(MultipartFile file, String path) throws IOException {
         file.transferTo (new File (file.getOriginalFilename ()));
         String realPath = String.format ("%s/%s", tempDir, file.getOriginalFilename ());
-        CompressUtils.decompressZip (realPath, path);
+        boolean result = false;
+        for (CompressService compressService : serviceList) {
+            if (compressService.support (file.getOriginalFilename ())) {
+                log.info ("use {} to decompress", compressService.getClass ());
+                result = true;
+                CompressUtils.decompressZip (realPath, path);
+            }
+        }
         new File (realPath).delete ();
+        if (!result) {
+            log.error ("no CompressService can decompress file {}", file.getOriginalFilename ());
+        }
+        return result;
     }
 
-    private boolean checkPath(String path) {
+    private boolean checkPath(String path) throws IOException {
         File file = new File (path);
         if (!file.exists ()) {
             file.mkdirs ();
             return false;
         } else {
-            file.delete ();
+            FileUtils.forceDelete (file);
             file.mkdirs ();
             return true;
         }
