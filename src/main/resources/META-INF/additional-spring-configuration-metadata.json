@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "file.input-base-location",
+      "type": "java.lang.String",
+      "description": "Description for file.input-base-location."
+    },
+    {
+      "name": "file.tempdir",
+      "type": "java.lang.String",
+      "description": "Description for file.tempdir."
+    }
+  ]
+}

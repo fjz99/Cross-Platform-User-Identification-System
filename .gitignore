@@ -33,4 +33,5 @@ build/
 .vscode/
 
 /src/docs
-*.log
+my.*
+*.gz
