@@ -1,9 +1,9 @@
 package edu.nwpu.cpuis.controller;
 
 import edu.nwpu.cpuis.entity.Response;
-import edu.nwpu.cpuis.model.BasicModel;
-import edu.nwpu.cpuis.model.DatasetService;
-import edu.nwpu.cpuis.model.ModelDefinition;
+import edu.nwpu.cpuis.service.model.BasicModel;
+import edu.nwpu.cpuis.service.DatasetService;
+import edu.nwpu.cpuis.service.model.ModelDefinition;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

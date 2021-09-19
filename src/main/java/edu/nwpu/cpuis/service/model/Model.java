@@ -1,4 +1,4 @@
-package edu.nwpu.cpuis.model;
+package edu.nwpu.cpuis.service.model;
 
 import java.util.List;
 

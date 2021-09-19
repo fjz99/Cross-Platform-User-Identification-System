@@ -1,12 +1,10 @@
 package edu.nwpu.cpuis.utils;
 
-import edu.nwpu.cpuis.model.ModelDefinition;
+import edu.nwpu.cpuis.service.model.ModelDefinition;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 

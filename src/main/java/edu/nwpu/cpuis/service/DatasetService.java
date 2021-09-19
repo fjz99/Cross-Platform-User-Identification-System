@@ -1,4 +1,4 @@
-package edu.nwpu.cpuis.model;
+package edu.nwpu.cpuis.service;
 
 import edu.nwpu.cpuis.utils.compress.CompressService;
 import edu.nwpu.cpuis.utils.compress.CompressUtils;
