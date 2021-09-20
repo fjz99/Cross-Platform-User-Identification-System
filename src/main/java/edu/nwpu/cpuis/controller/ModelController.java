@@ -58,14 +58,6 @@ public class ModelController {
         } else return Response.fail ("模型不存在");
     }
 
-    @GetMapping("/{name}/train")
-    public Response<?> train(@PathVariable @NotBlank String name,
-                             @RequestParam @NotBlank String file) {
-        if (basicModel.train (Collections.singletonList (file), name)) {
-            return Response.ok ("训练开始");
-        } else return Response.fail ("模型已存在");
-    }
-
     @DeleteMapping("/{name}/delete")
     public Response<?> delete(@PathVariable @NotBlank String name) {
         if (basicModel.destroy (name)) {
