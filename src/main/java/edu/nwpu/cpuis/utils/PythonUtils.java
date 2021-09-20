@@ -63,23 +63,26 @@ public final class PythonUtils implements ApplicationContextAware {
         context = applicationContext;
     }
 
+    public static enum State {
+        UNTRAINED,
+        TRAINING,
+        ERROR_STOPPED,//任何异常
+        SUCCESS_STOPPED,
+        PREDICTING;
+    }
+
     @Slf4j
     public abstract static class ProcessWrapper {
-        public static enum State {
-            RUNNING,
-            ERR_STOP,
-            SUCCESS_TOP;
-        }
 
         protected static final String DONE_LITERAL = "done";
         protected final Process process;
         protected final BufferedReader reader;
         protected final Thread daemon;
         protected final String name;
-        protected volatile State state;//-1 err 0 ok 1 running
+        protected volatile PythonUtils.State state;//-1 err 0 ok 1 running
 
         public ProcessWrapper(Process process, String name) {
-            this.state = State.RUNNING;
+            this.state = PythonUtils.State.TRAINING;
             this.name = name;
             this.process = process;
             reader = new BufferedReader (new InputStreamReader (process.getInputStream ()));
@@ -93,7 +96,7 @@ public final class PythonUtils implements ApplicationContextAware {
             process.destroy ();
         }
 
-        public State getState() {
+        public PythonUtils.State getState() {
             return state;
         }
     }
@@ -110,7 +113,7 @@ public final class PythonUtils implements ApplicationContextAware {
         }
 
         public Object getOutput() {
-            if (state == State.SUCCESS_TOP)
+            if (state == PythonUtils.State.SUCCESS_STOPPED)
                 return output;
             else return null;
         }
@@ -125,13 +128,14 @@ public final class PythonUtils implements ApplicationContextAware {
                 String s;
                 StringBuilder sb = new StringBuilder ();
                 try {
-                    while (state == State.RUNNING) {
+                    while (state == PythonUtils.State.TRAINING) {
                         //没有数据读会阻塞，如果返回null，就是进程结束了
                         if ((s = reader.readLine ()) == null) {
-                            if (parseOutput && precessOutput (sb.toString ())) state = State.SUCCESS_TOP;
+                            if (parseOutput && precessOutput (sb.toString ()))
+                                state = PythonUtils.State.SUCCESS_STOPPED;
                             else {
                                 log.error ("err shutdown stream");
-                                state = State.ERR_STOP;
+                                state = PythonUtils.State.ERROR_STOPPED;
                             }
                             return;
                         }
@@ -154,14 +158,14 @@ public final class PythonUtils implements ApplicationContextAware {
                                     log.info ("train model {} success", name);
                                 }
                             } else {
-                                state = State.ERR_STOP;
+                                state = PythonUtils.State.ERROR_STOPPED;
                                 log.error ("err input: {}", s);
                             }
                         }
                     }
                 } catch (IOException e) {
                     e.printStackTrace ();
-                    state = State.ERR_STOP;
+                    state = PythonUtils.State.ERROR_STOPPED;
                     PythonUtils.trainProcesses.remove (name);
                     log.error ("err stop process :" + e.getMessage ());
                 }

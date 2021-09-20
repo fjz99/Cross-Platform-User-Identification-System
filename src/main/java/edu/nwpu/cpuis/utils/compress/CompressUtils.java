@@ -14,7 +14,7 @@ import java.io.*;
 import java.util.List;
 
 /**
- * 只支持zip
+ * 只支持zip and rar
  */
 public final class CompressUtils {
     public static void unrar(String rarFileName, String outFilePath, UnrarCallback callback) throws Exception {

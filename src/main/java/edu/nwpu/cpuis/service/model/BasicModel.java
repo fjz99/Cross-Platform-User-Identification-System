@@ -1,10 +1,14 @@
 package edu.nwpu.cpuis.service.model;
 
+import edu.nwpu.cpuis.service.DatasetService;
 import edu.nwpu.cpuis.utils.PythonUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,23 +21,31 @@ import java.util.Map;
 @Slf4j
 public class BasicModel<A, B> implements CheckableModel<A, B> {
     private final ModelDefinition definition;
+    @Value("${file.input-base-location}")
+    private String datasetPath;
+    @Resource
+    private DatasetService datasetService;
 
     public BasicModel(ModelDefinition definition) {
         this.definition = definition;
     }
 
     /**
-     * @param dirs 文件夹，2个
+     * @param datasets 文件夹，2个
      * @param name
      * @return
      */
     @Override
-    public boolean train(List<String> dirs, String name) {
+    public boolean train(List<String> datasets, String name) {
         PythonUtils.ProcessWrapper process = PythonUtils.getTrainProcess (name);
         if (process == null) {
             final ModelDefinition.SingleModel singleModel = definition.getDefinition ().get (name);
             Map<String, Object> map = new HashMap<> ();
-            map.put ("dirs", dirs);
+            List<String> out = new ArrayList<> (datasets.size ());
+            for (String s : datasets) {
+                out.add (datasetService.getDatasetLocation (s));
+            }
+            map.put ("dirs", out);
             PythonUtils.runScript (name, singleModel.getTrainSource (), map);
             return true;
         } else {
@@ -70,5 +82,13 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
             return null;
         }
         return trainProcess.getPercentage ();
+    }
+
+    public boolean contains(String name) {
+        return PythonUtils.getTrainProcess (name) != null;
+    }
+
+    public String getStatus(String name) {
+        return PythonUtils.getTrainProcess (name).getState ().toString ();
     }
 }

@@ -3,6 +3,9 @@ package edu.nwpu.cpuis.utils.compress;
 import java.io.File;
 import java.util.List;
 
+/**
+ * @author fujiazheng
+ */
 public interface CompressService {
     boolean support(String fileName);
 

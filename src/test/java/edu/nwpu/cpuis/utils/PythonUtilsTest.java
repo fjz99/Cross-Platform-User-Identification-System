@@ -64,7 +64,7 @@ class PythonUtilsTest {
             add ("def.txt");
         }});
         PythonUtils.ProcessWrapperTrain demo = PythonUtils.runScript ("demo", "demo-train.py", args);
-        while (demo.getState () != PythonUtils.ProcessWrapper.State.SUCCESS_TOP) ;
+        while (demo.getState () != PythonUtils.State.SUCCESS_STOPPED) ;
         System.out.println (demo.getPercentage ());
         System.out.println (demo.getState ());
         System.out.println (demo.getOutput ());

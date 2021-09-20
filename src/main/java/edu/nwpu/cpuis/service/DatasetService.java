@@ -6,24 +6,26 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-
+/**
+ * @author fujiazheng
+ */
 @Service
 @Validated
 @Slf4j
 public class DatasetService {
-    private final Map<String, String> datasetLocation = new HashMap<> ();
+    private final Map<String, String> datasetLocation = new HashMap<> (8);
     @Value("${file.input-base-location}")
     @NotNull
     private String baseLocation;
@@ -32,6 +34,7 @@ public class DatasetService {
     private String tempDir;
     @Resource
     private List<CompressService> serviceList;
+
 
     public boolean uploadInput(MultipartFile file, String datasetName) throws IOException {
         String path = generateDatasetLocation (datasetName);
@@ -52,12 +55,13 @@ public class DatasetService {
         return baseLocation.endsWith ("/") ? baseLocation + datasetName + "/" : baseLocation + "/" + datasetName + "/";
     }
 
-    private boolean decompress(MultipartFile file, String path) throws IOException {
-        file.transferTo (new File (file.getOriginalFilename ()));
-        String realPath = String.format ("%s/%s", tempDir, file.getOriginalFilename ());
+    private void decompress(MultipartFile file, String path) throws IOException {
+        String originalFilename = file.getOriginalFilename ();
+        file.transferTo (new File (originalFilename));
+        String realPath = String.format ("%s/%s", tempDir, originalFilename);
         boolean result = false;
         for (CompressService compressService : serviceList) {
-            if (compressService.support (file.getOriginalFilename ())) {
+            if (compressService.support (originalFilename)) {
                 log.info ("use {} to decompress", compressService.getClass ());
                 result = true;
                 CompressUtils.decompressZip (realPath, path);
@@ -65,9 +69,8 @@ public class DatasetService {
         }
         new File (realPath).delete ();
         if (!result) {
-            log.error ("no CompressService can decompress file {}", file.getOriginalFilename ());
+            log.error ("no CompressService can decompress file {}", originalFilename);
         }
-        return result;
     }
 
     private boolean checkPath(String path) throws IOException {
@@ -84,5 +87,18 @@ public class DatasetService {
 
     public Map<String, String> getDatasetLocation() {
         return datasetLocation;
+    }
+
+    public @Nullable
+    String getDatasetLocation(String name) {
+        return datasetLocation.getOrDefault (name, null);
+    }
+
+    @PostConstruct
+    public void scanDataset() {
+        for (File file : Objects.requireNonNull (new File (baseLocation).listFiles ())) {
+            datasetLocation.put (file.getName (), file.getPath ());
+        }
+        log.info ("auto load datasets {}", datasetLocation.entrySet ());
     }
 }

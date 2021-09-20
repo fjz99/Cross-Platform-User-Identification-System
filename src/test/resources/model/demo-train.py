@@ -1,5 +1,6 @@
 import getopt
 import sys
+import time
 
 LOG_OUTPUT_DIR = "E:/123.txt"
 MAX_STEP = 10  # 计算训练百分比用,不训练的话，这个=0
@@ -24,7 +25,7 @@ class TrainBase:
             print((i + 1) / MAX_STEP * 100, file=f)
             sys.stdout.flush()
             f.flush()
-            # time.sleep(1)
+            time.sleep(1)
         print('done')
         print(self.output())
         sys.stdout.flush()
@@ -44,17 +45,16 @@ class YourModel(TrainBase):
 
     # 训练的输出，如果是没有参数的，输出即为匹配的结果、用户筛选结果
     # 如果没有输出，则不要写这个
-    def output(self):
-        return {'a': 1, 'b': {
-            'c': [1, 2, 3]
-        }}
+    # def output(self):
+    #     pass
 
 
 if __name__ == '__main__':
     opts, args = getopt.getopt(sys.argv[1:], '', ['dirs='])
     for opt, arg in opts:
-        # print(opt, arg[1:-1].split(','))
+        print(opt, arg[1:-1].split(','), file=f)
         if opt == '--dirs':
             dirs = arg[1:-1].split(',')
-            # print(opt, dirs)
+            print(opt, dirs, file=f)
             YourModel(dirs).train()
+    f.flush()
