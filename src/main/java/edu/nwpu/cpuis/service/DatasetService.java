@@ -96,6 +96,10 @@ public class DatasetService {
 
     @PostConstruct
     public void scanDataset() {
+        File path = new File (baseLocation);
+        if (!path.exists ()) {
+            path.mkdirs ();
+        }
         for (File file : Objects.requireNonNull (new File (baseLocation).listFiles ())) {
             datasetLocation.put (file.getName (), file.getPath ());
         }

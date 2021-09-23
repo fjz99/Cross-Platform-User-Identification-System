@@ -33,7 +33,7 @@ class TrainBase:
 
 class YourModel(TrainBase):
     """
-    dirs 示例 [E:/abc,D:/cfv]
+    dirs 示例 [E:/fq,D:/tw]
     """
 
     def __init__(self, dirs: list):
@@ -47,7 +47,6 @@ class YourModel(TrainBase):
     # 如果没有输出，则不要写这个
     # def output(self):
     #     pass
-
 
 if __name__ == '__main__':
     opts, args = getopt.getopt(sys.argv[1:], '', ['dirs='])
