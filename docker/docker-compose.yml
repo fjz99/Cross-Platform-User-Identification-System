@@ -1,0 +1,55 @@
+# yaml 配置
+version: "3.4"
+services:
+  web:
+    build:
+      #因为docker compose启动的时候，会设定yml的位置为相对路径
+      context: ../
+      dockerfile: ./docker/Dockerfile.dev
+    ports:
+     - "80:8899"
+    tty: true
+    stdin_open: true
+    #同时配置2个，完成tty
+    container_name: CPUIS
+    # 默认名称
+    depends_on:
+      - mysql
+      - redis
+    volumes:
+      - hou:/share
+    environment:
+      - JAVA_OPTS=-Xmx256M -Duser.timezone=GMT+08
+    networks:
+      - dev
+  redis:
+    image: "redis"
+    container_name: redis
+    networks:
+      - dev
+    volumes:
+      - hou:/share
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: test
+      MYSQL_USER: fjz
+      MYSQL_PASSWORD: 123456
+    networks:
+      - dev
+  # 如果不配置network的话，就会创建一个默认的network
+networks:
+  dev:
+    driver: bridge
+    external: false
+    ipam:
+      config:
+        - subnet: 168.18.0.0/24
+volumes:
+    db_data: {}
+    hou: {}
