@@ -5,9 +5,11 @@ services:
     build:
       #因为docker compose启动的时候，会设定yml的位置为相对路径
       context: ../
-      dockerfile: ./docker/Dockerfile.dev
+      dockerfile: ./docker/Dockerfile.dev 
+    image: cpuis:0.1
+    #生成image的名字
     ports:
-     - "80:8899"
+      - "80:8899"
     tty: true
     stdin_open: true
     #同时配置2个，完成tty
@@ -16,8 +18,8 @@ services:
     depends_on:
       - mysql
       - redis
-    volumes:
-      - hou:/share
+    volumes: #支持E：/,不会解析错
+      - E:/tmp:/share
     environment:
       - JAVA_OPTS=-Xmx256M -Duser.timezone=GMT+08
     networks:
@@ -51,5 +53,7 @@ networks:
       config:
         - subnet: 168.18.0.0/24
 volumes:
-    db_data: {}
-    hou: {}
+  db_data: {}
+  #引用外部的卷
+  hou:
+    external: true

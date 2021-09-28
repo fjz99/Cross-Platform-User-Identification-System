@@ -99,6 +99,8 @@
     </dependencies>
 
     <build>
+        <!--        修改默认的jar文件名-->
+        <!--        <finalName>CPUIS</finalName>-->
         <plugins>
             <plugin>
                 <groupId>org.asciidoctor</groupId>
