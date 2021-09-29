@@ -16,8 +16,18 @@ class TrainBase:
         pass
 
     def output(self):
-        return {}
-
+        return json.dumps({
+            'time': 1000,
+            'name': 'demo',
+            'dataset': ['aa', 'bb'],
+            'output': {
+                '1': [[1, 0.1], [2, 0.2]]
+            },
+            'other': {
+                'k': 5
+            },
+            'success': "true"
+        })
     def train(self):
         for i in range(MAX_STEP):
             self.train_one_step()

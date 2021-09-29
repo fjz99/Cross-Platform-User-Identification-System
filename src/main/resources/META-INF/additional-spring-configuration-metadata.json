@@ -9,6 +9,11 @@
       "name": "file.tempdir",
       "type": "java.lang.String",
       "description": "Description for file.tempdir."
+    },
+    {
+      "name": "models.datasetKey",
+      "type": "java.lang.String",
+      "description": "Description for models.datasetKey."
     }
   ]
 }

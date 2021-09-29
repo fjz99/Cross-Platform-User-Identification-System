@@ -16,8 +16,18 @@ class TrainBase:
         pass
 
     def output(self):
-        return {}
-
+        return json.dumps({
+            'time': 1000,
+            'name': 'demo',
+            'dataset': ['aa', 'bb'],
+            'output': {
+                '1': [[1, 0.1], [2, 0.2]]
+            },
+            'other': {
+                'k': 5
+            },
+            'success': "true"
+        })
     def train(self):
         for i in range(MAX_STEP):
             self.train_one_step()
@@ -33,7 +43,7 @@ class TrainBase:
 
 class YourModel(TrainBase):
     """
-    dirs 示例 [E:/fq,D:/tw]
+    dirs 示例 [E:/abc,D:/cfv]
     """
 
     def __init__(self, dirs: list):
@@ -47,6 +57,7 @@ class YourModel(TrainBase):
     # 如果没有输出，则不要写这个
     # def output(self):
     #     pass
+
 
 if __name__ == '__main__':
     opts, args = getopt.getopt(sys.argv[1:], '', ['dirs='])

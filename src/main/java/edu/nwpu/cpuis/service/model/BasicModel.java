@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.Map;
 @Data
 @Slf4j
 public class BasicModel<A, B> implements CheckableModel<A, B> {
+    private static final String datasetKey = "dirs";
     private final ModelDefinition definition;
     @Value("${file.input-base-location}")
     private String datasetPath;
@@ -30,6 +32,10 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
         this.definition = definition;
     }
 
+    public static String getDatasetKey() {
+        return datasetKey;
+    }
+
     /**
      * @param datasets 文件夹，2个
      * @param name
@@ -38,6 +44,7 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
     @Override
     public boolean train(List<String> datasets, String name) {
         PythonUtils.ProcessWrapper process = PythonUtils.getTrainProcess (name);
+        Assert.isTrue (datasets.size () == 2, "目前只支持2个数据集输入");
         if (process == null) {
             final ModelDefinition.SingleModel singleModel = definition.getDefinition ().get (name);
             Map<String, Object> map = new HashMap<> ();
@@ -45,8 +52,8 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
             for (String s : datasets) {
                 out.add (datasetService.getDatasetLocation (s));
             }
-            map.put ("dirs", out);
-            PythonUtils.runScript (name, singleModel.getTrainSource (), map);
+            map.put (datasetKey, out);
+            PythonUtils.runScript (name, singleModel.getTrainSource (), map, datasets);
             return true;
         } else {
             return false;

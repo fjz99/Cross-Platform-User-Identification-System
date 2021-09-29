@@ -1,6 +1,7 @@
 import getopt
 import sys
 import time
+import json
 
 LOG_OUTPUT_DIR = "E:/123.txt"
 MAX_STEP = 10  # 计算训练百分比用,不训练的话，这个=0
@@ -16,7 +17,18 @@ class TrainBase:
         pass
 
     def output(self):
-        return {}
+        return json.dumps({
+            'time': 1000,
+            'name': 'demo',
+            'dataset': ['aa', 'bb'],
+            'output': {
+                '1': [[1, 0.1], [2, 0.2]]
+            },
+            'other': {
+                'k': 5
+            },
+            'success': "true"
+        })
 
     def train(self):
         for i in range(MAX_STEP):
