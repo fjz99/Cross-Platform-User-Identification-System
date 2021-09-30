@@ -3,12 +3,11 @@ package edu.nwpu.cpuis.controller;
 import edu.nwpu.cpuis.entity.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import javax.servlet.ServletException;
 
 /**
  * @author fujiazheng
@@ -24,9 +23,9 @@ public class GlobalAdvice {
         return Response.fail ("服务器异常");
     }
 
-    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ExceptionHandler(ServletException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Response<?> badRequest(MissingServletRequestParameterException e) {
+    public Response<?> badRequest(ServletException e) {
         log.error ("global err " + e);
         e.printStackTrace ();
         return Response.fail (HttpStatus.BAD_REQUEST.getReasonPhrase () + ":" + e.getMessage ());
