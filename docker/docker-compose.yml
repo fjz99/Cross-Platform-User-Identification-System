@@ -5,7 +5,7 @@ services:
     build:
       #因为docker compose启动的时候，会设定yml的位置为相对路径
       context: ../
-      dockerfile: ./docker/Dockerfile.dev 
+      dockerfile: ./docker/Dockerfile.dev
     image: cpuis:0.1
     #生成image的名字
     ports:

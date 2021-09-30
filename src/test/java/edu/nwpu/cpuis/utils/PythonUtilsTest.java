@@ -1,7 +1,6 @@
 package edu.nwpu.cpuis.utils;
 
 import edu.nwpu.cpuis.service.model.ModelDefinition;
-import org.apache.catalina.LifecycleState;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -70,7 +69,7 @@ class PythonUtilsTest {
         names.add ("dataset1");
         names.add ("dataset2");
         PythonUtils.ProcessWrapperTrain demo = PythonUtils.runScript ("demo", "demo-train.py", args, names);
-        while (demo.getState () != PythonUtils.State.SUCCESS_STOPPED) ;
+        while (demo.getState () != PythonUtils.State.SUCCESSFULLY_STOPPED) ;
         System.out.println (demo.getPercentage ());
         System.out.println (demo.getState ());
         System.out.println (demo.getOutput ());

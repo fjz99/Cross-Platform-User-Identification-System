@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import edu.nwpu.cpuis.entity.MongoEntity;
 import edu.nwpu.cpuis.entity.Output;
 import edu.nwpu.cpuis.service.MongoService;
-import edu.nwpu.cpuis.service.model.BasicModel;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -90,7 +89,7 @@ public final class PythonUtils implements ApplicationContextAware {
         UNTRAINED,
         TRAINING,
         ERROR_STOPPED,//任何异常
-        SUCCESS_STOPPED,
+        SUCCESSFULLY_STOPPED,
         PREDICTING;
     }
 
@@ -136,7 +135,7 @@ public final class PythonUtils implements ApplicationContextAware {
         }
 
         public Output getOutput() {
-            if (state == PythonUtils.State.SUCCESS_STOPPED)
+            if (state == PythonUtils.State.SUCCESSFULLY_STOPPED)
                 return output;
             else return null;
         }
@@ -155,13 +154,14 @@ public final class PythonUtils implements ApplicationContextAware {
                         //没有数据读会阻塞，如果返回null，就是进程结束了
                         if ((s = reader.readLine ()) == null) {
                             if (parseOutput && precessOutput (sb.toString ())) {
+                                state = PythonUtils.State.SUCCESSFULLY_STOPPED;
                                 saveToMongoDB (key, output);
-                                state = PythonUtils.State.SUCCESS_STOPPED;
                                 log.info ("{} successfully stopped", key);
                             } else {
                                 log.error ("{} err shutdown stream", key);
                                 state = PythonUtils.State.ERROR_STOPPED;
                             }
+                            break;
                         }
                         if (parseOutput) {
                             //处理JSON
