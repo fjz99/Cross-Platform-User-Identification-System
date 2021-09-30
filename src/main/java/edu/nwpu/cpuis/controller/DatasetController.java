@@ -15,7 +15,6 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/dataset")
 @Slf4j
-@SuppressWarnings({"rawtypes", "unchecked"})
 public class DatasetController {
     @Resource
     private DatasetService datasetService;
