@@ -76,7 +76,7 @@ public final class PythonUtils implements ApplicationContextAware {
     }
 
     private static String generateMongoKey(String algoName, List<String> datasetName, String type) {
-        Collections.sort (datasetName);
+        Collections.sort (datasetName); //!!!
         return String.format ("%s-%s-%s-%s", algoName, datasetName.get (0), datasetName.get (1), type);
     }
 
@@ -153,7 +153,7 @@ public final class PythonUtils implements ApplicationContextAware {
                     while (state == PythonUtils.State.TRAINING) {
                         //没有数据读会阻塞，如果返回null，就是进程结束了
                         if ((s = reader.readLine ()) == null) {
-                            if (parseOutput && precessOutput (sb.toString ())) {
+                            if (parseOutput && processOutput (sb.toString ())) {
                                 state = PythonUtils.State.SUCCESSFULLY_STOPPED;
                                 saveToMongoDB (key, output);
                                 log.info ("{} successfully stopped", key);
@@ -204,7 +204,7 @@ public final class PythonUtils implements ApplicationContextAware {
             mongoService.insert (mongoEntity, "output");
         }
 
-        private boolean precessOutput(String s) {
+        private boolean processOutput(String s) {
             try {
                 output = JSON.parseObject (s, Output.class);
                 return true;
