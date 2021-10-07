@@ -11,9 +11,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @date 2021/9/29 18:50
- */
+
 //@DataMongoTest
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class MongoTest {
