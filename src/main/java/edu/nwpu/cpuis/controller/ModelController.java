@@ -96,11 +96,16 @@ public class ModelController {
         }
     }
 
+    /**
+     * @param key 算法名-数据集1-数据集2-train/predict,数据集1和2必须是升序排列
+     */
     @GetMapping("/{key}/{type:output|metadata}")
     public Response<?> output(@PathVariable String key,
                               @PathVariable String type,
                               @RequestParam(value = "id", required = false)
-                              @Size(max = 2, message = "id参数不合规范") String[] id) {
+                              @Size(max = 2, message = "id参数不合规范") String[] id,
+                              @RequestParam(value = "reverse", required = false, defaultValue = "false")
+                                      Boolean reverse) {
         try {
             switch (type) {
                 case "output": {
@@ -109,7 +114,7 @@ public class ModelController {
                     } else {
                         Map<String, Object> result = new HashMap<> ();
                         Stream.of (id).forEach (x -> {
-                            Object matchedUsers = matrixOutputModelService.getMatchedUsers (x, key);
+                            Object matchedUsers = matrixOutputModelService.getMatchedUsers (x, key, reverse);
                             List<Object> changed = ((List<Object>) matchedUsers);
                             result.put (x, changed);
                         });

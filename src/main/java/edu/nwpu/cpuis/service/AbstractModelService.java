@@ -5,7 +5,9 @@ import edu.nwpu.cpuis.entity.Output;
 
 import javax.annotation.Resource;
 
-
+/**
+ * @author fujiazheng
+ */
 public abstract class AbstractModelService {
     @Resource
     protected MongoService<MongoEntity> mongoService;
