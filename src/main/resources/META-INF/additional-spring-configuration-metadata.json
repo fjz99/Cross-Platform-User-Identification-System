@@ -14,6 +14,11 @@
       "name": "models.datasetKey",
       "type": "java.lang.String",
       "description": "Description for models.datasetKey."
+    },
+    {
+      "name": "ControllerLogging",
+      "type": "java.lang.Boolean",
+      "description": "Description for ControllerLogging."
     }
   ]
 }
