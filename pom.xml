@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>CPUIS</name>
     <properties>
+        <port>8899</port>
         <java.version>1.8</java.version>
     </properties>
     <packaging>jar</packaging>
@@ -86,10 +87,16 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.9.2</version>
         </dependency>
+        <!--        支持bean验证-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-bean-validators</artifactId>
+            <version>2.9.2</version>
+        </dependency>
         <dependency>
             <groupId>io.github.swagger2markup</groupId>
             <artifactId>swagger2markup</artifactId>
-            <version>1.3.1</version>
+            <version>1.3.3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -102,10 +109,10 @@
             <artifactId>junrar</artifactId>
             <version>3.0.0</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
@@ -116,6 +123,31 @@
         <!--        修改默认的jar文件名-->
         <!--        <finalName>CPUIS</finalName>-->
         <plugins>
+            <plugin>
+                <groupId>io.github.swagger2markup</groupId>
+                <artifactId>swagger2markup-maven-plugin</artifactId>
+                <version>1.3.3</version>
+                <configuration>
+                    <!--The URL or file path to the Swagger specification-->
+                    <swaggerInput>http://localhost:${port}/v2/api-docs</swaggerInput>
+                    <outputDir>src/docs/asciidoc/generated/</outputDir>
+                    <outputFile>src/docs/asciidoc/generated/cpuis_api_doc</outputFile>
+                    <config>
+                        <!--设置输出文件的语言：ASCIIDOC, MARKDOWN, CONFLUENCE_MARKUP-->
+                        <swagger2markup.markupLanguage>MARKDOWN</swagger2markup.markupLanguage>
+                        <!--设置目录的展现方式-->
+                        <swagger2markup.pathsGroupedBy>TAGS</swagger2markup.pathsGroupedBy>
+                    </config>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>convertSwagger2markup</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>

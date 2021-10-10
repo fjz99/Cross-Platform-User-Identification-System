@@ -5,8 +5,13 @@ import edu.nwpu.cpuis.service.DatasetService;
 import edu.nwpu.cpuis.service.MatrixOutputModelService;
 import edu.nwpu.cpuis.service.model.BasicModel;
 import edu.nwpu.cpuis.service.model.ModelDefinition;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -23,6 +28,7 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/model")
 @Slf4j
+@Api(tags = "model", description = "模型api")
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class ModelController {
     @Resource
@@ -35,6 +41,8 @@ public class ModelController {
     private MatrixOutputModelService matrixOutputModelService;
 
     @GetMapping("{name}/info")
+    @ApiOperation(value = "获得模型的详细信息", notes = "传入模型的key，即'算法-数据集1-数据集2-train/predict'")
+    @ApiImplicitParam(paramType = "path", name = "name", value = "模型名称", required = true, dataType = "String")
     public Response<?> getInfo(@PathVariable("name") @NotBlank String name) {
         if (definition.getDefinition ().containsKey (name)) {
             return Response.ok (definition.getDefinition ().get (name));
@@ -44,6 +52,8 @@ public class ModelController {
     }
 
     @GetMapping("/stage/{id}")
+    @ApiOperation(value = "获得某个阶段的所有算法")
+    @ApiImplicitParam(paramType = "path", name = "id", value = "阶段", required = true, dataTypeClass = Integer.class)
     public Response<?> getByStage(@PathVariable @Range(min = 1, max = 4) int id) {
         return Response.ok (definition.getByStage (id));
     }
@@ -69,7 +79,7 @@ public class ModelController {
     }
 
     @PostMapping("/{name}/train")
-    public Response<?> train(@PathVariable String name,
+    public Response<?> train(@PathVariable @NotBlank String name,
                              @RequestParam List<String> dataset) {
         if (dataset.size () != 2) {
             log.error ("dataset input err {}", dataset);
@@ -86,7 +96,7 @@ public class ModelController {
     }
 
     @GetMapping("/{name}/status")
-    public Response<?> status(@PathVariable String name) {
+    public Response<?> status(@PathVariable @NotBlank String name) {
         try {
             if (basicModel.contains (name))
                 return Response.ok (basicModel.getStatus (name));
@@ -100,7 +110,7 @@ public class ModelController {
      * @param key 算法名-数据集1-数据集2-train/predict,数据集1和2必须是升序排列
      */
     @GetMapping("/{key}/{type:output|metadata}")
-    public Response<?> output(@PathVariable String key,
+    public Response<?> output(@PathVariable @NotBlank String key,
                               @PathVariable String type,
                               @RequestParam(value = "id", required = false)
                               @Size(max = 2, message = "id参数不合规范") String[] id,

@@ -10,7 +10,6 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class MvcConfigurer implements WebMvcConfigurer {
 //        corsConfiguration.addAllowedOriginPattern ();
         corsConfiguration.addAllowedHeader ("*");
         corsConfiguration.addAllowedMethod ("*");
-//        corsConfiguration.setAllowCredentials (true);
+//        corsConfiguration.setAllowCredentials (false); //用于cookie，不允许cookie
         corsConfiguration.setMaxAge (3600L);
         return corsConfiguration;
     }
