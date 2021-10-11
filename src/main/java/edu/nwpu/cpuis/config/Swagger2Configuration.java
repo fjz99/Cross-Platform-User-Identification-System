@@ -1,10 +1,8 @@
 package edu.nwpu.cpuis.config;
 
-import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -29,8 +27,8 @@ public class Swagger2Configuration {
                 .pathMapping ("/")
                 .apiInfo (buildApiInf ())
                 .select ()
-//                .apis (RequestHandlerSelectors.basePackage ("edu.nwpu.cpuis.controller"))
-                .paths (PathSelectors.regex("/model/.*"))
+                .apis (RequestHandlerSelectors.basePackage ("edu.nwpu.cpuis.controller"))
+//                .paths (PathSelectors.regex("/model/.*"))
 //                .paths (PathSelectors.any ())
                 .build ();
     }
