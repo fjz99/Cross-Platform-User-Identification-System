@@ -15,9 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @date 2021/9/29 22:54
- */
+
 @Configuration
 public class MvcConfigurer implements WebMvcConfigurer {
     @Override
