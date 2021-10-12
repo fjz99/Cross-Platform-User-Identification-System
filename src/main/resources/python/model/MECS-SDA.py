@@ -52,12 +52,17 @@ TD=[] #the temporal attention weight
 df = pd.DataFrame()
 
 #to read the data
+
+def print_(s):
+    print(s)
+    sys.stdout.flush()
+
 def readUR(srcpath):
 
-    print('10')
+    print_('10')
 
     if not os.path.exists(srcpath):
-        print("\n****Error:srcpath doesn't exists, you need a srcpath")
+        print_("\n****Error:srcpath doesn't exists, you need a srcpath")
         raise IOError
         return False
 
@@ -69,13 +74,13 @@ def readUR(srcpath):
     i=0
     for filename in dir_list:
         # *************************************修改
-        # print("the processed user is: ", filename)
+        # print_("the processed user is: ", filename)
         users[filename]=i
         infile=os.path.join(srcpath+'/',filename)
         records=readData(infile)
         UR.append(records)
         Nt.append(len(records))
-        #print("the number of the records is: ",len(records))
+        #print_("the number of the records is: ",len(records))
         i+=1
 
     #return True
@@ -174,12 +179,12 @@ def preprocess(srcpath,dlist,tle):
 #construct Buckets based on UR
 def buildBuckets(dir_list):
 
-    print("40")
+    print_("40")
 
     #*************************修改****************************
-    #print("**********************************The buckets start building!**********************************")
+    #print_("**********************************The buckets start building!**********************************")
     for filename in dir_list:
-        #print("the processed user is: ", filename)
+        #print_("the processed user is: ", filename)
         uid=users[filename]  #to get the uid of the user
         records=UR[uid] # to get the records of this user
         i=0   #to record the sequence number of the record
@@ -227,7 +232,7 @@ def buildBuckets(dir_list):
                 #g.append(1)
                 Mset[bnum]=g
                 # ******************************************修改
-                # print("the built bucket is: ",bnum)
+                # print_("the built bucket is: ",bnum)
 
             i+=1
 
@@ -235,7 +240,7 @@ def buildBuckets(dir_list):
 
 
     #UR.clear()
-    #print("UR IS:",len(UR))
+    #print_("UR IS:",len(UR))
     #gc.collect()
     return True
 
@@ -253,7 +258,7 @@ def readRecord(n):
 #find candidates of each user with linear searching/the first filtering layer
 def findCan():
 
-    print("60")
+    print_("60")
 
     bnames=list(buckets.keys())#search each bucket
     bnames.sort()
@@ -291,7 +296,7 @@ def findCan():
 
 
         # *******************************************修改
-        # print("The No.",bid," bucket has been searched and So are its neighbors!")
+        # print_("The No.",bid," bucket has been searched and So are its neighbors!")
 
     return True
 
@@ -357,7 +362,7 @@ def buildCanset(key,candidates,similarity):
 #find top CK candidates
 def findCK():
 
-    print("80")
+    print_("80")
 
     names=csets.keys()
     Ncan=[]
@@ -392,7 +397,7 @@ def findFinalCan():
         keys=list(Cset[uid].keys()) #get the list of candidates
         keys.sort()
         searchFCan(keys,name,uid)
-        print("The user: ",name," has find its final candidates!")
+        print_("The user: ",name," has find its final candidates!")
 
     return True
 
@@ -533,17 +538,17 @@ def printoutcome(path,time):
         },
         'sucess':"true"
     }
-    print(data)
-    # print('{')
+    print_(data)
+    # print_('{')
     # for key in data:
     #     if key == "output":
-    #         print('"' + str(key) + '": ' + "{")
+    #         print_('"' + str(key) + '": ' + "{")
     #         for key1 in data.get('output'):
-    #             print('"' + str(key1) + '": ', data.get('output')[key1])
-    #         print("}")
+    #             print_('"' + str(key1) + '": ', data.get('output')[key1])
+    #         print_("}")
     #     else:
-    #         print('"' + str(key) + '": ' + str(data[key]))
-    # print('}')
+    #         print_('"' + str(key) + '": ' + str(data[key]))
+    # print_('}')
 
 #以jason格式打印
 def printoutcome1(path,time):
@@ -562,7 +567,7 @@ def printoutcome1(path,time):
         'sucess':'True'
     }
     data_json = json.dumps(data, indent=2, sort_keys=True)
-    print(data_json)
+    print_(data_json)
 
 #***合并文件夹
 def copy_file(dirs):
@@ -590,7 +595,7 @@ def copy_file(dirs):
 
 def calDis(srcpath,dir_list):
 
-    print("90")
+    print_("90")
     tempfilename = srcpath[-4:]  #用来运行新函数
     Template=np.load(srcpath+"_template.npy",allow_pickle = True).item()
     nm=0 #to record the number of users that has no records
@@ -604,7 +609,7 @@ def calDis(srcpath,dir_list):
 
     for filename in dir_list:
         #****************************修改***********************
-        # print("the processed user is: ", filename)
+        # print_("the processed user is: ", filename)
         flag=filename in csets
         if not flag:
             nm+=1
@@ -617,7 +622,7 @@ def calDis(srcpath,dir_list):
         nt=len(uset)
 
 
-        # print("the top k candidates : " , uset[:5])
+        # print_("the top k candidates : " , uset[:5])
 
         '''
         新函数切入点
@@ -628,7 +633,7 @@ def calDis(srcpath,dir_list):
 
 
         #*******************修改***********************************
-        # print("the number of candidates of this user is: ", nt)
+        # print_("the number of candidates of this user is: ", nt)
 
 
         Users.append(filename)
@@ -656,7 +661,7 @@ def calDis(srcpath,dir_list):
 
                     flag2=True
 
-                    # print("the matched is:",pair,"\nand its rank is:",it)
+                    # print_("the matched is:",pair,"\nand its rank is:",it)
 
                     break
 
@@ -665,7 +670,7 @@ def calDis(srcpath,dir_list):
 
 
             if not flag2:
-                # print("the user ",filename," failed to find its match!")
+                # print_("the user ",filename," failed to find its match!")
                 fn+=1
 
         else:
@@ -675,14 +680,14 @@ def calDis(srcpath,dir_list):
                    fp+=1
 
     # writetofile(df)
-    print("100")
-    print('done')
-    # print(df)
+    print_("100")
+    print_('done')
+    # print_(df)
     sncan=sum(Ncan)
     ave=sncan/len(Ncan)
-    # print("the mean value of candidate numbers is: ", ave)
+    # print_("the mean value of candidate numbers is: ", ave)
     mnum=max(Ncan)
-    # print("the max value of candidate numbers is: ", mnum)
+    # print_("the max value of candidate numbers is: ", mnum)
     for i in range(mnum+1):
         k=0
         for j in range(len(Ncan)):
@@ -699,15 +704,15 @@ def calDis(srcpath,dir_list):
 
 
     '''
-    print("the mode of candidate numbers is: ", mode,"\n and the number of users with the mode candidate number is: ",Unum[mode])
-    print("the nm is: ", nm,"\nthe users with no candidate set are:",ncan)
-    print("the number of 0 is: ", Unum[0])
-    print("the total user number, the true pair number, and the two platform user numbers are respectively: ", Para)
-    print("the number of users who find their matches is: ", s)
-    print("the average ranking positions of the user pairs is:",np.mean(ican))
-    print("the max ranking position of the user pairs is:",max(ican))
-    print("the median ranking positions of the user pairs is:",np.median(ican))
-    print("the mode ranking positions of the user pairs is:",ican_mode,"\nand the number of matched pairs with the mode ranking position is: ",icancounts[ican_mode]) 
+    print_("the mode of candidate numbers is: ", mode,"\n and the number of users with the mode candidate number is: ",Unum[mode])
+    print_("the nm is: ", nm,"\nthe users with no candidate set are:",ncan)
+    print_("the number of 0 is: ", Unum[0])
+    print_("the total user number, the true pair number, and the two platform user numbers are respectively: ", Para)
+    print_("the number of users who find their matches is: ", s)
+    print_("the average ranking positions of the user pairs is:",np.mean(ican))
+    print_("the max ranking position of the user pairs is:",max(ican))
+    print_("the median ranking positions of the user pairs is:",np.median(ican))
+    print_("the mode ranking positions of the user pairs is:",ican_mode,"\nand the number of matched pairs with the mode ranking position is: ",icancounts[ican_mode]) 
     '''
 
     '''
@@ -721,15 +726,15 @@ def calDis(srcpath,dir_list):
 
     recall=s/(s+fn)
     precision=s/(s+fp)  #the precision
-    # print("the final precision is: ", precision)
+    # print_("the final precision is: ", precision)
     F1=2*recall*precision/(recall+precision)
-    # print("the final F1 score is: ", F1)
+    # print_("the final F1 score is: ", F1)
     accuracy=(s+Para[0]-Para[1]-fp)/Para[0]
-    # print("the final accuracy is: ", accuracy)
-    # print("the bucket number is: ", len(Bt))
+    # print_("the final accuracy is: ", accuracy)
+    # print_("the bucket number is: ", len(Bt))
     ratio=Unum[0]/Para[0]
 
-    #print("the ratio of users that have candidates is: ", 1-ratio,"\nthe number of false positives are:",fp)
+    #print_("the ratio of users that have candidates is: ", 1-ratio,"\nthe number of false positives are:",fp)
     return recall,sncan/(Para[2]*Para[3]*2) #sncan/(Para[2]*Para[3]*2) RCA
 
 
@@ -752,13 +757,13 @@ def calDis2(srcpath,dir_list):
     title1=srcpath[:2]
     title2=srcpath[2:4]
     for filename in dir_list:
-        print("the processed user is: ", filename)
+        print_("the processed user is: ", filename)
         uid=fcsets[filename]
         #uset=Fcset[uid] #to get its dictionaries
         uset=sorted(Fcset[uid].items(),key = operator.itemgetter(1),reverse = True)#become a list
         nt=len(uset)
 
-        print("the number of final candidates of this user is: ", nt)
+        print_("the number of final candidates of this user is: ", nt)
         ncan.append(nt)
         target=Template[filename]
 
@@ -775,7 +780,7 @@ def calDis2(srcpath,dir_list):
                     s+=1
                     ican.append(it)
                     flag2=True
-                    print("the matched is:",pair,"\nand its rank is:",it)
+                    print_("the matched is:",pair,"\nand its rank is:",it)
                     output1.write(filename+" "+key+" "+str(pair[1])+" "+str(it)+" "+str(nt)+"\n")
                     break
                 it+=1
@@ -790,7 +795,7 @@ def calDis2(srcpath,dir_list):
 
                 if key == target:
                     fp+=1
-                    print("the false positive is:",pair,"\nand its rank is:",it)
+                    print_("the false positive is:",pair,"\nand its rank is:",it)
                     output2.write(filename+" "+key+" "+str(pair[1])+" "+str(it)+" "+str(nt)+"\n")
                     ican2.append(it)
                     break
@@ -801,9 +806,9 @@ def calDis2(srcpath,dir_list):
     output2.close()
     sncan=sum(ncan)
     ave=sncan/len(ncan)
-    print("the mean value of final candidate numbers is: ", ave)
+    print_("the mean value of final candidate numbers is: ", ave)
     mnum=max(ncan)
-    print("the max value of final candidate numbers is: ", mnum)
+    print_("the max value of final candidate numbers is: ", mnum)
     for i in range(mnum+1):
         k=0
         for j in range(len(ncan)):
@@ -819,18 +824,18 @@ def calDis2(srcpath,dir_list):
     nican=len(ican)
     icancounts=np.bincount(ican)
     ican_mode=np.argmax(icancounts)
-    print("the mode of final candidate numbers is: ", mode,"\nand the number of users with the mode candidate number is: ",unum[mode])
-    print("the number of 0 is: ", unum[0])
-    print("the number of users who find their matches in final candidates is: ", s)
-    print("the average ranking positions of the user pairs is:",np.mean(ican))
-    print("the max ranking position of the user pairs is:",max(ican))
-    print("the median ranking positions of the user pairs is:",np.median(ican))
-    print("the mode ranking positions of the user pairs is:",ican_mode,"\nand the number of matched pairs with the mode ranking position is: ",icancounts[ican_mode])
+    print_("the mode of final candidate numbers is: ", mode,"\nand the number of users with the mode candidate number is: ",unum[mode])
+    print_("the number of 0 is: ", unum[0])
+    print_("the number of users who find their matches in final candidates is: ", s)
+    print_("the average ranking positions of the user pairs is:",np.mean(ican))
+    print_("the max ranking position of the user pairs is:",max(ican))
+    print_("the median ranking positions of the user pairs is:",np.median(ican))
+    print_("the mode ranking positions of the user pairs is:",ican_mode,"\nand the number of matched pairs with the mode ranking position is: ",icancounts[ican_mode])
 
     if len(ican2)>0:
-        print("the max ranking position of false positives is:",max(ican2))
-        print("the average ranking positions of false positives is:",np.mean(ican2))
-        print("the median ranking positions of false positives is:",np.median(ican2))
+        print_("the max ranking position of false positives is:",max(ican2))
+        print_("the average ranking positions of false positives is:",np.mean(ican2))
+        print_("the median ranking positions of false positives is:",np.median(ican2))
 
     '''
     Num2=np.linspace(1,nican,num=nican)        
@@ -842,14 +847,14 @@ def calDis2(srcpath,dir_list):
     '''
 
     precision=s/(s+fp)  #the precision
-    print("the final precision is: ", precision,"\nthe number of false positives are:",fp)
+    print_("the final precision is: ", precision,"\nthe number of false positives are:",fp)
     napcp=Para[2]*Para[3]*2  #num_all_possible_can_pairs
     accuracy=(s+Para[0]-Para[1]-fp)/Para[0]
-    print("the final accuracy is: ", accuracy)
+    print_("the final accuracy is: ", accuracy)
     recall=s/(s+fn)#Para[1]
-    print("the total user number, the true pair number, and the two platform user numbers are respectively: ", Para)
+    print_("the total user number, the true pair number, and the two platform user numbers are respectively: ", Para)
     F1=2*recall*precision/(recall+precision)
-    print("the final F1 score is: ", F1)
+    print_("the final F1 score is: ", F1)
 
     return recall,sncan/napcp#s/(Para[2]*Para[3]*2)
 
@@ -859,45 +864,45 @@ def calDis2(srcpath,dir_list):
 if __name__ == '__main__':
     opts, args = getopt.getopt(sys.argv[1:], '', ['dirs='])
     for opt, arg in opts:
-        # print(opt, arg[1:-1].split(','), file=f)
+        # print_(opt, arg[1:-1].split(','), file=f)
         if opt == '--dirs':
             dirs = arg[1:-1].split(',')
 
     # dirs=['E:/inputs/fb','E:/inputs/fs']  #调试用
-    # print(dirs)
+    # print_(dirs)
     tempfile = copy_file(dirs)    #合并dirs所指数据集的文件夹
 
     inpath1=tempfile #("Please input a srcpath:" input)     #读取数据集文件    程序接口**************
 
     flist=readUR(inpath1)
 
-    print("20")
+    print_("20")
 
     if(len(flist)):
         time_begin = time.time()  #to record the time
 
-        print("30")
+        print_("30")
 
-        #print('Congratulations!The user files have been all read!')
+        #print_('Congratulations!The user files have been all read!')
         if (buildBuckets(flist)):
 
-            print("50")
+            print_("50")
 
-            #print('Congratulations!The bucket files have been all built!')
+            #print_('Congratulations!The bucket files have been all built!')
             if(findCan()):
 
-                print("70")
+                print_("70")
 
-                #print('Congratulations!All users have found their candidates!')
+                #print_('Congratulations!All users have found their candidates!')
                 rca=findCK()
                 recall,ratio=calDis(inpath1,flist)
                 #*******************************修改**********************************
-                # print('***************************\nthe rca is:',rca)
-                #print('the recall of this candidate set is: ', recall)
+                # print_('***************************\nthe rca is:',rca)
+                #print_('the recall of this candidate set is: ', recall)
                 time_end = time.time()
                 time = time_end - time_begin
-                # print('***************************\nThe running time is :', time)
-                # print("***************************\nthe k is  = ", 5)
+                # print_('***************************\nThe running time is :', time)
+                # print_("***************************\nthe k is  = ", 5)
 
                 '''
                 新函数切入点
@@ -907,23 +912,23 @@ if __name__ == '__main__':
                 '''
                 of = int(input("Please input a number:"))
                 if(findFinalCan()):
-                    print('Congratulations!All users have found their final candidates!')
+                    print_('Congratulations!All users have found their final candidates!')
                     recall2,ratio2=calDis2(inpath1,flist)
-                    print('the 2nd recall of this candidate set is: ', recall2,'\nthe ratio of all filtered candidate pairs in all possible candidate pairs is:',ratio2)
+                    print_('the 2nd recall of this candidate set is: ', recall2,'\nthe ratio of all filtered candidate pairs in all possible candidate pairs is:',ratio2)
                     time_end = time.time()
                     time = time_end - time_begin
-                    print('***************************\nThe running time is :', time)
+                    print_('***************************\nThe running time is :', time)
                 else:
-                    print("Warning! \n There are some errors in finding final candidates!\n")
+                    print_("Warning! \n There are some errors in finding final candidates!\n")
                 '''
             else:
-                print("Warning! \n There are some errors in finding candidates!\n")
+                print_("Warning! \n There are some errors in finding candidates!\n")
         else:
-            print("Warning! \n There are some errors in reading buckets!\n")
+            print_("Warning! \n There are some errors in reading buckets!\n")
 
 
     else:
-        print("Warning! \n There are some errors in reading user files!\n")
+        print_("Warning! \n There are some errors in reading user files!\n")
     #删除合并的临时文件夹
     if os.path.exists(tempfile):
         shutil.rmtree(tempfile)
