@@ -41,7 +41,7 @@ public final class PythonUtils implements ApplicationContextAware {
     /**
      * @param algoName
      * @param sourceName
-     * @param args   存在dirs=[E:/hou,xx]，是数据集的位置
+     * @param args         存在dirs=[E:/hou,xx]，是数据集的位置
      * @param datasetNames
      * @return
      */
@@ -67,7 +67,16 @@ public final class PythonUtils implements ApplicationContextAware {
         String path = context.getResources ("classpath:/**/" + sourceName)[0].getFile ().getPath ();
         String cmd = String.format ("python %s", path);
         StringBuilder sb = new StringBuilder (cmd);
-        args.forEach ((k, v) -> sb.append (" --").append (k).append ('=').append (v));
+        //数组不能加空格。。，不支持数组，必须是List！
+        args.forEach ((k, v) -> {
+            sb.append (" --").append (k).append ('=');
+            if (v instanceof List) {
+                sb.append ('[');
+                ((List<?>) v).forEach (x -> sb.append (x).append (','));
+                sb.deleteCharAt (sb.length () - 1);
+                sb.append (']');
+            } else sb.append (v);
+        });
         return sb.toString ();
     }
 
@@ -153,7 +162,7 @@ public final class PythonUtils implements ApplicationContextAware {
                     while (state == PythonUtils.State.TRAINING) {
                         //没有数据读会阻塞，如果返回null，就是进程结束了
                         if ((s = reader.readLine ()) == null) {
-                            if (parseOutput && processOutput (sb.toString ())) {
+                            if (parseOutput && processOutput (sb.toString ().trim ())) {
                                 state = PythonUtils.State.SUCCESSFULLY_STOPPED;
                                 saveToMongoDB (key, output);
                                 log.info ("{} successfully stopped", key);

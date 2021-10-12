@@ -101,7 +101,8 @@ public class DatasetService {
             path.mkdirs ();
         }
         for (File file : Objects.requireNonNull (new File (baseLocation).listFiles ())) {
-            datasetLocation.put (file.getName (), file.getPath ());
+            if (file.isDirectory ())
+                datasetLocation.put (file.getName (), file.getPath ());
         }
         log.info ("auto load datasets {}", datasetLocation.entrySet ());
     }
