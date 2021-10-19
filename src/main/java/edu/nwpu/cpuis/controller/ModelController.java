@@ -82,7 +82,7 @@ public class ModelController {
         } else return Response.fail ("模型不存在");
     }
 
-    @PostMapping("/{name}/train")
+    @GetMapping("/{name}/train")
     @ApiOperation(value = "模型训练", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "name", value = "算法名称", required = true, dataTypeClass = String.class),
