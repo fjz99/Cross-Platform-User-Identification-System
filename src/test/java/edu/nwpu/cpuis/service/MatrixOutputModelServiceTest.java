@@ -1,5 +1,6 @@
 package edu.nwpu.cpuis.service;
 
+import edu.nwpu.cpuis.entity.vo.OutputSearchVO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,10 +14,33 @@ class MatrixOutputModelServiceTest {
     private MatrixOutputModelService service;
 
     @Test
-    void getMatchedUsers() {
-        System.out.println (service.getMatchedUsers ("2", "demo-a-b-train", true));
-        System.out.println (service.getMatchedUsers ("1", "demo-a-b-train", true));
-        System.out.println (service.getMatchedUsers ("1", "demo-a-b-train", false));
-        System.out.println (service.getMatchedUsers ("2", "demo-a-b-train", false));
+    void getOutput() {
+        OutputSearchVO vo = OutputSearchVO.builder ()
+                .dataset (new String[]{"fb", "fs"})
+                .algoName ("hash")
+                .phase ("train")
+                .build ();
+        System.out.println (service.getOutput (vo));
+        vo = OutputSearchVO.builder ()
+                .dataset (new String[]{"fb", "fs"})
+                .algoName ("hash")
+                .phase ("train")
+                .id (1)
+                .build ();
+        System.out.println (service.getOutput (vo));
+        vo = OutputSearchVO.builder ()
+                .dataset (new String[]{"fb", "fs"})
+                .algoName ("hash")
+                .phase ("train")
+                .range (new Integer[]{3, 22})
+                .build ();
+        System.out.println (service.getOutput (vo));
+        vo = OutputSearchVO.builder ()
+                .dataset (new String[]{"fb", "fs"})
+                .algoName ("hash")
+                .phase ("train")
+                .k (1)
+                .build ();
+        System.out.println (service.getOutput (vo));
     }
 }

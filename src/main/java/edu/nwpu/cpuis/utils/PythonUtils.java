@@ -1,7 +1,7 @@
 package edu.nwpu.cpuis.utils;
 
 import com.alibaba.fastjson.JSON;
-import edu.nwpu.cpuis.entity.MongoEntity;
+import edu.nwpu.cpuis.entity.MongoOutputEntity;
 import edu.nwpu.cpuis.entity.Output;
 import edu.nwpu.cpuis.service.MongoService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,16 +24,18 @@ import java.util.*;
 @Component
 @Slf4j
 public final class PythonUtils implements ApplicationContextAware {
+    public static final String OUTPUT_TYPE = "output";
+    public static final String METADATA_TYPE = "metadata";
     //key
     private static final Map<String, ProcessWrapperTrain> processes = new HashMap<> ();
     private static final String TRAIN_TYPE_NAME = "train";
     private static final String PREDICT_TYPE_NAME = "predict";
-    static MongoService<MongoEntity> mongoService;
+    static MongoService<MongoOutputEntity> mongoService;
     private static ApplicationContext context;
     private static ThreadPoolTaskExecutor executor;
 
 
-    private PythonUtils(ThreadPoolTaskExecutor executor, MongoService<MongoEntity> mongoService) {
+    private PythonUtils(ThreadPoolTaskExecutor executor, MongoService<MongoOutputEntity> mongoService) {
         PythonUtils.mongoService = mongoService;
         PythonUtils.executor = executor;
     }
@@ -50,10 +52,9 @@ public final class PythonUtils implements ApplicationContextAware {
             String cmd = buildCmd (args, sourceName);
             log.info ("run script cmd '{}'", cmd);
             Process exec = Runtime.getRuntime ().exec (cmd);
-            String key = generateMongoKey (algoName,
-                    datasetNames,
-                    TRAIN_TYPE_NAME);
-            ProcessWrapperTrain wrapper = new ProcessWrapperTrain (exec, key);
+            String[] dataset = datasetNames.toArray (new String[]{});
+            String key = ModelKeyGenerator.generateKey (dataset, algoName, "train", null);
+            ProcessWrapperTrain wrapper = new ProcessWrapperTrain (exec, algoName, dataset);
             processes.put (key, wrapper);
             return wrapper;
         } catch (IOException e) {
@@ -84,11 +85,6 @@ public final class PythonUtils implements ApplicationContextAware {
         return processes.getOrDefault (key, null);
     }
 
-    private static String generateMongoKey(String algoName, List<String> datasetName, String type) {
-        Collections.sort (datasetName); //!!!
-        return String.format ("%s-%s-%s-%s", algoName, datasetName.get (0), datasetName.get (1), type);
-    }
-
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         context = applicationContext;
@@ -102,6 +98,7 @@ public final class PythonUtils implements ApplicationContextAware {
         PREDICTING;
     }
 
+    //hash-fb-fs-train-output/metadata
     @Slf4j
     public abstract static class ProcessWrapper {
 
@@ -109,19 +106,27 @@ public final class PythonUtils implements ApplicationContextAware {
         protected final Process process;
         protected final BufferedReader reader;
         protected final Thread daemon;
-        protected final String key;
         protected volatile PythonUtils.State state;//-1 err 0 ok 1 running
+        protected String[] dataset;
+        protected String phase;
+        protected String algoName;
+        protected String key;
 
-        public ProcessWrapper(Process process, String key) {
+        public ProcessWrapper(Process process, String algoName, String[] dataset, String phase) {
             this.state = PythonUtils.State.TRAINING;
-            this.key = key;
+            this.algoName = algoName;
+            this.dataset = dataset;
             this.process = process;
+            this.phase = phase;
             reader = new BufferedReader (new InputStreamReader (process.getInputStream ()));
             daemon = getDaemon ();
+            cleanupLastOutput ();
             executor.submit (daemon);
         }
 
-        abstract protected Thread getDaemon();
+        protected abstract void cleanupLastOutput();
+
+        protected abstract Thread getDaemon();
 
         public void kill() {
             process.destroy ();
@@ -136,9 +141,10 @@ public final class PythonUtils implements ApplicationContextAware {
         private volatile double percentage;
         private volatile boolean parseOutput;
         private Output output;
+        private MongoOutputEntity mongoOutputEntity;
 
-        public ProcessWrapperTrain(Process process, String name) {
-            super (process, name);
+        public ProcessWrapperTrain(Process process, String algoName, String[] dataset) {
+            super (process, algoName, dataset, "train");
             percentage = 0;
             parseOutput = false;
         }
@@ -154,17 +160,41 @@ public final class PythonUtils implements ApplicationContextAware {
         }
 
         @Override
+        protected void cleanupLastOutput() {
+            //删除上次的输出
+            key = ModelKeyGenerator.generateKey (dataset, algoName, phase, METADATA_TYPE);
+            mongoService.deleteCollection (key);
+            key = ModelKeyGenerator.generateKey (dataset, algoName, phase, OUTPUT_TYPE);
+            mongoService.deleteCollection (key);
+            mongoService.deleteCollection (getReversedKey (OUTPUT_TYPE));
+            mongoService.deleteCollection (getReversedKey (METADATA_TYPE));
+            log.info ("cleanup output done");
+        }
+
+        private String getReversedKey(String type) {
+            String[] reversedDataset = new String[2];
+            if (dataset.length == 0) {
+                reversedDataset = dataset;
+            } else {
+                reversedDataset[0] = dataset[1];
+                reversedDataset[1] = dataset[0];
+            }
+            return ModelKeyGenerator.generateKey (reversedDataset, algoName, phase, type);
+        }
+
+        @Override
         protected Thread getDaemon() {
             return new Thread (() -> {
                 String s;
                 StringBuilder sb = new StringBuilder ();
+                key = String.format ("%s-%s-%s", algoName, Arrays.toString (dataset), phase);
                 try {
                     while (state == PythonUtils.State.TRAINING) {
                         //没有数据读会阻塞，如果返回null，就是进程结束了
                         if ((s = reader.readLine ()) == null) {
                             if (parseOutput && processOutput (sb.toString ().trim ())) {
                                 state = PythonUtils.State.SUCCESSFULLY_STOPPED;
-                                saveToMongoDB (key, output);
+                                saveToMongoDB ();
                                 log.info ("{} successfully stopped", key);
                             } else {
                                 log.error ("{} err shutdown stream", key);
@@ -205,12 +235,59 @@ public final class PythonUtils implements ApplicationContextAware {
             });
         }
 
-        private void saveToMongoDB(String key, Output output) {
-            MongoEntity mongoEntity = new MongoEntity ();
-            mongoEntity.setOutput (output);
-            mongoEntity.set_id (key);
+        //首先转换成mongoDB的格式，再异步完成逆置操作
+        private void saveToMongoDB() {
+            for (Map.Entry<String, Object> stringObjectEntry : ((Map<String, Object>) output.getOutput ()).entrySet ()) {
+                final String k = stringObjectEntry.getKey ();
+                final List<List<String>> v = (List<List<String>>) stringObjectEntry.getValue ();
+                final String key = ModelKeyGenerator.generateKey (dataset, algoName, phase, OUTPUT_TYPE);
+                MongoOutputEntity mongoOutputEntity = new MongoOutputEntity ();
+                mongoOutputEntity.setId (Integer.parseInt (k));
+                mongoOutputEntity.setOthers (new ArrayList<> ());
+                for (List<String> x : v) {
+                    MongoOutputEntity.OtherUser otherUser = MongoOutputEntity.OtherUser.builder ()
+                            .id (Integer.parseInt (x.get (0)))
+                            .similarity (Double.parseDouble (x.get (1)))
+                            .build ();
+                    mongoOutputEntity.getOthers ().add (otherUser);
+                }
+                mongoOutputEntity.getOthers ().sort (Comparator.comparing (MongoOutputEntity.OtherUser::getSimilarity).reversed ());
+                mongoService.insert (mongoOutputEntity, key);
+//            log.debug ("{} data is",mongoOutputEntity);
+            }
             log.info ("{} saved output to mongodb", key);
-            mongoService.insert (mongoEntity, "output");
+            executor.submit (reversedOutput ());
+        }
+
+        private Runnable reversedOutput() {
+            return () -> {
+                String key = getReversedKey (OUTPUT_TYPE);
+                Map<String, Object> map = (Map<String, Object>) output.getOutput ();
+                Map<String, MongoOutputEntity> result = new HashMap<> ();
+                for (Map.Entry<String, Object> stringObjectEntry : map.entrySet ()) {
+                    final String k = stringObjectEntry.getKey ();
+                    final List<List<String>> v = (List<List<String>>) stringObjectEntry.getValue ();
+                    final Integer thisKey = Integer.valueOf (k);
+                    for (List<String> list : v) {
+                        String anotherKey = list.get (0);
+                        if (!result.containsKey (anotherKey)) {
+                            MongoOutputEntity mongoOutputEntity = new MongoOutputEntity ();
+                            mongoOutputEntity.setId (Integer.parseInt (anotherKey));
+                            mongoOutputEntity.setOthers (new ArrayList<> ());
+                            result.put (anotherKey, mongoOutputEntity);
+                        }
+                        MongoOutputEntity.OtherUser build = MongoOutputEntity.OtherUser.builder ()
+                                .id (thisKey).similarity (Double.valueOf (list.get (1))).build ();
+                        result.get (anotherKey).getOthers ().add (build);
+                    }
+                }
+
+                result.forEach ((k, v) ->{
+                    v.getOthers ().sort (Comparator.comparing (MongoOutputEntity.OtherUser::getSimilarity).reversed ());
+                    mongoService.insert (v, key);
+                } );
+                log.info ("reversed output {} saved", key);
+            };
         }
 
         private boolean processOutput(String s) {
@@ -231,16 +308,17 @@ public final class PythonUtils implements ApplicationContextAware {
         }
     }
 
-    //TODO
-    public static class ProcessWrapperPredict extends ProcessWrapper {
-
-        public ProcessWrapperPredict(Process process, String name) {
-            super (process, name);
-        }
-
-        @Override
-        protected Thread getDaemon() {
-            return null;
-        }
-    }
 }
+
+//TODO
+//    public static class ProcessWrapperPredict extends ProcessWrapper {
+//
+//        public ProcessWrapperPredict(Process process, String name) {
+//            super (process, name);
+//        }
+//
+//        @Override
+//        protected Thread getDaemon() {
+//            return null;
+//        }
+//    }

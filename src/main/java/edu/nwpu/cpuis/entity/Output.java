@@ -11,5 +11,5 @@ public class Output {
     private Map<String, Object> other;
     private Object output;
     private Boolean success;
-    private long time;//ms
+    private long time;//s
 }

@@ -9,6 +9,7 @@ import edu.nwpu.cpuis.entity.Output;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Collation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -46,24 +47,56 @@ public class MongoService<T> {
         mongoTemplate.createCollection (name);
     }
 
+    public void deleteCollection(String name) {
+        mongoTemplate.getCollection (name).drop ();
+    }
+
+    public boolean collectionExists(String name) {
+        return mongoTemplate.collectionExists (name);
+    }
+
+    public List<T> selectAll(String collectionName, Class<T> clazz) {
+        return mongoTemplate.findAll (clazz, collectionName);
+    }
+
+    /**
+     * @param currentPage 从1开始
+     * @param rangeMin    都是include
+     * @param rangeMax    都是include
+     */
+    public List<T> selectRange(String collectionName, Class<T> clazz, int currentPage,
+                               int pageSize, int rangeMin, int rangeMax) {
+        //设置分页参数
+        Query query = new Query ();
+        //设置分页信息
+        query.limit (pageSize);
+        query.skip ((long) pageSize * (currentPage - 1));
+        query.addCriteria (Criteria.where ("id").lte (rangeMax).gte (rangeMin));
+//        query.addCriteria (Criteria.where ("id").gte (1).lte (22));
+        return mongoTemplate.find (query, clazz, collectionName);
+    }
+
     /**
      * 功能描述: 创建索引
      * 索引是顺序排列，且唯一的索引
      *
      * @param collectionName 集合名称，相当于关系型数据库中的表名
-     * @param filedName      对象中的某个属性名
+     * @param fieldName      对象中的某个属性名
      * @return:java.lang.String
      * @since: v1.0
      * @Author:wangcanfeng
      * @Date: 2019/3/20 16:13
      */
-    public String createIndex(String collectionName, String filedName) {
+    public String createIndex(String collectionName, String fieldName, boolean unique, boolean ascending) {
         //配置索引选项
         IndexOptions options = new IndexOptions ();
         // 设置为唯一
-        options.unique (true);
+        options.unique (unique);
         //创建按filedName升序排的索引
-        return mongoTemplate.getCollection (collectionName).createIndex (Indexes.ascending (filedName), options);
+        if (ascending)
+            return mongoTemplate.getCollection (collectionName).createIndex (Indexes.ascending (fieldName), options);
+        else
+            return mongoTemplate.getCollection (collectionName).createIndex (Indexes.descending (fieldName), options);
     }
 
 
@@ -102,7 +135,7 @@ public class MongoService<T> {
      * @Date: 2019/3/20 16:46
      */
     public void insert(T info, String collectionName) {
-        log.debug ("mongo insert {}", info);
+//        log.debug ("mongo insert {}", info);
         mongoTemplate.insert (info, collectionName);
     }
 
@@ -178,7 +211,14 @@ public class MongoService<T> {
     public T selectById(String id, Class<T> clazz, String collectionName) {
         // 查询对象的时候，不仅需要传入id这个唯一键，还需要传入对象的类型，以及集合的名称
         T byId = mongoTemplate.findById (id, clazz, collectionName);
-        log.debug ("mongo select {}", byId);
+//        log.debug ("mongo select {}", byId);
+        return byId;
+    }
+
+    public T selectById(Integer id, Class<T> clazz, String collectionName) {
+        // 查询对象的时候，不仅需要传入id这个唯一键，还需要传入对象的类型，以及集合的名称
+        T byId = mongoTemplate.findById (id, clazz, collectionName);
+//        log.debug ("mongo select {}", byId);
         return byId;
     }
 

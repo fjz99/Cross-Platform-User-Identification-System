@@ -1,25 +1,29 @@
 package edu.nwpu.cpuis.controller;
 
 import edu.nwpu.cpuis.entity.Response;
+import edu.nwpu.cpuis.entity.vo.OutputSearchVO;
 import edu.nwpu.cpuis.service.DatasetService;
 import edu.nwpu.cpuis.service.MatrixOutputModelService;
 import edu.nwpu.cpuis.service.model.BasicModel;
 import edu.nwpu.cpuis.service.model.ModelDefinition;
+import edu.nwpu.cpuis.utils.ModelKeyGenerator;
+import edu.nwpu.cpuis.utils.OutputVoValidator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 
 /**
  * @author fujiazheng
@@ -38,6 +42,15 @@ public class ModelController {
     private DatasetService fileUploadService;
     @Resource
     private MatrixOutputModelService matrixOutputModelService;
+    @Resource
+    private OutputVoValidator validator;
+
+    //即使注册成为bean了，也得加这个
+    //会覆盖默认的验证器。。,因为supports为true了
+    @InitBinder
+    public void init(WebDataBinder dataBinder) {
+        dataBinder.setValidator (validator);
+    }
 
     @GetMapping("{name}/info")
     @ApiOperation(value = "获得模型的详细信息", notes = "传入模型的key，即'算法-数据集1-数据集2-train/predict'")
@@ -94,6 +107,10 @@ public class ModelController {
             log.error ("dataset input err {}", dataset);
             return Response.fail ("数据集输入错误");
         }
+        if (basicModel.contains (ModelKeyGenerator.generateKey (dataset.toArray (new String[]{}), name, "train", null))) {
+            log.error ("模型正在训练中");
+            return Response.fail ("模型已经存在了！");
+        }
         if (fileUploadService.getDatasetLocation (dataset.get (0)) != null
                 && fileUploadService.getDatasetLocation (dataset.get (1)) != null) {
             basicModel.train (dataset, name);//模型名字
@@ -118,50 +135,20 @@ public class ModelController {
     }
 
     /**
-     * @param key 算法名-数据集1-数据集2-train/predict,数据集1和2必须是升序排列
+     * 算法名-数据集1-数据集2-train/predict,数据集1和2必须是升序排列
      */
-    @GetMapping("/{key}/{type:output|metadata}")
-    @ApiOperation(value = "获得模型输出", notes = "注意参数，支持output和metadata两种，metadata会返回模型输出的一些统计信息，比如运行时间；\n" +
-            "而output就是返回输出内容")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "path", name = "key", value = "模型运行id", required = true, dataTypeClass = String.class),
-            @ApiImplicitParam(paramType = "path", name = "type", value = "查询类型，为output和metadata其中的一个", required = true, dataTypeClass = String.class),
-            @ApiImplicitParam(paramType = "query", name = "id", value = "output模式下，指定查询的用户id，若不指定，则为查询所有用户",
-                    dataTypeClass = String[].class),
-            @ApiImplicitParam(paramType = "query", name = "reverse", value = "output模式下，指定是否反向查询，具体细节QQ询问",
-                    dataTypeClass = Boolean.class, defaultValue = "false")
-    })
-    public Response<?> output(@PathVariable @NotBlank String key,
-                              @PathVariable String type,
-                              @RequestParam(value = "id", required = false)
-                              @Size(max = 2, message = "id参数不合规范") String[] id,
-                              @RequestParam(value = "reverse", required = false, defaultValue = "false")
-                                      Boolean reverse) {
+    @GetMapping("/output")
+    @ApiOperation(value = "获得输出")
+    @ApiImplicitParam(paramType = "body", value = "OutputSearchVO", required = true, dataTypeClass = OutputSearchVO.class)
+    //加@Valid！，即使databinder弄了！
+    public Response<?> output(@RequestBody @Validated OutputSearchVO searchVO) {
         try {
-            switch (type) {
-                case "output": {
-                    if (id == null) {
-                        return Response.ok (matrixOutputModelService.getAllMatchedUsers (key));
-                    } else {
-                        Map<String, Object> result = new HashMap<> ();
-                        Stream.of (id).forEach (x -> {
-                            Object matchedUsers = matrixOutputModelService.getMatchedUsers (x, key, reverse);
-                            List<Object> changed = ((List<Object>) matchedUsers);
-                            result.put (x, changed);
-                        });
-                        return Response.ok (result);
-                    }
-                }
-                case "metadata": {
-                    return Response.ok (matrixOutputModelService.getMetadata (key));
-                }
-                default:
-                    return Response.fail ("err server failed");
-            }
+            return Response.ok (matrixOutputModelService.getOutput (searchVO));
         } catch (Exception e) {
             e.printStackTrace ();
             return Response.fail ("err " + e.getMessage ());
         }
     }
+    //todo metadata
 
 }
