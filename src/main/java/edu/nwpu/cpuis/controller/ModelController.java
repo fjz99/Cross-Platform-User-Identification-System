@@ -14,15 +14,12 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -149,5 +146,16 @@ public class ModelController {
         }
     }
     //todo metadata
+
+    @GetMapping("/statistics")
+    @ApiOperation(value = "获得元数据")
+    public Response<?> metadata(@RequestBody @Validated OutputSearchVO searchVO) {
+        try {
+            return Response.ok (matrixOutputModelService.getStatistics (searchVO));
+        } catch (Exception e) {
+            e.printStackTrace ();
+            return Response.fail ("err " + e.getMessage ());
+        }
+    }
 
 }

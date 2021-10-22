@@ -8,7 +8,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -17,7 +16,6 @@ import java.util.Optional;
  * @see edu.nwpu.cpuis.service.AbstractModelService
  */
 @Service
-@SuppressWarnings("unchecked")
 @Slf4j
 public class MatrixOutputModelService extends AbstractModelService {
 
@@ -45,10 +43,6 @@ public class MatrixOutputModelService extends AbstractModelService {
         }
         entities = preprocessTopK (entities, searchVO.getK ());
         return entities;
-    }
-
-    public List<Map<String, String>> getMetadata() {
-        return null;
     }
 
     private List<MongoOutputEntity> preprocessTopK(List<MongoOutputEntity> list, Integer topK) {

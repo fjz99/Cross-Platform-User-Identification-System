@@ -56,5 +56,10 @@ public class OutputVoValidator implements Validator {
         if (searchVO.getPhase () == null || !pattern.matcher (searchVO.getPhase ()).matches ()) {
             errors.rejectValue ("range", "0", "phase输入错误，取值为train|test|predict|evaluate");
         }
+        //type
+        Pattern types = Pattern.compile ("output|statistics");
+        if (searchVO.getType () == null || !types.matcher (searchVO.getType ()).matches ()) {
+            errors.rejectValue ("range", "0", "type输入错误，取值为output|statistics");
+        }
     }
 }

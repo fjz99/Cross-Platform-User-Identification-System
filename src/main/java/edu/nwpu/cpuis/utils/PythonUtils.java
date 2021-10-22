@@ -23,6 +23,7 @@ import java.util.*;
  */
 @Component
 @Slf4j
+@SuppressWarnings ({"rawtypes","unchecked"})
 public final class PythonUtils implements ApplicationContextAware {
     public static final String OUTPUT_TYPE = "output";
     public static final String METADATA_TYPE = "metadata";
@@ -31,13 +32,16 @@ public final class PythonUtils implements ApplicationContextAware {
     private static final String TRAIN_TYPE_NAME = "train";
     private static final String PREDICT_TYPE_NAME = "predict";
     static MongoService<MongoOutputEntity> mongoService;
+    static MongoService<Map> mapMongoService;
     private static ApplicationContext context;
     private static ThreadPoolTaskExecutor executor;
 
 
-    private PythonUtils(ThreadPoolTaskExecutor executor, MongoService<MongoOutputEntity> mongoService) {
+    private PythonUtils(ThreadPoolTaskExecutor executor, MongoService<MongoOutputEntity> mongoService,
+                        MongoService<Map> mapMongoService) {
         PythonUtils.mongoService = mongoService;
         PythonUtils.executor = executor;
+        PythonUtils.mapMongoService = mapMongoService;
     }
 
     /**
@@ -90,12 +94,12 @@ public final class PythonUtils implements ApplicationContextAware {
         context = applicationContext;
     }
 
-    public static enum State {
+    public enum State {
         UNTRAINED,
         TRAINING,
         ERROR_STOPPED,//任何异常
         SUCCESSFULLY_STOPPED,
-        PREDICTING;
+        PREDICTING
     }
 
     //hash-fb-fs-train-output/metadata
@@ -255,8 +259,18 @@ public final class PythonUtils implements ApplicationContextAware {
                 mongoService.insert (mongoOutputEntity, key);
 //            log.debug ("{} data is",mongoOutputEntity);
             }
+            //存储统计信息
+            String key = ModelKeyGenerator.generateKey (dataset, algoName, phase, "statistics");
+            saveStatisticsToMongoDB (key, output);
             log.info ("{} saved output to mongodb", key);
             executor.submit (reversedOutput ());
+        }
+
+        private void saveStatisticsToMongoDB(String key, Output output) {
+            Map<String, Object> statistics = new HashMap<> ();
+            statistics.put ("time", output.getTime ());
+            statistics.putAll (output.getOther ());
+            mapMongoService.insert (statistics, key);
         }
 
         private Runnable reversedOutput() {
@@ -282,10 +296,13 @@ public final class PythonUtils implements ApplicationContextAware {
                     }
                 }
 
-                result.forEach ((k, v) ->{
+                result.forEach ((k, v) -> {
                     v.getOthers ().sort (Comparator.comparing (MongoOutputEntity.OtherUser::getSimilarity).reversed ());
                     mongoService.insert (v, key);
-                } );
+                });
+
+                //存储统计信息
+                saveStatisticsToMongoDB (getReversedKey ("statistics"), output);
                 log.info ("reversed output {} saved", key);
             };
         }

@@ -17,6 +17,7 @@ public class OutputSearchVO {
     private Integer[] range;//都是included
     private Integer id;//只查询某个id
     private String phase;//train，test，predict，evaluate
+    private String type;//output、statistics等
 
     private Integer k;//以后可能改
 }
