@@ -139,7 +139,6 @@ public class ModelController {
      */
     @GetMapping("/output")
     @ApiOperation(value = "获得输出")
-    @ApiImplicitParam(paramType = "body", value = "OutputSearchVO", required = true, dataTypeClass = OutputSearchVO.class)
     //加@Valid！，即使databinder弄了！
     public Response<?> output(@RequestBody @Validated OutputSearchVO searchVO) {
         try {
