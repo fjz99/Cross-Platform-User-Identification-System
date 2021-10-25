@@ -19,6 +19,11 @@
       "name": "ControllerLogging",
       "type": "java.lang.Boolean",
       "description": "Description for ControllerLogging."
+    },
+    {
+      "name": "datasetPrefix",
+      "type": "java.lang.String",
+      "description": "Description for datasetPrefix."
     }
   ]
 }

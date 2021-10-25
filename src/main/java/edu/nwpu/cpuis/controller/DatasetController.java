@@ -25,7 +25,7 @@ public class DatasetController {
     @Resource
     private DatasetService datasetService;
 
-    @PostMapping("/uploadInputs")
+    @PostMapping(value = "/uploadInputs", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "上传数据集", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, notes = "支持文件夹，压缩包格式[zip]，推荐上传zip格式")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "file", value = "文件", required = true),

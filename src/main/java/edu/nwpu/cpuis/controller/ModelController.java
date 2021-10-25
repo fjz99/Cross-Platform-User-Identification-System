@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -134,7 +135,7 @@ public class ModelController {
     /**
      * 算法名-数据集1-数据集2-train/predict,数据集1和2必须是升序排列
      */
-    @GetMapping("/output")
+    @GetMapping(value = "/output", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "获得输出")
     //加@Valid！，即使databinder弄了！
     public Response<?> output(@RequestBody @Validated OutputSearchVO searchVO) {
@@ -148,7 +149,7 @@ public class ModelController {
     //todo metadata
 
     @GetMapping("/statistics")
-    @ApiOperation(value = "获得元数据")
+    @ApiOperation(value = "获得元数据", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Response<?> metadata(@RequestBody @Validated OutputSearchVO searchVO) {
         try {
             return Response.ok (matrixOutputModelService.getStatistics (searchVO));

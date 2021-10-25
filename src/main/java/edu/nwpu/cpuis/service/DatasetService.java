@@ -94,7 +94,7 @@ public class DatasetService {
         return datasetLocation.getOrDefault (name, null);
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void scanDataset() {
         File path = new File (baseLocation);
         if (!path.exists ()) {

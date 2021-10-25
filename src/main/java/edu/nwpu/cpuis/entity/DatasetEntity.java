@@ -13,5 +13,7 @@ public class DatasetEntity {
     public static class PathEntity {
         private String time;
         private List<String> degree;//经纬度
+        private String location;
+        private String message;
     }
 }
