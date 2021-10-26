@@ -1,5 +1,7 @@
 package edu.nwpu.cpuis.service;
 
+import edu.nwpu.cpuis.entity.DatasetEntity;
+import edu.nwpu.cpuis.utils.DatasetLoader;
 import edu.nwpu.cpuis.utils.compress.CompressService;
 import edu.nwpu.cpuis.utils.compress.CompressUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 import java.io.File;
@@ -34,6 +35,10 @@ public class DatasetService {
     private String tempDir;
     @Resource
     private List<CompressService> serviceList;
+    @Resource
+    private MongoService<DatasetEntity> mongoService;
+    @Resource
+    private DatasetLoader loader;
 
 
     public boolean uploadInput(MultipartFile file, String datasetName) throws IOException {
@@ -94,7 +99,7 @@ public class DatasetService {
         return datasetLocation.getOrDefault (name, null);
     }
 
-//    @PostConstruct
+    //    @PostConstruct
     public void scanDataset() {
         File path = new File (baseLocation);
         if (!path.exists ()) {
@@ -105,5 +110,20 @@ public class DatasetService {
                 datasetLocation.put (file.getName (), file.getPath ());
         }
         log.info ("auto load datasets {}", datasetLocation.entrySet ());
+    }
+
+    public boolean checkDatasetExists(String name) {
+        return getDatasetLocation (name) != null;
+    }
+
+    public List<DatasetEntity> getUserTrace(String id, String datasetName) {
+        final String name = loader.generateUserTraceDataCollectionName (datasetName);
+        if (!mongoService.collectionExists (name)) {
+            return null;
+        } else if (id != null) {
+            return Collections.singletonList (mongoService.selectById (id, DatasetEntity.class, name));
+        } else {
+            return mongoService.selectAll (name, DatasetEntity.class);
+        }
     }
 }

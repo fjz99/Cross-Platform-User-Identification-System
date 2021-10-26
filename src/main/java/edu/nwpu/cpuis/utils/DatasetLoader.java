@@ -35,13 +35,15 @@ public class DatasetLoader {
      * @param path 目录
      */
     public void loadDataset(String path, String datasetName) {
-        final String collectionName = DATASET_PREFIX + datasetName;
+        final String collectionName = generateUserTraceDataCollectionName (datasetName);
         if (replace) {
             log.warn ("replace dataset {}", datasetName);
             mongoService.deleteCollection (collectionName);
         }
         if (!mongoService.collectionExists (collectionName)) {
             mongoService.createCollection (collectionName);
+        } else {
+            return;
         }
         File file = new File (path);
         if (!file.exists ()) {
@@ -83,5 +85,9 @@ public class DatasetLoader {
         if (StringUtils.contains (s, '\'')) {
             return s.substring (s.indexOf ('\'') + 1, s.lastIndexOf ('\''));
         } else return "";
+    }
+
+    public String generateUserTraceDataCollectionName(String datasetName) {
+        return DATASET_PREFIX + datasetName;
     }
 }

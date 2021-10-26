@@ -86,4 +86,22 @@ class PythonUtilsTest {
         System.out.println (modelDefinition);
     }
 
+    @Test
+    public void runCmdTest() {
+        Map<String, Object> args = new HashMap<> ();
+        args.put ("dirs", new ArrayList<String> () {{
+            add ("E:/inputs/fb");
+            add ("E:/inputs/fs");
+        }});
+        List<String> names = new ArrayList<> ();
+        names.add ("fb");
+        names.add ("fs");
+        args.put ("k", "10");
+        PythonUtils.ProcessWrapperTrain demo = PythonUtils.runScript ("hash", "MECS-SDA.py", args, names);
+        while (demo.getState () != PythonUtils.State.SUCCESSFULLY_STOPPED) ;
+        System.out.println (demo.getPercentage ());
+        System.out.println (demo.getState ());
+        System.out.println (demo.getOutput ());
+    }
+
 }

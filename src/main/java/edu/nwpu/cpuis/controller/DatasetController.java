@@ -1,5 +1,6 @@
 package edu.nwpu.cpuis.controller;
 
+import edu.nwpu.cpuis.entity.DatasetEntity;
 import edu.nwpu.cpuis.entity.Response;
 import edu.nwpu.cpuis.service.DatasetService;
 import io.swagger.annotations.Api;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author fujiazheng
@@ -42,5 +45,22 @@ public class DatasetController {
     @ApiOperation(value = "获得所有数据集")
     public Response<?> all() {
         return Response.ok (datasetService.getDatasetLocation ().keySet ());
+    }
+
+    @GetMapping({"/trace/{dataset}/{user}", "/trace/{dataset}/"})
+    @ApiOperation(value = "获得某个用户的轨迹", notes = "不输入用户的话，会返回所有数据，但是文件很大大概2-5mb的JSON文件，这个接口可以用于数据集下载")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "dataset", value = "数据集名称", required = true),
+            @ApiImplicitParam(paramType = "path", name = "user", value = "用户id")
+    })
+    public Response<?> getTrace(@PathVariable @NotNull String dataset,
+                                @PathVariable(required = false) String user) {
+        if (!datasetService.checkDatasetExists (dataset)) {
+            return Response.fail (String.format ("数据集%s不存在", dataset));
+        }
+        List<DatasetEntity> userTrace = datasetService.getUserTrace (user, dataset);
+        if (userTrace == null || userTrace.size () == 0) {
+            return Response.ok ("用户不存在");
+        } else return Response.ok (userTrace);
     }
 }

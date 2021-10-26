@@ -16,6 +16,9 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -23,7 +26,7 @@ import java.util.*;
  */
 @Component
 @Slf4j
-@SuppressWarnings ({"rawtypes","unchecked"})
+@SuppressWarnings({"rawtypes", "unchecked"})
 public final class PythonUtils implements ApplicationContextAware {
     public static final String OUTPUT_TYPE = "output";
     public static final String METADATA_TYPE = "metadata";
@@ -268,6 +271,9 @@ public final class PythonUtils implements ApplicationContextAware {
 
         private void saveStatisticsToMongoDB(String key, Output output) {
             Map<String, Object> statistics = new HashMap<> ();
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern ("yyyy-MM-dd HH:mm:ss");
+            String format = dateTimeFormatter.format (LocalDateTime.now (ZoneOffset.ofHours (8)));
+            statistics.put ("trainTimeStamp", format);
             statistics.put ("time", output.getTime ());
             statistics.putAll (output.getOther ());
             mapMongoService.insert (statistics, key);

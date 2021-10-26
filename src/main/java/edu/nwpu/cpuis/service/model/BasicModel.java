@@ -39,10 +39,11 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
     /**
      * @param datasets 文件夹，2个
      * @param name
+     * @param args     其他元数据，比如k等
      * @return
      */
     @Override
-    public boolean train(List<String> datasets, String name) {
+    public boolean train(List<String> datasets, String name, Map<String, String> args) {
         PythonUtils.ProcessWrapper process = PythonUtils.getTrainProcess (name);
         Assert.isTrue (datasets.size () == 2, "目前只支持2个数据集输入");
         if (process == null) {
@@ -53,6 +54,7 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
                 out.add (datasetService.getDatasetLocation (s));
             }
             map.put (datasetKey, out);
+//            map.putAll (args);//会覆盖
             PythonUtils.runScript (name, singleModel.getTrainSource (), map, datasets);
             return true;
         } else {

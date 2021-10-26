@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotBlank;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author fujiazheng
@@ -94,10 +96,10 @@ public class ModelController {
     }
 
     @GetMapping("/{name}/train")
-    @ApiOperation(value = "模型训练", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字")
+    @ApiOperation(value = "模型训练", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字;k默认为5")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "name", value = "算法名称", required = true, dataTypeClass = String.class),
-            @ApiImplicitParam(paramType = "query", name = "dataset", value = "数据集名称", required = true, dataTypeClass = List.class)
+            @ApiImplicitParam(paramType = "query", name = "dataset", value = "数据集名称", required = true, dataTypeClass = List.class),
     })
     public Response<?> train(@PathVariable @NotBlank String name,
                              @RequestParam List<String> dataset) {
@@ -111,7 +113,8 @@ public class ModelController {
         }
         if (fileUploadService.getDatasetLocation (dataset.get (0)) != null
                 && fileUploadService.getDatasetLocation (dataset.get (1)) != null) {
-            basicModel.train (dataset, name);//模型名字
+            Map<String, String> args = new HashMap<> ();
+            basicModel.train (dataset, name, args);//模型名字
             return Response.ok ("训练开始");
         } else {
             log.error ("dataset input err {}", dataset);
@@ -140,19 +143,11 @@ public class ModelController {
     //加@Valid！，即使databinder弄了！
     public Response<?> output(@RequestBody @Validated OutputSearchVO searchVO) {
         try {
-            return Response.ok (matrixOutputModelService.getOutput (searchVO));
-        } catch (Exception e) {
-            e.printStackTrace ();
-            return Response.fail ("err " + e.getMessage ());
-        }
-    }
-    //todo metadata
-
-    @GetMapping("/statistics")
-    @ApiOperation(value = "获得元数据", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Response<?> metadata(@RequestBody @Validated OutputSearchVO searchVO) {
-        try {
-            return Response.ok (matrixOutputModelService.getStatistics (searchVO));
+            if (searchVO.getType ().equals ("statistics")) {
+                return Response.ok (matrixOutputModelService.getStatistics (searchVO, false));
+            } else {
+                return Response.ok (matrixOutputModelService.getOutput (searchVO));
+            }
         } catch (Exception e) {
             e.printStackTrace ();
             return Response.fail ("err " + e.getMessage ());
