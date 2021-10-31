@@ -97,7 +97,7 @@ class PythonUtilsTest {
         names.add ("fb");
         names.add ("fs");
         args.put ("k", "10");
-        PythonUtils.ProcessWrapperTrain demo = PythonUtils.runScript ("hash", "MECS-SDA.py", args, names);
+        PythonUtils.ProcessWrapperTrain demo = PythonUtils.runScript ("hash", "MECS-SDA2.py", args, names);
         while (demo.getState () != PythonUtils.State.SUCCESSFULLY_STOPPED) ;
         System.out.println (demo.getPercentage ());
         System.out.println (demo.getState ());

@@ -843,7 +843,7 @@ def calDis2(srcpath, dir_list):
 
 
 if __name__ == '__main__':
-    # python .\MECS-SDA.py --dirs=[E:/inputs/Facebook,E:/inputs/Foursquare]
+    # python .\MECS-SDA2.py --dirs=[E:/inputs/Facebook,E:/inputs/Foursquare]
     dirs, k = None, None
     opts, args = getopt.getopt(sys.argv[1:], '', ['dirs=', 'k='])
     for opt, arg in opts:
