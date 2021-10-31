@@ -7,6 +7,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
+/**
+ * @author fujiazheng
+ */
 @Aspect
 @Slf4j
 public class ControllerLoggingAspect {

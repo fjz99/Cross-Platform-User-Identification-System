@@ -5,10 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 //这个仅仅是输出的信息
+/**
+ * @author fujiazheng
+ */
 @Data
 @Builder
 @NoArgsConstructor

@@ -1,6 +1,8 @@
 package edu.nwpu.cpuis.utils;
 
-
+/**
+ * @author fujiazheng
+ */
 public final class ModelKeyGenerator {
     /**
      * @param phase 即predict、train、test等

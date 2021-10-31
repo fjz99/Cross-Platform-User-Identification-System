@@ -4,6 +4,9 @@ import edu.nwpu.cpuis.service.DatasetService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author fujiazheng
+ */
 @Component
 @Slf4j
 public class ApplicationInitializer {
