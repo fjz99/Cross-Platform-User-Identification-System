@@ -15,32 +15,5 @@ class MatrixOutputModelServiceTest {
 
     @Test
     void getOutput() {
-        OutputSearchVO vo = OutputSearchVO.builder ()
-                .dataset (new String[]{"fb", "fs"})
-                .algoName ("hash")
-                .phase ("train")
-                .build ();
-        System.out.println (service.getOutput (vo));
-        vo = OutputSearchVO.builder ()
-                .dataset (new String[]{"fb", "fs"})
-                .algoName ("hash")
-                .phase ("train")
-                .id (1)
-                .build ();
-        System.out.println (service.getOutput (vo));
-        vo = OutputSearchVO.builder ()
-                .dataset (new String[]{"fb", "fs"})
-                .algoName ("hash")
-                .phase ("train")
-                .range (new Integer[]{3, 22})
-                .build ();
-        System.out.println (service.getOutput (vo));
-        vo = OutputSearchVO.builder ()
-                .dataset (new String[]{"fb", "fs"})
-                .algoName ("hash")
-                .phase ("train")
-                .k (1)
-                .build ();
-        System.out.println (service.getOutput (vo));
     }
 }

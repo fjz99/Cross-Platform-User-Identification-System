@@ -169,12 +169,22 @@ public final class PythonUtils implements ApplicationContextAware {
         @Override
         protected void cleanupLastOutput() {
             //删除上次的输出
-            key = ModelKeyGenerator.generateKey (dataset, algoName, phase, METADATA_TYPE);
-            mongoService.deleteCollection (key);
+//            key = ModelKeyGenerator.generateKey (dataset, algoName, phase, METADATA_TYPE);
+//            mongoService.deleteCollection (key);
+
             key = ModelKeyGenerator.generateKey (dataset, algoName, phase, OUTPUT_TYPE);
             mongoService.deleteCollection (key);
+            mongoService.createCollection (key);
+            mongoService.createIndex (key, "userName", false, true);
+            mongoService.createTextIndex (key, "userName", false);
+
+            final String key = getReversedKey (OUTPUT_TYPE);
             mongoService.deleteCollection (getReversedKey (OUTPUT_TYPE));
-            mongoService.deleteCollection (getReversedKey (METADATA_TYPE));
+            mongoService.createCollection (key);
+            mongoService.createIndex (key, "userName", false, true);
+            mongoService.createTextIndex (key, "userName", false);
+
+//            mongoService.deleteCollection (getReversedKey (METADATA_TYPE));
             log.info ("cleanup output done");
         }
 
@@ -249,11 +259,11 @@ public final class PythonUtils implements ApplicationContextAware {
                 final List<List<String>> v = (List<List<String>>) stringObjectEntry.getValue ();
                 final String key = ModelKeyGenerator.generateKey (dataset, algoName, phase, OUTPUT_TYPE);
                 MongoOutputEntity mongoOutputEntity = new MongoOutputEntity ();
-                mongoOutputEntity.setId (Integer.parseInt (k));
+                mongoOutputEntity.setUserName (k);
                 mongoOutputEntity.setOthers (new ArrayList<> ());
                 for (List<String> x : v) {
                     MongoOutputEntity.OtherUser otherUser = MongoOutputEntity.OtherUser.builder ()
-                            .id (Integer.parseInt (x.get (0)))
+                            .userName (x.get (0))
                             .similarity (Double.parseDouble (x.get (1)))
                             .build ();
                     mongoOutputEntity.getOthers ().add (otherUser);
@@ -287,17 +297,17 @@ public final class PythonUtils implements ApplicationContextAware {
                 for (Map.Entry<String, Object> stringObjectEntry : map.entrySet ()) {
                     final String k = stringObjectEntry.getKey ();
                     final List<List<String>> v = (List<List<String>>) stringObjectEntry.getValue ();
-                    final Integer thisKey = Integer.valueOf (k);
+                    final String thisKey = k;
                     for (List<String> list : v) {
                         String anotherKey = list.get (0);
                         if (!result.containsKey (anotherKey)) {
                             MongoOutputEntity mongoOutputEntity = new MongoOutputEntity ();
-                            mongoOutputEntity.setId (Integer.parseInt (anotherKey));
+                            mongoOutputEntity.setUserName (anotherKey);
                             mongoOutputEntity.setOthers (new ArrayList<> ());
                             result.put (anotherKey, mongoOutputEntity);
                         }
                         MongoOutputEntity.OtherUser build = MongoOutputEntity.OtherUser.builder ()
-                                .id (thisKey).similarity (Double.valueOf (list.get (1))).build ();
+                                .userName (thisKey).similarity (Double.valueOf (list.get (1))).build ();
                         result.get (anotherKey).getOthers ().add (build);
                     }
                 }

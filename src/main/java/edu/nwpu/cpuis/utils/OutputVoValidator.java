@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
@@ -47,14 +48,6 @@ public class OutputVoValidator implements Validator {
         }
         //page不校验
         //id and range
-        if (searchVO.getRange () != null) {
-            if (searchVO.getRange ().length != 2) {
-                errors.rejectValue ("range", "0", "range错误");
-            }
-            if (searchVO.getId () != null) {
-                errors.rejectValue ("range", "0", "range和id不可以同时存在");
-            }
-        }
         Pattern pattern = Pattern.compile ("train|test|predict|evaluate");
         if (searchVO.getPhase () == null || !pattern.matcher (searchVO.getPhase ()).matches ()) {
             errors.rejectValue ("range", "0", "phase输入错误，取值为train|test|predict|evaluate");
@@ -63,6 +56,14 @@ public class OutputVoValidator implements Validator {
         Pattern types = Pattern.compile ("output|statistics");
         if (searchVO.getType () == null || !types.matcher (searchVO.getType ()).matches ()) {
             errors.rejectValue ("range", "0", "type输入错误，取值为output|statistics");
+        }
+        //search type
+        types = Pattern.compile ("fulltext|regex|normal|");
+        if (searchVO.getSearchType () == null || Objects.equals (searchVO.getSearchType (), "")) {
+            return;
+        }
+        if (!types.matcher (searchVO.getSearchType ()).matches ()) {
+            errors.rejectValue ("searchType", "0", "search type输入错误，取值为output|statistics");
         }
     }
 }

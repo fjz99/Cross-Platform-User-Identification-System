@@ -1,10 +1,10 @@
-#encoding:utf-8
+# #encoding:utf-8
 import os
 import re
 import time
 import math
-import matplotlib.pyplot as plt # 
-import numpy as np 
+import matplotlib.pyplot as plt #
+import numpy as np
 import heapq
 import operator
 from scipy.stats import norm
@@ -19,7 +19,7 @@ import getopt
 '''
  The copyright is reserved by Wenqiang He.
 '''
-UR=[] #the user-record list, the ith row is the ith user and the jth column represents the jth record of this user. 
+UR=[] #the user-record list, the ith row is the ith user and the jth column represents the jth record of this user.
 Nt=[]   # a list which records the number of records of each user
 users={} #a dictionary that maps the name of the user(username) to its sequence number(uid) which points to the row of UR
 buckets={} #a dictionary which maps the bucket ID(bnum) to the bucket's sequence number(bid) in Buckets
@@ -47,7 +47,7 @@ PK=10  #the users that with points less than PK is filtered
 S=[] #to record the value of 2**(-n)
 #Sb=[]
 Sb=[4.0,0.125,0.125,0.125,0,0.125,0.125,0.125,0] #the spatial attention weight
-G={} #the key is gcode^g and the value is its number of ones 
+G={} #the key is gcode^g and the value is its number of ones
 Mcset=[] #each element is a trajectory vector dictionary for a user whose key is the bucket id and whose value is the result of geocodes
 mcset={} #a dictionary that maps each user to its id in Mcset
 TD=[] #the temporal attention weight
@@ -69,10 +69,10 @@ def readUR(srcpath):
 
     _print('10')
 
-    if not os.path.exists(srcpath):			
-        print("\n****Error:srcpath doesn't exists, you need a srcpath")			  
-        raise IOError
-        return False
+    # if not os.path.exists(srcpath):
+    #     _print("\n****Error:srcpath doesn't exists, you need a srcpath")
+    #     raise IOError
+    #     return False
 
     dir_list=os.listdir(srcpath)
     dir_list.sort()
@@ -82,15 +82,15 @@ def readUR(srcpath):
     i=0
     for filename in dir_list:
         # *************************************修改
-        # print("the processed user is: ", filename)
+        # _print("the processed user is: ", filename)
         users[filename]=i
         infile=os.path.join(srcpath+'/',filename)
         records=readData(infile)
         UR.append(records)
         Nt.append(len(records))
-        #print("the number of the records is: ",len(records))
+        #_print("the number of the records is: ",len(records))
         i+=1
-    
+
     #return True
     return dir_list
 
@@ -115,7 +115,7 @@ def extract(line):
     for z in line:
         if z == '@':
             j=line.index(z)
-            
+
         if z == '$':
             i=line.index(z)
             timcode=int(line[j+1:j+1+Ti],2)
@@ -136,13 +136,13 @@ def bin_to_hex(bnum):
 
 #preprocess: to filter users whose record  number is small.
 def preprocess(srcpath,dlist,tle):
-    flist=[] #to record the preprocessed users 
+    flist=[] #to record the preprocessed users
     Template=np.load(srcpath+"_template.npy",allow_pickle = True).item()
     nuser=0 #number of users
     nfb=0 #number of users from one social site
     ntw=0 #number of users from another social site
     fbn=0 #number of true positives
-    
+
     for filename in dlist:
         infile=os.path.join(srcpath+'/',filename)
         eachfile=open(infile,'r')
@@ -158,54 +158,54 @@ def preprocess(srcpath,dlist,tle):
         else:
             ntw+=1
             tname=tle+fid
-            flag=tname in flist 
+            flag=tname in flist
             if flag: # if its true match exists
                 if Template[filename]==tname:
-                    fbn+=1 
+                    fbn+=1
                 if Template[tname]==filename:
                     fbn+=1
 
-                
-    
+
+
     Para.append(nuser)
     Para.append(fbn)
     Para.append(nfb)
     Para.append(ntw)
-    
+
     #to initialize some parameters
     for i in range(N+1):
-       
+
         if i<=N:
             TD.append(1/(i+e))
-        
+
 
     return flist
-    
-    
-    
-        
+
+
+
+
 #construct Buckets based on UR
 def buildBuckets(dir_list):
 
     _print("40")
 
     #*************************修改****************************
-    #print("**********************************The buckets start building!**********************************")
+    #_print("**********************************The buckets start building!**********************************")
     for filename in dir_list:
-        #print("the processed user is: ", filename)
+        #_print("the processed user is: ", filename)
         uid=users[filename]  #to get the uid of the user
         records=UR[uid] # to get the records of this user
         i=0   #to record the sequence number of the record
         Mset={} #to construct the trajectory vector of each user
         kid=len(mcset)
         mcset[filename]=kid
-        
+
 
         for record in records:
             bnum=record[0]
             flag=bnum in buckets #judge whether the bucket exists
             bn=len(Bt)
-            
+
             if flag:
                 bid=buckets[bnum]
                 flag2=filename in Buckets[bid] #judge whether the user exists
@@ -240,15 +240,15 @@ def buildBuckets(dir_list):
                 #g.append(1)
                 Mset[bnum]=g
                 # ******************************************修改
-                # print("the built bucket is: ",bnum)
+                # _print("the built bucket is: ",bnum)
 
             i+=1
 
         Mcset.append(Mset)
-                
+
 
     #UR.clear()
-    #print("UR IS:",len(UR))
+    #_print("UR IS:",len(UR))
     #gc.collect()
     return True
 
@@ -300,12 +300,12 @@ def findCan():
                 addcandidate(key,candidates,similarity)
             else:
                 buildCanset(key,candidates,similarity)
-        
-            
-        
+
+
+
         # *******************************************修改
-        # print("The No.",bid," bucket has been searched and So are its neighbors!")
-  
+        # _print("The No.",bid," bucket has been searched and So are its neighbors!")
+
     return True
 
 ##find candidates of each user in this bucket and calculate the statistical similarities
@@ -385,27 +385,27 @@ def findCK():
         b=sorted(cset.items(),key = operator.itemgetter(1),reverse = True) #ranked by the similarity
 
         n=0
-      
+
         for pair in b:
             if n >= CK:
                 del cset[pair[0]]
             n+=1
 
-        
+
     return sum(Ncan)/(Para[2]*Para[3]*2)#len(Ncan) # the average number of candidates before filtering
-        
+
 
 #find the final nearest K neighbors of each user
 def findFinalCan():
     names=list(csets.keys())
     names.sort()
-        
+
     for name in names:
         uid=csets[name]
         keys=list(Cset[uid].keys()) #get the list of candidates
         keys.sort()
         searchFCan(keys,name,uid)
-        print("The user: ",name," has find its final candidates!")
+        _print("The user: ",name," has find its final candidates!")
 
     return True
 
@@ -423,21 +423,21 @@ def searchFCan(keys,name,uid):
             continue
         sim=0
         kmid=mcset[key]
-        
+
         for vec in vectors:#for each bucket of the target user
             vector=Mcset[nid][vec] #the user's vector for this bucket
-            rsim=calKDE(vector,kmid) 
+            rsim=calKDE(vector,kmid)
             sim+=rsim
 
         sim/=n
         fcset[key]=sim
-    
+
     findK(fcset,K)
     m=len(fcsets)
     fcsets[name]=m
     Fcset.append(fcset)
 
-            
+
 #to calcualte the KDE
 def calKDE(vector,uid):
     rsim=0
@@ -454,7 +454,7 @@ def calKDE(vector,uid):
     #records=UR[uid]
     ts=1
     for buc in bucs: #for each record of the candidate user that falls in this bucket
-       
+
         vec=Mcset[uid][buc]
         t=vec[2]
         s3=countOne(tcode^t)
@@ -469,9 +469,9 @@ def calKDE(vector,uid):
         if s2==8:
             continue
         n+=1
-        s1=gcode^g 
+        s1=gcode^g
         rsim+=Sb[s2]*(ss-s1)*(td*vec[3])**0.5
- 
+
     return rsim #rsim*n/len(bucs)#rsim/n
 
 
@@ -480,7 +480,7 @@ def countOne(n):
     if n in G:
         return G[n]
 
-    count = 0  
+    count = 0
 
     while n > 0:
 
@@ -492,19 +492,19 @@ def countOne(n):
 
     G[n]=count
     return count
-      
-            
-    
+
+
+
 def findK(fcset,L):
- 
+
     b=sorted(fcset.items(),key = operator.itemgetter(1),reverse = True)
     n=0
     for pair in b:
-       if n > L or pair[1] <= 0:
+        if n > L or pair[1] <= 0:
 
-           del fcset[pair[0]]
+            del fcset[pair[0]]
 
-       n+=1
+        n+=1
 
 
 '''
@@ -525,7 +525,7 @@ def encode1(lat, lon, precision=0.001):
     c_range1 = 1
     c_range2 = 1
     while (c_range1) > precision:
-        # print(code, lat_range, lon_range, geohash)
+        # _print(code, lat_range, lon_range, geohash)
         j += 1
 
         lon_mid = sum(lon_range) / 2
@@ -548,14 +548,14 @@ def encode1(lat, lon, precision=0.001):
             lat_range[0] = lat_mid
         c_range2 = lat_range[1]-lat_range[0]
     i = 0
-    #print(len(codew),len(codej))
+    #_print(len(codew),len(codej))
     while i<len(codej) or i<len(codew):
         if i< len(codej):
             code.append(codej[i])
         if i< len(codew):
             code.append(codew[i])
         i+=1
-    #print(len(code))
+    #_print(len(code))
     return code
 #时间编码（月、日、时、分）
 def encode2(time, precision=1):
@@ -613,7 +613,7 @@ def encode_time(time):
     time_month = time%100
     time =int(time/100)
     time_year =time
-    # print(time_year,time_month,time_day,time_hour,time_minutes)
+    # _print(time_year,time_month,time_day,time_hour,time_minutes)
     for c in encode3(time_year - 2000):
         code.append(c)
     for c in encode2(time_month):
@@ -624,7 +624,7 @@ def encode_time(time):
         code.append(c)
     for c in encode2(time_minutes):
         code.append(c)
-    # print(len(code))
+    # _print(len(code))
     return code
 #哈希编码
 def Hash_code(filename):
@@ -659,7 +659,7 @@ def Hash_code(filename):
     df["t_code"] = '@'+df['t_code']
     df['g_code'] =gis_code
     df["g_code"] = '$'+df['g_code']
-    # print(df)
+    # _print(df)
     df.to_csv(f, index=False,header=None,sep=" ")
 
 #哈希编码函数接口
@@ -683,9 +683,16 @@ def creatDF(dirs,c_filename ,c_array):
     df=df.append(pd.DataFrame({base1: c_filename, base2: [c_array]}))
 
 def writetofile(df):
-    df.to_csv("./1.txt")
+    df.to_csv("./1.txt",index_label=None)
 
-#            修改用户名（只取数据集名称）
+    '''
+    df中的列表写入csv中后，如果需要再次读取时，会以字符串的格式读取，需要
+    from ast import literal_eval
+    df[] = df[].apply(literal_eval)
+    将字符串转化成列表
+    '''
+
+    # 修改用户名（只取数据集名称）
 def change1(filename , uset):
     filename = re.sub("\D", "", filename)
     # array = np.array(uset[:5])
@@ -695,9 +702,35 @@ def change1(filename , uset):
         x[i][0] = re.sub("\D", "", x[i][0])
     return filename , x
 
+#  number_name的字典，用来映射
+def To_dict():
+    data = []
+    with open("number_name.txt", "r", encoding="utf-8") as f_input:
+        for line in f_input:
+            data.append(list(line.strip().split('#')))
+    dataset=pd.DataFrame(data,columns=["number","name","k"])
+    d1 = dataset[["number","name"]].set_index("number").to_dict()["name"]
+    return d1
+#
+# # dict_name为number_name的字典
+dict_name = To_dict()
+
+
+def change1(filename , uset):
+    filename = re.sub("\D", "", filename)
+    filename = str(dict_name.get(filename))
+    # filename = filename + "_" + str(dict_name.get(filename))
+    # array = np.array(uset[:5])
+    array = np.array(uset)
+    x = np.matrix.tolist(array)
+    for i in range(len(x)):
+        x[i][0] = re.sub("\D", "", x[i][0])
+        x[i][0] = str(dict_name.get(x[i][0]))
+        # x[i][0] = x[i][0] + "_" + str(dict_name.get(x[i][0]))
+    return filename , x
 
 #***以jason格式打印（强迫症版）
-def printoutcome(path,time):
+def _printoutcome(path,time):
     srcpath = path[-4:]  #取路径末尾的文件名
     global df
     #DataFrame 转化成字典
@@ -712,16 +745,16 @@ def printoutcome(path,time):
         },
         'sucess':'True'
     }
-    print('{')
+    _print('{')
     for key in data:
         if key == "output":
-            print('"' + str(key) + '": ' + "{")
+            _print('"' + str(key) + '": ' + "{")
             for key1 in data.get('output'):
-                print('"' + str(key1) + '": ', data.get('output')[key1])
-            print("}")
+                _print('"' + str(key1) + '": ', data.get('output')[key1])
+            _print("}")
         else:
-            print('"' + str(key) + '": ' + str(data[key]))
-    print('}')
+            _print('"' + str(key) + '": ' + str(data[key]))
+    _print('}')
 
 #***以jason格式打印
 def to_jason(path,dirs):
@@ -770,7 +803,7 @@ def to_template(srcpath):
             template.update({i:j})
     template = sorted(template.items(), key=lambda d: d[0], reverse=False)
     template = dict(template)
-    # print(template)
+    # _print(template)
     np.save(srcpath+'_template.npy',template)
 
 
@@ -792,12 +825,12 @@ def calDis(srcpath,dir_list,dirs):
     fp=0 #the number of false positive
     ncan=[] #to record the users that have no matches
     ican=[] #the index of matched candidate for each user pair to calculate the AUC
-    Ncan=[]  #to record the candidate number of each user  
+    Ncan=[]  #to record the candidate number of each user
     Unum=[]   #to record the number of each candidate number value
 
     for filename in dir_list:
         #****************************修改***********************
-        # print("the processed user is: ", filename)
+        # _print("the processed user is: ", filename)
         flag=filename in csets
         if not flag:
             nm+=1
@@ -810,7 +843,7 @@ def calDis(srcpath,dir_list,dirs):
         nt=len(uset)
 
 
-        # print("the top k candidates : " , uset[:5])
+        # _print("the top k candidates : " , uset[:5])
 
         '''
         新函数切入点
@@ -821,12 +854,12 @@ def calDis(srcpath,dir_list,dirs):
             creatDF(dirs,c_filename, xlist)
 
         #*******************修改***********************************
-        # print("the number of candidates of this user is: ", nt)
+        # _print("the number of candidates of this user is: ", nt)
 
 
         Users.append(filename)
         Ncan.append(nt)
-        
+
         target=Template[filename]
 
         flag=target[3:]==filename[3:]
@@ -841,7 +874,7 @@ def calDis(srcpath,dir_list,dirs):
 
                 key=pair[0]
 
-                if key==target: 
+                if key==target:
 
                     s+=1
 
@@ -849,7 +882,7 @@ def calDis(srcpath,dir_list,dirs):
 
                     flag2=True
 
-                    # print("the matched is:",pair,"\nand its rank is:",it)
+                    # _print("the matched is:",pair,"\nand its rank is:",it)
 
                     break
 
@@ -858,68 +891,68 @@ def calDis(srcpath,dir_list,dirs):
 
 
             if not flag2:
-                # print("the user ",filename," failed to find its match!")
+                # _print("the user ",filename," failed to find its match!")
                 fn+=1
 
         else:
             for pair in uset:
                 key=pair[0]
                 if key == target:
-                   fp+=1
+                    fp+=1
 
     # writetofile(df)
     _print("100")
-    print('done')
-    # print(df)
-    sncan=sum(Ncan)         
+    _print('done')
+    # _print(df)
+    sncan=sum(Ncan)
     ave=sncan/len(Ncan)
-    # print("the mean value of candidate numbers is: ", ave)
+    # _print("the mean value of candidate numbers is: ", ave)
     mnum=max(Ncan)
-    # print("the max value of candidate numbers is: ", mnum)
+    # _print("the max value of candidate numbers is: ", mnum)
     for i in range(mnum+1):
         k=0
         for j in range(len(Ncan)):
             if Ncan[j] == i:
                 k+=1
-            
+
 
         Unum.append(k)#to get the distribution of candidate numbers
 
-    mode=Unum.index(max(Unum)) # the mode of the list 
+    mode=Unum.index(max(Unum)) # the mode of the list
     nican=len(ican)
     icancounts=np.bincount(ican)
     ican_mode=np.argmax(icancounts)
 
 
     '''
-    print("the mode of candidate numbers is: ", mode,"\n and the number of users with the mode candidate number is: ",Unum[mode])
-    print("the nm is: ", nm,"\nthe users with no candidate set are:",ncan)
-    print("the number of 0 is: ", Unum[0])
-    print("the total user number, the true pair number, and the two platform user numbers are respectively: ", Para)
-    print("the number of users who find their matches is: ", s)
-    print("the average ranking positions of the user pairs is:",np.mean(ican))
-    print("the max ranking position of the user pairs is:",max(ican))
-    print("the median ranking positions of the user pairs is:",np.median(ican))
-    print("the mode ranking positions of the user pairs is:",ican_mode,"\nand the number of matched pairs with the mode ranking position is: ",icancounts[ican_mode]) 
+    _print("the mode of candidate numbers is: ", mode,"\n and the number of users with the mode candidate number is: ",Unum[mode])
+    _print("the nm is: ", nm,"\nthe users with no candidate set are:",ncan)
+    _print("the number of 0 is: ", Unum[0])
+    _print("the total user number, the true pair number, and the two platform user numbers are respectively: ", Para)
+    _print("the number of users who find their matches is: ", s)
+    _print("the average ranking positions of the user pairs is:",np.mean(ican))
+    _print("the max ranking position of the user pairs is:",max(ican))
+    _print("the median ranking positions of the user pairs is:",np.median(ican))
+    _print("the mode ranking positions of the user pairs is:",ican_mode,"\nand the number of matched pairs with the mode ranking position is: ",icancounts[ican_mode])
     '''
 
     '''
-    Num2=np.linspace(1,nican,num=nican)        
-    plt.title("The distribution of the ranking position of the matched candidate for each user pair in their candidate sets ")    
-    plt.scatter(Num2,ican)    
-    plt.xlabel("Sequence number of each user")    
-    plt.ylabel("Ranking position of its matched candidate")    
+    Num2=np.linspace(1,nican,num=nican)
+    plt.title("The distribution of the ranking position of the matched candidate for each user pair in their candidate sets ")
+    plt.scatter(Num2,ican)
+    plt.xlabel("Sequence number of each user")
+    plt.ylabel("Ranking position of its matched candidate")
     plt.show()
     '''
 
     recall=s/(s+fn)
     precision=s/(s+fp)  #the precision
-    # print("the final precision is: ", precision)
+    # _print("the final precision is: ", precision)
     F1=2*recall*precision/(recall+precision)
-    # print("the final F1 score is: ", F1)
+    # _print("the final F1 score is: ", F1)
     accuracy=(s+Para[0]-Para[1]-fp)/Para[0]
-    # print("the final accuracy is: ", accuracy)
-    # print("the bucket number is: ", len(Bt))
+    # _print("the final accuracy is: ", accuracy)
+    # _print("the bucket number is: ", len(Bt))
     ratio=Unum[0]/Para[0]
 
     x = {
@@ -937,7 +970,7 @@ def calDis(srcpath,dir_list,dirs):
     data['other'].update(x)
 
 
-    #print("the ratio of users that have candidates is: ", 1-ratio,"\nthe number of false positives are:",fp)
+    #_print("the ratio of users that have candidates is: ", 1-ratio,"\nthe number of false positives are:",fp)
     return recall,sncan/(Para[2]*Para[3]*2) #sncan/(Para[2]*Para[3]*2) RCA
 
 
@@ -960,30 +993,30 @@ def calDis2(srcpath,dir_list):
     title1=srcpath[:2]
     title2=srcpath[2:4]
     for filename in dir_list:
-        print("the processed user is: ", filename)
+        _print("the processed user is: ", filename)
         uid=fcsets[filename]
         #uset=Fcset[uid] #to get its dictionaries
         uset=sorted(Fcset[uid].items(),key = operator.itemgetter(1),reverse = True)#become a list
         nt=len(uset)
-        
-        print("the number of final candidates of this user is: ", nt)
+
+        _print("the number of final candidates of this user is: ", nt)
         ncan.append(nt)
         target=Template[filename]
 
         flag=target[3:]==filename[3:]
-        
+
         it=0 #the index of the list
-        
+
 
         if flag:#if it is a positive sample
             flag2=False
             for pair in uset:
                 key=pair[0]
-                if key==target: 
+                if key==target:
                     s+=1
                     ican.append(it)
                     flag2=True
-                    print("the matched is:",pair,"\nand its rank is:",it)
+                    _print("the matched is:",pair,"\nand its rank is:",it)
                     output1.write(filename+" "+key+" "+str(pair[1])+" "+str(it)+" "+str(nt)+"\n")
                     break
                 it+=1
@@ -998,7 +1031,7 @@ def calDis2(srcpath,dir_list):
 
                 if key == target:
                     fp+=1
-                    print("the false positive is:",pair,"\nand its rank is:",it)
+                    _print("the false positive is:",pair,"\nand its rank is:",it)
                     output2.write(filename+" "+key+" "+str(pair[1])+" "+str(it)+" "+str(nt)+"\n")
                     ican2.append(it)
                     break
@@ -1009,69 +1042,69 @@ def calDis2(srcpath,dir_list):
     output2.close()
     sncan=sum(ncan)
     ave=sncan/len(ncan)
-    print("the mean value of final candidate numbers is: ", ave)
+    _print("the mean value of final candidate numbers is: ", ave)
     mnum=max(ncan)
-    print("the max value of final candidate numbers is: ", mnum)
+    _print("the max value of final candidate numbers is: ", mnum)
     for i in range(mnum+1):
         k=0
         for j in range(len(ncan)):
             if ncan[j] == i:
                 k+=1
-            
+
 
         unum.append(k)
-    mode=unum.index(max(unum)) # the mode of the list 
-   
+    mode=unum.index(max(unum)) # the mode of the list
+
     #Unum = np.bincount(Ncan)
     #mode=np.argmax(Unum)  #calculate the mode
     nican=len(ican)
     icancounts=np.bincount(ican)
     ican_mode=np.argmax(icancounts)
-    print("the mode of final candidate numbers is: ", mode,"\nand the number of users with the mode candidate number is: ",unum[mode])
-    print("the number of 0 is: ", unum[0])
-    print("the number of users who find their matches in final candidates is: ", s)
-    print("the average ranking positions of the user pairs is:",np.mean(ican))
-    print("the max ranking position of the user pairs is:",max(ican))
-    print("the median ranking positions of the user pairs is:",np.median(ican))
-    print("the mode ranking positions of the user pairs is:",ican_mode,"\nand the number of matched pairs with the mode ranking position is: ",icancounts[ican_mode])
- 
+    _print("the mode of final candidate numbers is: ", mode,"\nand the number of users with the mode candidate number is: ",unum[mode])
+    _print("the number of 0 is: ", unum[0])
+    _print("the number of users who find their matches in final candidates is: ", s)
+    _print("the average ranking positions of the user pairs is:",np.mean(ican))
+    _print("the max ranking position of the user pairs is:",max(ican))
+    _print("the median ranking positions of the user pairs is:",np.median(ican))
+    _print("the mode ranking positions of the user pairs is:",ican_mode,"\nand the number of matched pairs with the mode ranking position is: ",icancounts[ican_mode])
+
     if len(ican2)>0:
-        print("the max ranking position of false positives is:",max(ican2))
-        print("the average ranking positions of false positives is:",np.mean(ican2))
-        print("the median ranking positions of false positives is:",np.median(ican2))
+        _print("the max ranking position of false positives is:",max(ican2))
+        _print("the average ranking positions of false positives is:",np.mean(ican2))
+        _print("the median ranking positions of false positives is:",np.median(ican2))
 
     '''
-    Num2=np.linspace(1,nican,num=nican)        
-    plt.title("The distribution of the ranking position of the matched candidate for each user pair in their candidate sets ")  
-    plt.scatter(Num2,ican)    
-    plt.xlabel("Sequence number of each user")    
-    plt.ylabel("Ranking position of its matched candidate")    
+    Num2=np.linspace(1,nican,num=nican)
+    plt.title("The distribution of the ranking position of the matched candidate for each user pair in their candidate sets ")
+    plt.scatter(Num2,ican)
+    plt.xlabel("Sequence number of each user")
+    plt.ylabel("Ranking position of its matched candidate")
     plt.show()
     '''
 
     precision=s/(s+fp)  #the precision
-    print("the final precision is: ", precision,"\nthe number of false positives are:",fp)
+    _print("the final precision is: ", precision,"\nthe number of false positives are:",fp)
     napcp=Para[2]*Para[3]*2  #num_all_possible_can_pairs
     accuracy=(s+Para[0]-Para[1]-fp)/Para[0]
-    print("the final accuracy is: ", accuracy)
+    _print("the final accuracy is: ", accuracy)
     recall=s/(s+fn)#Para[1]
-    print("the total user number, the true pair number, and the two platform user numbers are respectively: ", Para)
+    _print("the total user number, the true pair number, and the two platform user numbers are respectively: ", Para)
     F1=2*recall*precision/(recall+precision)
-    print("the final F1 score is: ", F1)
-    
+    _print("the final F1 score is: ", F1)
+
     return recall,sncan/napcp#s/(Para[2]*Para[3]*2)
 
 
 
-
+#
 if __name__ == '__main__':
     opts, args = getopt.getopt(sys.argv[1:], '', ['dirs='])
     for opt, arg in opts:
-        # print(opt, arg[1:-1].split(','), file=f)
+        # _print(opt, arg[1:-1].split(','), file=f)
         if opt == '--dirs':
             dirs = arg[1:-1].split(',')
 
-    # dirs=['E:/fb','E:/fs']  #调试用
+    # dirs=['E:/fb_','E:/fs_']  #调试用
 
     tempfile = copy_file(dirs)    #合并dirs所指数据集的文件夹
 
@@ -1090,57 +1123,58 @@ if __name__ == '__main__':
 
         _print("30")
 
-        #print('Congratulations!The user files have been all read!')
+        #_print('Congratulations!The user files have been all read!')
         if (buildBuckets(flist)):
 
             _print("50")
 
-            #print('Congratulations!The bucket files have been all built!')
+            #_print('Congratulations!The bucket files have been all built!')
             if(findCan()):
 
                 _print("70")
 
-                #print('Congratulations!All users have found their candidates!')
+                #_print('Congratulations!All users have found their candidates!')
                 rca=findCK()
                 recall,ratio=calDis(inpath1,flist,dirs) #传dirs只是为了获取数据集名称
                 #把召回率rca和召回率recall添加到data['other']中
                 data['other'].update({'rca':rca ,'recall':recall})
                 #*******************************修改**********************************
-                # print('***************************\nthe rca is:',rca)
-                #print('the recall of this candidate set is: ', recall)
+                # _print('***************************\nthe rca is:',rca)
+                #_print('the recall of this candidate set is: ', recall)
                 time_end = time.time()
                 time = time_end - time_begin
                 #添加到data中  （时间）
                 data['time'] = time
-                # print('***************************\nThe running time is :', time)
-                # print("***************************\nthe k is  = ", 5)
+                # _print('***************************\nThe running time is :', time)
+                # _print("***************************\nthe k is  = ", 5)
 
                 '''
                 新函数切入点
                 '''
                 to_jason(inpath1,dirs)
                 data_json = json.dumps(data, indent=2, sort_keys=True)
-                print(data_json)
+                _print(data_json)
+
                 '''
                 of = int(input("Please input a number:"))
                 if(findFinalCan()):
-                    print('Congratulations!All users have found their final candidates!')
+                    _print('Congratulations!All users have found their final candidates!')
                     recall2,ratio2=calDis2(inpath1,flist)
-                    print('the 2nd recall of this candidate set is: ', recall2,'\nthe ratio of all filtered candidate pairs in all possible candidate pairs is:',ratio2)
+                    _print('the 2nd recall of this candidate set is: ', recall2,'\nthe ratio of all filtered candidate pairs in all possible candidate pairs is:',ratio2)
                     time_end = time.time()
                     time = time_end - time_begin
-                    print('***************************\nThe running time is :', time)
+                    _print('***************************\nThe running time is :', time)
                 else:
-                    print("Warning! \n There are some errors in finding final candidates!\n")
+                    _print("Warning! \n There are some errors in finding final candidates!\n")
                 '''
             else:
-                print("Warning! \n There are some errors in finding candidates!\n")
+                _print("Warning! \n There are some errors in finding candidates!\n")
         else:
-            print("Warning! \n There are some errors in reading buckets!\n")
+            _print("Warning! \n There are some errors in reading buckets!\n")
 
- 
+
     else:
-        print("Warning! \n There are some errors in reading user files!\n")
+        _print("Warning! \n There are some errors in reading user files!\n")
     #删除合并的临时文件夹
     if os.path.exists(tempfile):
         shutil.rmtree(tempfile)

@@ -10,6 +10,7 @@ import org.bson.Document;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -95,6 +96,15 @@ public class MongoService<T> {
             return mongoTemplate.getCollection (collectionName).createIndex (Indexes.ascending (fieldName), options);
         else
             return mongoTemplate.getCollection (collectionName).createIndex (Indexes.descending (fieldName), options);
+    }
+
+    public String createTextIndex(String collectionName, String fieldName, boolean unique) {
+        //配置索引选项
+        IndexOptions options = new IndexOptions ();
+        // 设置为唯一
+        options.unique (unique);
+        //创建按filedName升序排的索引
+        return mongoTemplate.getCollection (collectionName).createIndex (Indexes.text (), options);
     }
 
 
@@ -218,6 +228,36 @@ public class MongoService<T> {
         T byId = mongoTemplate.findById (id, clazz, collectionName);
 //        log.debug ("mongo select {}", byId);
         return byId;
+    }
+
+    public List<T> searchRegex(Class<T> clazz, String collectionName, String regex, Integer currentPage, Integer pageSize) {
+        //设置分页参数
+        Query query = new Query ();
+        //设置分页信息
+        query.limit (pageSize);
+        query.skip (pageSize * (currentPage - 1));
+        query.addCriteria (Criteria.where ("userName").regex (regex));
+        return mongoTemplate.find (query, clazz, collectionName);
+    }
+
+    public List<T> searchNormal(Class<T> clazz, String collectionName, String v, Integer currentPage, Integer pageSize) {
+        //设置分页参数
+        Query query = new Query ();
+        //设置分页信息{
+        query.limit (pageSize);
+        query.skip (pageSize * (currentPage - 1));
+        query.addCriteria (Criteria.where ("userName").is (v));
+        return mongoTemplate.find (query, clazz, collectionName);
+    }
+
+    public List<T> searchFullText(Class<T> clazz, String collectionName, String text, Integer currentPage, Integer pageSize) {
+        //设置分页参数
+        Query query = new Query ();
+        //设置分页信息
+        query.limit (pageSize);
+        query.skip (pageSize * (currentPage - 1));
+        query.addCriteria (TextCriteria.forLanguage ("en").matchingPhrase (text));
+        return mongoTemplate.find (query, clazz, collectionName);
     }
 
     /**

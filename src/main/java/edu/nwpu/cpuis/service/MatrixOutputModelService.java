@@ -31,15 +31,23 @@ public class MatrixOutputModelService extends AbstractModelService {
         log.info ("search for key {}", key);
         final int pageSize = Optional.ofNullable (searchVO.getPageSize ()).orElse (20);
         final int pageNum = Optional.ofNullable (searchVO.getPageNum ()).orElse (1);
-        List<MongoOutputEntity> entities;
-        if (searchVO.getId () == null && searchVO.getRange () == null) {
-            entities = mongoOutputService.selectList (key, MongoOutputEntity.class, pageNum, pageSize);
-        } else if (searchVO.getId () != null) {
-            entities = mongoOutputService.selectRange (key, MongoOutputEntity.class, 1, 1
-                    , searchVO.getId (), searchVO.getId ());
-        } else {
-            entities = mongoOutputService.selectRange (key, MongoOutputEntity.class, pageNum, pageSize
-                    , searchVO.getRange ()[0], searchVO.getRange ()[1]);
+        List<MongoOutputEntity> entities = null;
+        if (searchVO.getSearchType () == null || searchVO.getSearchType ().equals ("")) {
+            searchVO.setSearchType ("fulltext");
+        }
+        switch (searchVO.getSearchType ()) {
+            case "fulltext": {
+                entities = mongoOutputService.searchFullText (MongoOutputEntity.class, key, searchVO.getSearchText (), pageNum, pageSize);
+                break;
+            }
+            case "regex": {
+                entities = mongoOutputService.searchRegex (MongoOutputEntity.class, key, searchVO.getSearchText (), pageNum, pageSize);
+                break;
+            }
+            case "normal": {
+                entities = mongoOutputService.searchNormal (MongoOutputEntity.class, key, searchVO.getSearchText (), pageNum, pageSize);
+                break;
+            }
         }
         entities = preprocessTopK (entities, searchVO.getK ());
         return entities;

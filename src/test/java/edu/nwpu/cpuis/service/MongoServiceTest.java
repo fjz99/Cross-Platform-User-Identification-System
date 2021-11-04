@@ -7,8 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class MongoServiceTest {
     String name = "hash-fb-fs-train-output";
@@ -22,20 +20,22 @@ class MongoServiceTest {
             service.deleteCollection (name);
         }
         service.createCollection (name);
+        service.createTextIndex (name, "userName", false);
+        service.createIndex (name, "userName", false, true);
         MongoOutputEntity info = new MongoOutputEntity ();
-        info.setId (1);
+        info.setUserName ("fjzfjzfjzfjzfjzfjzfjz");
         info.setOthers (new ArrayList<MongoOutputEntity.OtherUser> () {
             {
-                add (MongoOutputEntity.OtherUser.builder ().id (2).similarity (0.5).build ());
-                add (MongoOutputEntity.OtherUser.builder ().id (3).similarity (0.6).build ());
+                add (MongoOutputEntity.OtherUser.builder ().userName ("fjz").similarity (0.5).build ());
+                add (MongoOutputEntity.OtherUser.builder ().userName ("zjf").similarity (0.6).build ());
             }
         });
         service.insert (info, name);
-        info.setId (6);
+        info.setUserName ("zryzryzryzryzryzryzryzryzry");
         info.setOthers (new ArrayList<MongoOutputEntity.OtherUser> () {
             {
-                add (MongoOutputEntity.OtherUser.builder ().id (7).similarity (0.5).build ());
-                add (MongoOutputEntity.OtherUser.builder ().id (8).similarity (0.6).build ());
+                add (MongoOutputEntity.OtherUser.builder ().userName ("zry").similarity (0.5).build ());
+                add (MongoOutputEntity.OtherUser.builder ().userName ("fjz").similarity (0.6).build ());
             }
         });
         service.insert (info, name);
@@ -48,4 +48,16 @@ class MongoServiceTest {
         System.out.println (service.selectList (name, MongoOutputEntity.class, 0, 10));
         System.out.println (service.selectRange (name, MongoOutputEntity.class, 0, 20, 3, 22));
     }
+
+    @Test
+    public void search2() {
+        System.out.println (service.searchRegex (MongoOutputEntity.class, name, "\\w+", 1, 20));
+        System.out.println (service.searchFullText (MongoOutputEntity.class, name, "zrz", 1, 20));
+    }
+
+    @Test
+    public void search3() {
+        System.out.println (service.searchRegex (MongoOutputEntity.class, name, "\\w+", 1, 1));
+    }
+
 }
