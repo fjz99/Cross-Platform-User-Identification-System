@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -107,7 +108,7 @@ public class ModelController {
             log.error ("dataset input err {}", dataset);
             return Response.fail ("数据集输入错误");
         }
-        if (basicModel.contains (ModelKeyGenerator.generateKey (dataset.toArray (new String[]{}), name, "train", null))) {
+        if (basicModel.contains (ModelKeyGenerator.generateKey (dataset.toArray (new String[]{}), name, "train", null), true)) {
             log.error ("模型正在训练中");
             return Response.fail ("模型已经存在了！");
         }
@@ -127,7 +128,7 @@ public class ModelController {
     @ApiImplicitParam(paramType = "path", name = "name", value = "模型运行id", required = true, dataTypeClass = String.class)
     public Response<?> status(@PathVariable @NotBlank String name) {
         try {
-            if (basicModel.contains (name))
+            if (basicModel.contains (name, true))
                 return Response.ok (basicModel.getStatus (name));
             else return Response.fail ("模型不存在");
         } catch (Exception e) {

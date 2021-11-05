@@ -205,6 +205,16 @@ public class MongoService<T> {
         mongoTemplate.remove (query, clazz, collectionName);
     }
 
+    public void deleteByEqual(String name, Class<T> clazz, String collectionName, String fieldName) {
+        // 设置查询条件，当id=#{id}
+        Query query = new Query ();
+        query.addCriteria (Criteria.where (fieldName).is (name));
+        // mongodb在删除对象的时候会判断对象类型，如果你不传入对象类型，只传入了集合名称，它是找不到的
+        // 上面我们为了方便管理和提升后续处理的性能，将一个集合限制了一个对象类型，所以需要自行管理一下对象类型
+        // 在接口传入时需要同时传入对象类型
+        mongoTemplate.remove (query, clazz, collectionName);
+    }
+
     /**
      * 功能描述: 根据id查询信息
      *

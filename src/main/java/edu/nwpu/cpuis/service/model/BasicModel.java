@@ -93,8 +93,11 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
         return trainProcess.getPercentage ();
     }
 
-    public boolean contains(String name) {
-        return PythonUtils.getTrainProcess (name) != null;
+    public boolean contains(String name, boolean replaceStopped) {
+        if (!replaceStopped)
+            return PythonUtils.getTrainProcess (name) != null;
+        else
+            return PythonUtils.getTrainProcess (name) != null && PythonUtils.getTrainProcess (name).getState () == PythonUtils.State.TRAINING;
     }
 
     public String getStatus(String name) {

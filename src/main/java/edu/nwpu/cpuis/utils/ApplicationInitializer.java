@@ -1,5 +1,6 @@
 package edu.nwpu.cpuis.utils;
 
+import edu.nwpu.cpuis.service.AlgoService;
 import edu.nwpu.cpuis.service.DatasetService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -12,10 +13,12 @@ import org.springframework.stereotype.Component;
 public class ApplicationInitializer {
     private final DatasetLoader loader;
     private final DatasetService datasetService;
+    private final AlgoService algoService;
 
-    public ApplicationInitializer(DatasetLoader loader, DatasetService datasetService) {
+    public ApplicationInitializer(DatasetLoader loader, DatasetService datasetService, AlgoService algoService) {
         this.loader = loader;
         this.datasetService = datasetService;
+        this.algoService = algoService;
     }
 
     public void init() {
@@ -23,6 +26,7 @@ public class ApplicationInitializer {
         datasetService.getDatasetLocation ().forEach ((k, v) -> {
             loader.loadDataset (v, k);
         });
+        algoService.scanAlgo ();
         log.info ("应用程序启动完成");
     }
 }
