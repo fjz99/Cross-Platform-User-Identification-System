@@ -72,7 +72,8 @@ public final class PythonUtils implements ApplicationContextAware {
 
 
     private static String buildCmd(Map<String, Object> args, String sourceName) throws IOException {
-        String path = context.getResources ("classpath:/**/" + sourceName)[0].getFile ().getPath ();
+        String path = sourceName;
+//        String path = context.getResources ("classpath:/**/" + sourceName)[0].getFile ().getPath ();
         String cmd = String.format ("python %s", path);
         StringBuilder sb = new StringBuilder (cmd);
         //数组不能加空格。。，不支持数组，必须是List！

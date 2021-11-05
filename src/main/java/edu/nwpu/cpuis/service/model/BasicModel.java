@@ -1,5 +1,6 @@
 package edu.nwpu.cpuis.service.model;
 
+import edu.nwpu.cpuis.service.AlgoService;
 import edu.nwpu.cpuis.service.DatasetService;
 import edu.nwpu.cpuis.utils.PythonUtils;
 import lombok.Data;
@@ -27,6 +28,8 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
     private String datasetPath;
     @Resource
     private DatasetService datasetService;
+    @Resource
+    private AlgoService algoService;
 
     public BasicModel(ModelDefinition definition) {
         this.definition = definition;
@@ -55,7 +58,8 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
             }
             map.put (datasetKey, out);
 //            map.putAll (args);//会覆盖
-            PythonUtils.runScript (name, singleModel.getTrainSource (), map, datasets);
+//            PythonUtils.runScript (name, singleModel.getTrainSource (), map, datasets);
+            PythonUtils.runScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets);
             return true;
         } else {
             return false;
