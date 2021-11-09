@@ -31,7 +31,7 @@ public class ApplicationInitializer {
         log.info ("应用程序启动完成");
     }
 
-    //todo
+//    //todo
 //    @Scheduled(cron = "0 0 ? * * *")
 //    public void ScheduledDatasetLoader() {
 //        datasetService.getDatasetLocation ().forEach ((k, v) -> {

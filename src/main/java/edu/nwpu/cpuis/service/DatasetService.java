@@ -39,6 +39,10 @@ public class DatasetService {
     private MongoService<DatasetEntity> mongoService;
     @Resource
     private DatasetLoader loader;
+    @Value("${dataset-mongo-collection-name}")
+    private String mongoCollection;
+    @Resource
+    private DatasetValidator validator;
 
 
     public boolean uploadInput(MultipartFile file, String datasetName) throws IOException {
@@ -48,10 +52,12 @@ public class DatasetService {
             log.warn ("数据集{}已经存在,自动覆盖", datasetName);
             datasetLocation.put (datasetName, path);
             decompress (file, path);
+            loader.loadDataset (path, datasetName);
             return false;
         } else {
             datasetLocation.put (datasetName, path);
             decompress (file, path);
+            loader.loadDataset (path, datasetName);
             return true;
         }
     }
@@ -126,4 +132,24 @@ public class DatasetService {
             return mongoService.selectAll (name, DatasetEntity.class);
         }
     }
+
+    public boolean exists(String name) {
+        return datasetLocation.containsKey (name);
+    }
+
+    public void delete(String name) throws IOException {
+        final String mongoName = loader.generateUserTraceDataCollectionName (name);
+        String s = datasetLocation.get (name);
+        datasetLocation.remove (name);
+        FileUtils.deleteDirectory (new File (s));
+        mongoService.deleteCollection (mongoName);
+        //todo 删除元数据
+        log.info ("delete dataset {},{},{} ok.", name, s, mongoName);
+    }
+
+    //todo
+    public boolean validate(String name) throws IOException {
+        return false;
+    }
+
 }

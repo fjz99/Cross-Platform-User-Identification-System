@@ -2,11 +2,16 @@ package edu.nwpu.cpuis.service;
 
 import edu.nwpu.cpuis.entity.AlgoEntity;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -23,6 +28,10 @@ public class AlgoService {
 
     public boolean exists(String name) {
         return algoMap.containsKey (name);
+    }
+
+    public String getAlgoLocation(String name) {
+        return algoBaseLocation + "/" + name + "/";
     }
 
     public AlgoEntity getAlgoEntity(String name) {
@@ -52,5 +61,23 @@ public class AlgoService {
             algoMap.put (x.getName (), x);
         });
         log.info ("Auto scan algoEntity from collection {}", algoMongoLocation);
+    }
+
+    public void delete(String name) throws IOException {
+        if (!algoMap.containsKey (name)) {
+            return;
+        }
+        AlgoEntity algoEntity = algoMap.get (name);
+        algoMap.remove (name);
+        mongoService.deleteByEqual (algoEntity.getName (), AlgoEntity.class, algoMongoLocation, "name");
+        //删除文件
+        String loc = getAlgoLocation (name);
+        FileUtils.deleteDirectory (new File (loc));
+        log.info ("Delete algo {} from collection {},{} ok.", algoEntity.getName (), algoMongoLocation, loc);
+    }
+
+    @Cacheable(key = "T(String).format('query-%s-%s',#size,#num)", cacheNames = "query")
+    public List<AlgoEntity> query(Integer size, Integer num) {
+        return mongoService.selectList (algoMongoLocation, AlgoEntity.class, num, size);
     }
 }

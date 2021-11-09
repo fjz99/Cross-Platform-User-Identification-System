@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * 存储到mongoDB的算法信息
  */
@@ -21,4 +23,6 @@ public class AlgoEntity {
     private String predictSource;
     //    private String validationSource;
     private String description;
+    private String stage; //1 2 3
+    private LocalDateTime time;
 }

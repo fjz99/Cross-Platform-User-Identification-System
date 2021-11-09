@@ -63,4 +63,18 @@ public class DatasetController {
             return Response.ok ("用户不存在");
         } else return Response.ok (userTrace);
     }
+
+    @DeleteMapping(value = "/delete/{name}")
+    @ApiOperation(value = "删除数据集", notes = "")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "name", value = "数据名字", required = true),
+    })
+    public Response<?> deleteAlgo(@PathVariable String name) throws IOException {
+        if (datasetService.exists (name)) {
+            datasetService.delete (name);
+            return Response.ok ("删除成功");
+        } else {
+            return Response.fail ("算法不存在");
+        }
+    }
 }

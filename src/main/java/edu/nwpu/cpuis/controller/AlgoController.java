@@ -10,15 +10,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.Pattern;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @RestController()
 @RequestMapping("/algo")
@@ -41,14 +40,17 @@ public class AlgoController {
                                     @RequestPart("name") String name,
                                     @RequestPart(required = false) String description,
                                     @RequestPart(required = false) String author,
+                                    @Pattern(regexp = "\\d+") String stage,
                                     @RequestPart(required = false) String contact) throws IOException {
         AlgoEntity entity = AlgoEntity.builder ()
                 .author (author)
                 .contact (contact)
                 .name (name)
                 .description (description)
+                .stage (stage)
+                .time (LocalDateTime.now ())
                 .build ();
-        String path = algoBaseLocation + "/" + name + "/";
+        String path = service.getAlgoLocation (name);
 
         Response<?> response;
         if (!service.exists (name)) {
@@ -70,11 +72,48 @@ public class AlgoController {
 
     private String saveFile(MultipartFile file, String name) throws IOException {
         if (file != null) {
-            String pathname = algoBaseLocation + "/" + name + "/" + file.getOriginalFilename ();
+            String pathname = service.getAlgoLocation (name) + file.getOriginalFilename ();
             File file1 = new File (pathname);
             file.transferTo (file1);
             return pathname;
         } else return null;
     }
 
+    @DeleteMapping(value = "/delete/{name}")
+    @ApiOperation(value = "删除算法", notes = "")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "name", value = "算法名字", required = true),
+    })
+    public Response<?> deleteAlgo(@PathVariable String name) throws IOException {
+        if (service.exists (name)) {
+            service.delete (name);
+            return Response.ok ("删除成功");
+        } else {
+            return Response.fail ("算法不存在");
+        }
+    }
+
+    @GetMapping(value = "/get")
+    @ApiOperation(value = "分页查找")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "size", value = "页大小", required = true),
+            @ApiImplicitParam(paramType = "query", name = "num", value = "页号", required = true)
+    })
+    public Response<?> getAlgoPage(@RequestParam(required = false, defaultValue = "20") Integer size,
+                                   @RequestParam(required = false, defaultValue = "1") Integer num) throws IOException {
+        return Response.ok (service.query (size, num));
+    }
+
+    @GetMapping(value = "/getByName/{name}")
+    @ApiOperation(value = "根据name查找")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "name", value = "算法名字", required = true),
+    })
+    public Response<?> getAlgoPage(@PathVariable String name) throws IOException {
+        if (service.exists (name)) {
+            return Response.ok (service.getAlgoEntity (name));
+        } else {
+            return Response.fail ("算法不存在");
+        }
+    }
 }
