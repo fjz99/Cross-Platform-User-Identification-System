@@ -1,6 +1,7 @@
 package edu.nwpu.cpuis.controller;
 
 import edu.nwpu.cpuis.entity.DatasetEntity;
+import edu.nwpu.cpuis.entity.DatasetManageEntity;
 import edu.nwpu.cpuis.entity.Response;
 import edu.nwpu.cpuis.service.DatasetService;
 import io.swagger.annotations.Api;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -35,8 +37,20 @@ public class DatasetController {
             @ApiImplicitParam(paramType = "form", name = "name", value = "数据集名称", required = true, dataType = "String")
     })
     public Response<?> uploadInputs(@RequestPart MultipartFile file,
-                                    @RequestPart("name") String datasetName) throws IOException {
-        if (datasetService.uploadInput (file, datasetName)) {
+                                    @RequestPart("name") String datasetName,
+                                    @RequestPart(required = false) String description,
+                                    @RequestPart(required = false) String author,
+                                    @RequestPart(required = false) String contact) throws IOException {
+        DatasetManageEntity manageEntity = DatasetManageEntity
+                .builder ()
+                .author (author)
+                .description (description)
+                .contact (contact)
+                .time (LocalDateTime.now ())
+                .name (datasetName)
+                .size (datasetService.getDatasetSizePretty (file.getSize ()))
+                .build ();
+        if (datasetService.uploadInput (file, datasetName, manageEntity)) {
             return Response.ok ("数据集上传成功");
         } else return Response.ok ("数据集覆盖");
     }
@@ -65,16 +79,40 @@ public class DatasetController {
     }
 
     @DeleteMapping(value = "/delete/{name}")
-    @ApiOperation(value = "删除数据集", notes = "")
+    @ApiOperation(value = "删除数据集")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "name", value = "数据名字", required = true),
     })
-    public Response<?> deleteAlgo(@PathVariable String name) throws IOException {
+    public Response<?> deleteDataset(@PathVariable String name) throws IOException {
         if (datasetService.exists (name)) {
             datasetService.delete (name);
             return Response.ok ("删除成功");
         } else {
             return Response.fail ("算法不存在");
+        }
+    }
+
+    @GetMapping(value = "/get")
+    @ApiOperation(value = "分页查找")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "size", value = "页大小", required = true),
+            @ApiImplicitParam(paramType = "query", name = "num", value = "页号", required = true)
+    })
+    public Response<?> getDatasetPage(@RequestParam(required = false, defaultValue = "20") Integer size,
+                                   @RequestParam(required = false, defaultValue = "1") Integer num) {
+        return Response.ok (datasetService.getEntityPage (size, num));
+    }
+
+    @GetMapping(value = "/getByName/{name}")
+    @ApiOperation(value = "根据name查找")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "name", value = "名字", required = true),
+    })
+    public Response<?> getDatasetPage(@PathVariable String name) {
+        if (datasetService.exists (name)) {
+            return Response.ok (datasetService.getEntity (name));
+        } else {
+            return Response.fail ("数据集不存在");
         }
     }
 }

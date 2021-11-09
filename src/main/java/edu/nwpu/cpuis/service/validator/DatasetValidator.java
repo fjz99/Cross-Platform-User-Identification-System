@@ -1,4 +1,4 @@
-package edu.nwpu.cpuis.service;
+package edu.nwpu.cpuis.service.validator;
 
 import org.springframework.stereotype.Service;
 

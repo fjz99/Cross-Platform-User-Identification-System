@@ -4,6 +4,7 @@ import edu.nwpu.cpuis.entity.AlgoEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class AlgoService {
     @Value("${algo-mongo-collection-name}")
     private String algoMongoLocation;
 
-    private Map<String, AlgoEntity> algoMap = new HashMap<> ();
+    private final Map<String, AlgoEntity> algoMap = new HashMap<> ();
 
     public boolean exists(String name) {
         return algoMap.containsKey (name);
@@ -63,6 +64,7 @@ public class AlgoService {
         log.info ("Auto scan algoEntity from collection {}", algoMongoLocation);
     }
 
+    @CacheEvict(cacheNames = "query", allEntries = true)
     public void delete(String name) throws IOException {
         if (!algoMap.containsKey (name)) {
             return;

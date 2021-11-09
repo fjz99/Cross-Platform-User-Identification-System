@@ -1,4 +1,4 @@
-package edu.nwpu.cpuis.utils;
+package edu.nwpu.cpuis.service.validator;
 
 
 import edu.nwpu.cpuis.entity.vo.OutputSearchVO;

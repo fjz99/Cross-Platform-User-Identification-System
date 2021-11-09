@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,8 +22,6 @@ import java.time.LocalDateTime;
 @RequestMapping("/algo")
 @Slf4j
 public class AlgoController {
-    @Value("${file.algo-base-location}")
-    private String algoBaseLocation;
     @Resource
     private AlgoService service;
 
@@ -80,7 +77,7 @@ public class AlgoController {
     }
 
     @DeleteMapping(value = "/delete/{name}")
-    @ApiOperation(value = "删除算法", notes = "")
+    @ApiOperation(value = "删除算法")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "name", value = "算法名字", required = true),
     })

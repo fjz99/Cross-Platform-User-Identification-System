@@ -75,6 +75,15 @@ public class MongoService<T> {
         return mongoTemplate.find (query, clazz, collectionName);
     }
 
+    public List<T> selectByEquals(String collectionName, Class<T> clazz, String field, String name) {
+        //设置分页参数
+        Query query = new Query ();
+        //设置分页信息
+        query.addCriteria (Criteria.where (field).is (name));
+//        query.addCriteria (Criteria.where ("id").gte (1).lte (22));
+        return mongoTemplate.find (query, clazz, collectionName);
+    }
+
     /**
      * 功能描述: 创建索引
      * 索引是顺序排列，且唯一的索引
