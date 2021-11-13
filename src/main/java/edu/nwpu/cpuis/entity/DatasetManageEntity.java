@@ -18,4 +18,5 @@ public class DatasetManageEntity {
     private String description;
     private String size;
     private LocalDateTime time;
+    private String downloadRelativeURI;//相对路径,磁盘上的
 }

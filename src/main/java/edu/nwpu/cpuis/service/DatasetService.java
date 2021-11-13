@@ -32,6 +32,12 @@ public class DatasetService {
     @Value("${file.input-base-location}")
     @NotNull
     private String baseLocation;
+    @Value("${dataset-nginx-dir}")
+    @NotNull
+    private String nginxBaseLocation;
+    @NotNull
+    @Value("${dataset-download-base-uri}")
+    private String downloadBaseURI;
     @Value("${file.tempdir}")
     @NotNull
     private String tempDir;
@@ -51,10 +57,11 @@ public class DatasetService {
 
 
     public boolean uploadInput(MultipartFile file, String datasetName, DatasetManageEntity manageEntity) throws IOException {
+        manageEntity.setDownloadRelativeURI (getDownloadPath (file.getOriginalFilename ()));
         String path = generateDatasetLocation (datasetName);
         boolean exist = checkPath (path);
         datasetLocation.put (datasetName, path);
-        decompress (file, path);
+        decompressAndSave (file, path, manageEntity);
         loader.loadDataset (path, datasetName);
         if (!mongoService.collectionExists (mongoCollection)) {
             mongoService.createCollection (mongoCollection);
@@ -72,25 +79,52 @@ public class DatasetService {
         }
     }
 
+    private String getDownloadPath(String originalFilename) {
+        if (downloadBaseURI.lastIndexOf ('/') == downloadBaseURI.length () - 1) {
+            return downloadBaseURI + originalFilename;
+        } else return downloadBaseURI + "/" + originalFilename;
+    }
+
+    private String getFileSysPath(String downloadBaseURI) {
+        if (!downloadBaseURI.contains ("/")) {
+            throw new IllegalStateException ();
+        }
+        return nginxBaseLocation + "/" + downloadBaseURI.substring (downloadBaseURI.lastIndexOf ("/") + 1);
+    }
+
     private String generateDatasetLocation(@NonNull String datasetName) {
         return baseLocation.endsWith ("/") ? baseLocation + datasetName + "/" : baseLocation + "/" + datasetName + "/";
     }
 
-    private void decompress(MultipartFile file, String path) throws IOException {
+    /**
+     * 解压并且保存到nignx映射的静态文件夹下
+     *
+     * @param file
+     * @param path
+     * @throws IOException
+     */
+    private void decompressAndSave(MultipartFile file, String path, DatasetManageEntity entity) throws IOException {
         String originalFilename = file.getOriginalFilename ();
         file.transferTo (new File (originalFilename));
         String realPath = String.format ("%s/%s", tempDir, originalFilename);
         boolean result = false;
         for (CompressService compressService : serviceList) {
             if (compressService.support (originalFilename)) {
-                log.info ("use {} to decompress", compressService.getClass ());
+                log.info ("use {} to decompressAndSave", compressService.getClass ());
                 result = true;
                 CompressUtils.decompressZip (realPath, path);
             }
         }
-        new File (realPath).delete ();
+        //移动到下载位置
+        File srcFile = new File (realPath);
+        File destFile = new File (getFileSysPath (entity.getDownloadRelativeURI ()));
+        if (destFile.exists ()) {
+            destFile.delete ();
+        }
+        FileUtils.moveFile (srcFile, destFile);
+//        srcFile.delete ();
         if (!result) {
-            log.error ("no CompressService can decompress file {}", originalFilename);
+            log.error ("no CompressService can decompressAndSave file {}", originalFilename);
         }
     }
 
@@ -153,6 +187,12 @@ public class DatasetService {
         datasetLocation.remove (name);
         FileUtils.deleteDirectory (new File (s));
         mongoService.deleteCollection (mongoName);
+        List<DatasetManageEntity> entities = datasetManageEntityMongoService.selectByEquals (name, DatasetManageEntity.class, mongoCollection, "name");
+        if (entities.size () > 0) {
+            String downloadRelativeURI = entities.get (0).getDownloadRelativeURI ();
+            String fileSysPath = getFileSysPath (downloadRelativeURI);
+            FileUtils.forceDelete (new File (fileSysPath));
+        }
         datasetManageEntityMongoService.deleteByEqual (name, DatasetManageEntity.class, mongoCollection, "name");
         log.info ("delete dataset {},{},{} ok.", name, s, mongoName);
     }
