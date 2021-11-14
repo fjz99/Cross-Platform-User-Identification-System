@@ -99,7 +99,7 @@ public class ModelController {
     @ApiOperation(value = "模型训练", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字;k默认为5")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "name", value = "算法名称", required = true, dataTypeClass = String.class),
-            @ApiImplicitParam(paramType = "query", name = "dataset", value = "数据集名称", required = true, dataTypeClass = List.class),
+            @ApiImplicitParam(paramType = "query", name = "dataset", value = "数据集名称", required = true, dataTypeClass = List.class, allowMultiple = true),
     })
     public Response<?> train(@PathVariable @NotBlank String name,
                              @RequestParam List<String> dataset) {
@@ -139,7 +139,7 @@ public class ModelController {
      * 算法名-数据集1-数据集2-train/predict,数据集1和2必须是升序排列
      */
     @GetMapping(value = "/output", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "获得输出")
+    @ApiOperation(value = "获得输出", responseContainer = "List")
     //加@Valid！，即使databinder弄了！
     public Response<?> output(@RequestBody @Validated OutputSearchVO searchVO) {
         try {

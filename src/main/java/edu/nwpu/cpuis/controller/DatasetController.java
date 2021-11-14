@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Part;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -33,8 +34,11 @@ public class DatasetController {
     @PostMapping(value = "/uploadInputs", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "上传数据集", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, notes = "支持文件夹，压缩包格式[zip]，推荐上传zip格式")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "form", name = "file", value = "文件", required = true),
-            @ApiImplicitParam(paramType = "form", name = "name", value = "数据集名称", required = true, dataType = "String")
+            @ApiImplicitParam(paramType = "form", name = "file", value = "文件", required = true, dataTypeClass = Part.class),
+            @ApiImplicitParam(paramType = "form", name = "name", value = "数据集名称", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "form", name = "description", value = "描述", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "form", name = "author", value = "作者", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "form", name = "contact", value = "联系方式", required = true, dataType = "String")
     })
     public Response<?> uploadInputs(@RequestPart MultipartFile file,
                                     @RequestPart("name") String datasetName,
@@ -93,13 +97,13 @@ public class DatasetController {
     }
 
     @GetMapping(value = "/get")
-    @ApiOperation(value = "分页查找")
+    @ApiOperation(value = "分页查找", responseContainer = "List")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "size", value = "页大小", required = true),
-            @ApiImplicitParam(paramType = "query", name = "num", value = "页号", required = true)
+            @ApiImplicitParam(paramType = "query", name = "size", value = "页大小", required = false),
+            @ApiImplicitParam(paramType = "query", name = "num", value = "页号", required = false)
     })
     public Response<?> getDatasetPage(@RequestParam(required = false, defaultValue = "20") Integer size,
-                                   @RequestParam(required = false, defaultValue = "1") Integer num) {
+                                      @RequestParam(required = false, defaultValue = "1") Integer num) {
         return Response.ok (datasetService.getEntityPage (size, num));
     }
 

@@ -3,6 +3,7 @@ package edu.nwpu.cpuis.controller;
 import edu.nwpu.cpuis.entity.AlgoEntity;
 import edu.nwpu.cpuis.entity.Response;
 import edu.nwpu.cpuis.service.AlgoService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -21,15 +22,22 @@ import java.time.LocalDateTime;
 @RestController()
 @RequestMapping("/algo")
 @Slf4j
+@Api(tags = "algo", description = "算法管理api")
 public class AlgoController {
     @Resource
     private AlgoService service;
 
     @PostMapping(value = "/uploadInputs", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @ApiOperation(value = "上传某个算法文件", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, notes = "支持文件夹，压缩包格式[zip]，推荐上传zip格式\n需要整体上传")
+    @ApiOperation(value = "上传算法", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, notes = "支持文件夹，压缩包格式[zip]，推荐上传zip格式\n需要整体上传")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "form", name = "file", value = "文件", required = true),
-            @ApiImplicitParam(paramType = "form", name = "name", value = "算法名称", required = true, dataType = "String")
+            @ApiImplicitParam(paramType = "form", name = "trainSource", value = "训练代码源文件", required = false),
+            @ApiImplicitParam(paramType = "form", name = "testSource", value = "测试代码源文件", required = false),
+            @ApiImplicitParam(paramType = "form", name = "predictSource", value = "预测代码源文件", required = false),
+            @ApiImplicitParam(paramType = "form", name = "name", value = "算法名称", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "form", name = "contact", value = "联系方式", required = false, dataType = "String"),
+            @ApiImplicitParam(paramType = "form", name = "description", value = "描述", required = false, dataType = "String"),
+            @ApiImplicitParam(paramType = "form", name = "author", value = "作者", required = false, dataType = "String"),
+            @ApiImplicitParam(paramType = "form", name = "stage", value = "阶段", required = true, dataType = "String")
     })
     public Response<?> uploadInputs(@RequestPart(required = false) MultipartFile trainSource,
                                     @RequestPart(required = false) MultipartFile testSource,
@@ -91,10 +99,10 @@ public class AlgoController {
     }
 
     @GetMapping(value = "/get")
-    @ApiOperation(value = "分页查找")
+    @ApiOperation(value = "分页查找", responseContainer = "List")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "size", value = "页大小", required = true),
-            @ApiImplicitParam(paramType = "query", name = "num", value = "页号", required = true)
+            @ApiImplicitParam(paramType = "query", name = "size", value = "页大小", required = false),
+            @ApiImplicitParam(paramType = "query", name = "num", value = "页号", required = false)
     })
     public Response<?> getAlgoPage(@RequestParam(required = false, defaultValue = "20") Integer size,
                                    @RequestParam(required = false, defaultValue = "1") Integer num) throws IOException {
@@ -106,7 +114,7 @@ public class AlgoController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "name", value = "算法名字", required = true),
     })
-    public Response<?> getAlgoPage(@PathVariable String name) throws IOException {
+    public Response<?> getByName(@PathVariable String name) {
         if (service.exists (name)) {
             return Response.ok (service.getAlgoEntity (name));
         } else {
