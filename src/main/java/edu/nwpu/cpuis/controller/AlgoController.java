@@ -28,7 +28,7 @@ public class AlgoController {
     private AlgoService service;
 
     @PostMapping(value = "/uploadInputs", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @ApiOperation(value = "上传算法", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, notes = "支持文件夹，压缩包格式[zip]，推荐上传zip格式\n需要整体上传")
+    @ApiOperation(value = "上传算法", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "trainSource", value = "训练代码源文件", required = false),
             @ApiImplicitParam(paramType = "form", name = "testSource", value = "测试代码源文件", required = false),
