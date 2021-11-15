@@ -2,6 +2,7 @@ package edu.nwpu.cpuis.service;
 
 import edu.nwpu.cpuis.entity.DatasetEntity;
 import edu.nwpu.cpuis.entity.DatasetManageEntity;
+import edu.nwpu.cpuis.entity.PageEntity;
 import edu.nwpu.cpuis.service.validator.DatasetValidator;
 import edu.nwpu.cpuis.utils.DatasetLoader;
 import edu.nwpu.cpuis.utils.compress.CompressService;
@@ -221,8 +222,9 @@ public class DatasetService {
         }
     }
 
-    public List<DatasetManageEntity> getEntityPage(Integer num, Integer size) {
-        return datasetManageEntityMongoService.selectList (mongoCollection, DatasetManageEntity.class, num, size);
+    public PageEntity<DatasetManageEntity> getEntityPage(Integer num, Integer size) {
+        return PageEntity.byAllDataNum (datasetManageEntityMongoService.selectList (mongoCollection, DatasetManageEntity.class, num, size),
+                (int) datasetManageEntityMongoService.countAll (mongoCollection, DatasetManageEntity.class), num, size);
     }
 
     public DatasetManageEntity getEntity(String name) {

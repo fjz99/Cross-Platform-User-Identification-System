@@ -58,6 +58,11 @@ public class MongoService<T> {
         return mongoTemplate.findAll (clazz, collectionName);
     }
 
+    public long countAll(String collectionName, Class<T> clazz) {
+        Query query = new Query ();
+        return mongoTemplate.count (query, clazz, collectionName);
+    }
+
     /**
      * @param currentPage 从1开始
      * @param rangeMin    都是include
@@ -259,14 +264,26 @@ public class MongoService<T> {
         return mongoTemplate.find (query, clazz, collectionName);
     }
 
+    public long countRegex(Class<T> clazz, String collectionName, String regex) {
+        Query query = new Query ();
+        query.addCriteria (Criteria.where ("userName").regex (regex));
+        return mongoTemplate.count (query, clazz, collectionName);
+    }
+
     public List<T> searchNormal(Class<T> clazz, String collectionName, String v, Integer currentPage, Integer pageSize) {
         //设置分页参数
         Query query = new Query ();
-        //设置分页信息{
+        //设置分页信息
         query.limit (pageSize);
         query.skip (pageSize * (currentPage - 1));
         query.addCriteria (Criteria.where ("userName").is (v));
         return mongoTemplate.find (query, clazz, collectionName);
+    }
+
+    public long countNormal(Class<T> clazz, String collectionName, String v) {
+        Query query = new Query ();
+        query.addCriteria (Criteria.where ("userName").is (v));
+        return mongoTemplate.count (query, clazz, collectionName);
     }
 
     public List<T> searchFullText(Class<T> clazz, String collectionName, String text, Integer currentPage, Integer pageSize) {
@@ -277,6 +294,12 @@ public class MongoService<T> {
         query.skip (pageSize * (currentPage - 1));
         query.addCriteria (TextCriteria.forLanguage ("en").matchingPhrase (text));
         return mongoTemplate.find (query, clazz, collectionName);
+    }
+
+    public long countFullText(Class<T> clazz, String collectionName, String text) {
+        Query query = new Query ();
+        query.addCriteria (TextCriteria.forLanguage ("en").matchingPhrase (text));
+        return mongoTemplate.count (query, clazz, collectionName);
     }
 
     /**

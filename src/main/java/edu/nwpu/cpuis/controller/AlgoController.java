@@ -106,7 +106,7 @@ public class AlgoController {
     })
     public Response<?> getAlgoPage(@RequestParam(required = false, defaultValue = "20") Integer size,
                                    @RequestParam(required = false, defaultValue = "1") Integer num) throws IOException {
-        return Response.ok (service.query (size, num));
+        return Response.ok (service.query (size,num));
     }
 
     @GetMapping(value = "/getByName/{name}")

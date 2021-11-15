@@ -104,7 +104,7 @@ public class DatasetController {
     })
     public Response<?> getDatasetPage(@RequestParam(required = false, defaultValue = "20") Integer size,
                                       @RequestParam(required = false, defaultValue = "1") Integer num) {
-        return Response.ok (datasetService.getEntityPage (size, num));
+        return Response.ok (datasetService.getEntityPage (num, size));
     }
 
     @GetMapping(value = "/getByName/{name}")

@@ -1,6 +1,7 @@
 package edu.nwpu.cpuis.service;
 
 import edu.nwpu.cpuis.entity.AlgoEntity;
+import edu.nwpu.cpuis.entity.PageEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,14 +19,13 @@ import java.util.Map;
 @Service
 @Slf4j
 public class AlgoService {
+    private final Map<String, AlgoEntity> algoMap = new HashMap<> ();
     @Value("${file.algo-base-location}")
     private String algoBaseLocation;
     @Resource
     private MongoService<AlgoEntity> mongoService;
     @Value("${algo-mongo-collection-name}")
     private String algoMongoLocation;
-
-    private final Map<String, AlgoEntity> algoMap = new HashMap<> ();
 
     public boolean exists(String name) {
         return algoMap.containsKey (name);
@@ -79,7 +79,9 @@ public class AlgoService {
     }
 
     @Cacheable(key = "T(String).format('query-%s-%s',#size,#num)", cacheNames = "query")
-    public List<AlgoEntity> query(Integer size, Integer num) {
-        return mongoService.selectList (algoMongoLocation, AlgoEntity.class, num, size);
+    public PageEntity<AlgoEntity> query(Integer size, Integer num) {
+        List<AlgoEntity> algoEntities = mongoService.selectList (algoMongoLocation, AlgoEntity.class, num, size);
+        int n = (int) mongoService.countAll (algoMongoLocation, AlgoEntity.class);
+        return PageEntity.byAllDataNum (algoEntities, n, num, size);
     }
 }
