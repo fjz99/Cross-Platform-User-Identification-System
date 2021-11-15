@@ -15,7 +15,7 @@ import java.util.Map;
  * @author fujiazheng
  */
 @Slf4j
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({"rawtypes"})
 public abstract class AbstractModelService {
     @Resource
     protected MongoService<Map> mongoMapService;

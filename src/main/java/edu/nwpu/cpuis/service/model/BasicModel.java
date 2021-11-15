@@ -41,9 +41,6 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
 
     /**
      * @param datasets 文件夹，2个
-     * @param name
-     * @param args     其他元数据，比如k等
-     * @return
      */
     @Override
     public boolean train(List<String> datasets, String name, Map<String, String> args) {
@@ -58,7 +55,11 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
             }
             map.put (datasetKey, out);
 //            map.putAll (args);//会覆盖
+            //fixme
 //            PythonUtils.runScript (name, singleModel.getTrainSource (), map, datasets);
+            if (algoService.getAlgoEntity (name) == null) {
+                return false;
+            }
             PythonUtils.runScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets);
             return true;
         } else {
