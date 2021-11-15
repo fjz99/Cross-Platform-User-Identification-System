@@ -138,7 +138,7 @@ public class ModelController {
     /**
      * 算法名-数据集1-数据集2-train/predict,数据集1和2必须是升序排列
      */
-    @GetMapping(value = "/output", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/output", consumes = MediaType.APPLICATION_JSON_VALUE, method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "获得输出", responseContainer = "List")
     //加@Valid！，即使databinder弄了！
     public Response<?> output(@RequestBody @Validated OutputSearchVO searchVO) {
