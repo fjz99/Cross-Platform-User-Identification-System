@@ -36,9 +36,9 @@ public class DatasetController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "file", value = "文件", required = true, dataTypeClass = Part.class),
             @ApiImplicitParam(paramType = "form", name = "name", value = "数据集名称", required = true, dataType = "String"),
-            @ApiImplicitParam(paramType = "form", name = "description", value = "描述", required = true, dataType = "String"),
-            @ApiImplicitParam(paramType = "form", name = "author", value = "作者", required = true, dataType = "String"),
-            @ApiImplicitParam(paramType = "form", name = "contact", value = "联系方式", required = true, dataType = "String")
+            @ApiImplicitParam(paramType = "form", name = "description", value = "描述", required = false, dataType = "String"),
+            @ApiImplicitParam(paramType = "form", name = "author", value = "作者", required = false, dataType = "String"),
+            @ApiImplicitParam(paramType = "form", name = "contact", value = "联系方式", required = false, dataType = "String")
     })
     public Response<?> uploadInputs(@RequestPart MultipartFile file,
                                     @RequestPart("name") String datasetName,
@@ -54,9 +54,7 @@ public class DatasetController {
                 .name (datasetName)
                 .size (datasetService.getDatasetSizePretty (file.getSize ()))
                 .build ();
-        if (datasetService.uploadInput (file, datasetName, manageEntity)) {
-            return Response.ok ("数据集上传成功");
-        } else return Response.ok ("数据集覆盖");
+        return datasetService.uploadInput (file, datasetName, manageEntity);
     }
 
     @GetMapping("/all")

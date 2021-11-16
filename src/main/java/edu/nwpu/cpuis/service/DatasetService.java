@@ -3,6 +3,7 @@ package edu.nwpu.cpuis.service;
 import edu.nwpu.cpuis.entity.DatasetEntity;
 import edu.nwpu.cpuis.entity.DatasetManageEntity;
 import edu.nwpu.cpuis.entity.PageEntity;
+import edu.nwpu.cpuis.entity.Response;
 import edu.nwpu.cpuis.service.validator.DatasetValidator;
 import edu.nwpu.cpuis.utils.DatasetLoader;
 import edu.nwpu.cpuis.utils.compress.CompressService;
@@ -57,27 +58,51 @@ public class DatasetService {
     private DatasetValidator validator;
 
 
-    public boolean uploadInput(MultipartFile file, String datasetName, DatasetManageEntity manageEntity) throws IOException {
-        manageEntity.setDownloadRelativeURI (getDownloadPath (file.getOriginalFilename ()));
-        String path = generateDatasetLocation (datasetName);
-        boolean exist = checkPath (path);
-        datasetLocation.put (datasetName, path);
-        decompressAndSave (file, path, manageEntity);
-        loader.loadDataset (path, datasetName);
-        if (!mongoService.collectionExists (mongoCollection)) {
-            mongoService.createCollection (mongoCollection);
-            mongoService.createIndex (mongoCollection, "name", true, true);
-            log.warn ("DatasetManageEntity collection not exists,auto create.");
-        }
-        if (exist) {
-            log.warn ("数据集{}已经存在,自动覆盖", datasetName);
-            delete (datasetName);
+    /**
+     * @param file
+     * @param datasetName
+     * @param manageEntity
+     * @return
+     */
+    public Response<?> uploadInput(MultipartFile file, String datasetName, DatasetManageEntity manageEntity) {
+        try {
+            manageEntity.setDownloadRelativeURI (getDownloadPath (file.getOriginalFilename ()));
+            String path = generateDatasetLocation (datasetName);
+            boolean exist = checkPath (path);
+            delete (datasetName);//delete 依赖于dataset location map
+            if (exist) {
+                log.warn ("数据集{}已经存在,自动覆盖", datasetName);
+                delete (datasetName);
+            }
+            datasetLocation.put (datasetName, path);
+            decompressAndSave (file, path, manageEntity);
+            if (!mongoService.collectionExists (mongoCollection)) {
+                mongoService.createCollection (mongoCollection);
+                mongoService.createIndex (mongoCollection, "name", true, true);
+                log.warn ("DatasetManageEntity collection not exists,auto create.");
+            }
             datasetManageEntityMongoService.insert (manageEntity, mongoCollection);
-            return false;
-        } else {
-            datasetManageEntityMongoService.insert (manageEntity, mongoCollection);
-            return true;
+            Response<String> stringResponse = tryParseDataset (datasetName, path);
+            if (stringResponse != null)
+                return stringResponse;
+            if (!exist) {
+                return Response.ok ("上传成功");
+            } else {
+                return Response.ok ("数据集覆盖");
+            }
+        } catch (IOException e) {
+            e.printStackTrace ();
+            return Response.fail (String.format ("上传失败，ERR：%s", e.getMessage ()));
         }
+    }
+
+    private Response<String> tryParseDataset(String datasetName, String path) {
+        try {
+            loader.loadDataset (path, datasetName);
+        } catch (Exception e) {
+            return Response.ok (String.format ("上传成功\nWARN:Failed to parse dataset %s with ERR %s", datasetName, e.getMessage ()));
+        }
+        return null;
     }
 
     private String getDownloadPath(String originalFilename) {
@@ -185,6 +210,10 @@ public class DatasetService {
     public void delete(String name) throws IOException {
         final String mongoName = loader.generateUserTraceDataCollectionName (name);
         String s = datasetLocation.get (name);
+        if (s == null) {
+            log.info ("delete dataset:dataset已经被删除");
+            return;
+        }
         datasetLocation.remove (name);
         FileUtils.deleteDirectory (new File (s));
         mongoService.deleteCollection (mongoName);
@@ -223,8 +252,13 @@ public class DatasetService {
     }
 
     public PageEntity<DatasetManageEntity> getEntityPage(Integer num, Integer size) {
-        return PageEntity.byAllDataNum (datasetManageEntityMongoService.selectList (mongoCollection, DatasetManageEntity.class, num, size),
-                (int) datasetManageEntityMongoService.countAll (mongoCollection, DatasetManageEntity.class), num, size);
+        if (size == -1) {
+            return PageEntity.byTotalPages (datasetManageEntityMongoService.selectAll (mongoCollection, DatasetManageEntity.class),
+                    -1, -1, -1);
+        } else {
+            return PageEntity.byAllDataNum (datasetManageEntityMongoService.selectList (mongoCollection, DatasetManageEntity.class, num, size),
+                    (int) datasetManageEntityMongoService.countAll (mongoCollection, DatasetManageEntity.class), num, size);
+        }
     }
 
     public DatasetManageEntity getEntity(String name) {

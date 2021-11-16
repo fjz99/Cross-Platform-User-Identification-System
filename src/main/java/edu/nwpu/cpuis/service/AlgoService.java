@@ -80,8 +80,14 @@ public class AlgoService {
 
     @Cacheable(key = "T(String).format('query-%s-%s',#size,#num)", cacheNames = "query")
     public PageEntity<AlgoEntity> query(Integer size, Integer num) {
-        List<AlgoEntity> algoEntities = mongoService.selectList (algoMongoLocation, AlgoEntity.class, num, size);
-        int n = (int) mongoService.countAll (algoMongoLocation, AlgoEntity.class);
-        return PageEntity.byAllDataNum (algoEntities, n, num, size);
+        if (size == -1) {
+            //查询所有
+            List<AlgoEntity> algoEntities = mongoService.selectAll (algoMongoLocation, AlgoEntity.class);
+            return PageEntity.byTotalPages (algoEntities, -1, -1, -1);
+        } else {
+            List<AlgoEntity> algoEntities = mongoService.selectList (algoMongoLocation, AlgoEntity.class, num, size);
+            int n = (int) mongoService.countAll (algoMongoLocation, AlgoEntity.class);
+            return PageEntity.byAllDataNum (algoEntities, n, num, size);
+        }
     }
 }

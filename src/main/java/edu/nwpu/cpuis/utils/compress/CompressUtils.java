@@ -144,6 +144,9 @@ public final class CompressUtils {
                         try {
                             //把解压出来的文件写到指定路径
                             File entryFile = new File (entryFilePath);
+                            if (!entryFile.exists ()) {
+                                entryFile.createNewFile ();
+                            }
                             os = new BufferedOutputStream (new FileOutputStream (entryFile));
                             os.write (content);
                         } catch (IOException e) {
