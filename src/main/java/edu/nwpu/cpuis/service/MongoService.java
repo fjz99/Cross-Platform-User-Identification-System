@@ -80,11 +80,11 @@ public class MongoService<T> {
         return mongoTemplate.find (query, clazz, collectionName);
     }
 
-    public List<T> selectByEquals(String collectionName, Class<T> clazz, String field, String name) {
+    public List<T> selectByEquals(String collectionName, Class<T> clazz, String field, String data) {
         //设置分页参数
         Query query = new Query ();
         //设置分页信息
-        query.addCriteria (Criteria.where (field).is (name));
+        query.addCriteria (Criteria.where (field).is (data));
 //        query.addCriteria (Criteria.where ("id").gte (1).lte (22));
         return mongoTemplate.find (query, clazz, collectionName);
     }
@@ -219,10 +219,10 @@ public class MongoService<T> {
         mongoTemplate.remove (query, clazz, collectionName);
     }
 
-    public void deleteByEqual(String name, Class<T> clazz, String collectionName, String fieldName) {
+    public void deleteByEqual(String data, Class<T> clazz, String collectionName, String fieldName) {
         // 设置查询条件，当id=#{id}
         Query query = new Query ();
-        query.addCriteria (Criteria.where (fieldName).is (name));
+        query.addCriteria (Criteria.where (fieldName).is (data));
         // mongodb在删除对象的时候会判断对象类型，如果你不传入对象类型，只传入了集合名称，它是找不到的
         // 上面我们为了方便管理和提升后续处理的性能，将一个集合限制了一个对象类型，所以需要自行管理一下对象类型
         // 在接口传入时需要同时传入对象类型

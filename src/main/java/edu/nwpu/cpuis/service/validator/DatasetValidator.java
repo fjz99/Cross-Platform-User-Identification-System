@@ -1,33 +1,38 @@
 package edu.nwpu.cpuis.service.validator;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 
+//验证格式只需要用loader尝试加载数据集即可
 @Service
 public class DatasetValidator {
+
     /**
      * @param location 文件夹名
-     * @return
      */
-    public boolean validateFileType(String location, String ext) {
+    public FileTypeValidatorOutput validateFileType(String location, String ext) {
         //递归判断所有的文件的扩展名都是ext
         File file = new File (location);
         if (file.exists ()) {
             if (file.isFile () && !checkName (file.getName (), ext)) {
-                return false;
+                return new FileTypeValidatorOutput (false, file.getName ());
             }
             File[] files = file.listFiles ();
             if (files == null) {
-                return true;
+                return new FileTypeValidatorOutput (true, null);
             }
             for (File listFile : files) {
-                if (!validateFileType (listFile.getAbsolutePath (), ext)) {
-                    return false;
+                FileTypeValidatorOutput output = validateFileType (listFile.getAbsolutePath (), ext);
+                if (!output.ok) {
+                    return output;
                 }
             }
         }
-        return true;
+        return new FileTypeValidatorOutput (true, null);
     }
 
     private boolean checkName(String name, String ext) {
@@ -37,8 +42,11 @@ public class DatasetValidator {
         return name.substring (name.lastIndexOf ('.') + 1).equals (ext);
     }
 
-//    todo
-//    public boolean validateFormat() {
-//
-//    }
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class FileTypeValidatorOutput {
+        private boolean ok;
+        private String failedFile;
+    }
 }

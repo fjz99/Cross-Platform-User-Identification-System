@@ -58,12 +58,6 @@ public class DatasetService {
     private DatasetValidator validator;
 
 
-    /**
-     * @param file
-     * @param datasetName
-     * @param manageEntity
-     * @return
-     */
     public Response<?> uploadInput(MultipartFile file, String datasetName, DatasetManageEntity manageEntity) {
         try {
             manageEntity.setDownloadRelativeURI (getDownloadPath (file.getOriginalFilename ()));
@@ -96,11 +90,19 @@ public class DatasetService {
         }
     }
 
+    //依赖于map，因为要查找entity
     private Response<String> tryParseDataset(String datasetName, String path) {
         try {
+            //验证文件类型
+            DatasetValidator.FileTypeValidatorOutput output = validator.validateFileType (datasetLocation.get (datasetName), "txt");
+            if (!output.isOk ()) {
+                log.warn ("数据集验证失败，必须是txt,造成异常的文件名为{}", output.getFailedFile ());
+                return Response.ok (String.format ("上传成功;WARN:数据集 %s 验证失败,数据集格式必须是txt,造成异常的文件名为'%s'",
+                        datasetName, output.getFailedFile ()));
+            }
             loader.loadDataset (path, datasetName);
         } catch (Exception e) {
-            return Response.ok (String.format ("上传成功\nWARN:Failed to parse dataset %s with ERR %s", datasetName, e.getMessage ()));
+            return Response.ok (String.format ("上传成功\nWARN:数据集 %s 验证失败,ERR %s", datasetName, e.getMessage ()));
         }
         return null;
     }
@@ -131,7 +133,7 @@ public class DatasetService {
      */
     private void decompressAndSave(MultipartFile file, String path, DatasetManageEntity entity) throws IOException {
         String originalFilename = file.getOriginalFilename ();
-        file.transferTo (new File (originalFilename));
+        file.transferTo (new File (originalFilename)); //此时，E：tempdir中就有了xx.zip
         String realPath = String.format ("%s/%s", tempDir, originalFilename);
         boolean result = false;
         for (CompressService compressService : serviceList) {
@@ -207,17 +209,23 @@ public class DatasetService {
         return datasetLocation.containsKey (name);
     }
 
+    /**
+     * 这个方法要求datasetLocation map中存在数据才能删除
+     *
+     * @param name
+     * @throws IOException
+     */
     public void delete(String name) throws IOException {
         final String mongoName = loader.generateUserTraceDataCollectionName (name);
         String s = datasetLocation.get (name);
         if (s == null) {
-            log.info ("delete dataset:dataset已经被删除");
+            log.warn ("delete dataset:dataset {} 已经被删除", name);
             return;
         }
         datasetLocation.remove (name);
         FileUtils.deleteDirectory (new File (s));
         mongoService.deleteCollection (mongoName);
-        List<DatasetManageEntity> entities = datasetManageEntityMongoService.selectByEquals (name, DatasetManageEntity.class, mongoCollection, "name");
+        List<DatasetManageEntity> entities = datasetManageEntityMongoService.selectByEquals (mongoCollection, DatasetManageEntity.class, "name", name);
         if (entities.size () > 0) {
             String downloadRelativeURI = entities.get (0).getDownloadRelativeURI ();
             String fileSysPath = getFileSysPath (downloadRelativeURI);
@@ -230,7 +238,7 @@ public class DatasetService {
     //todo
     public boolean validate(String name) throws IOException {
         if (datasetLocation.containsKey (name)) {
-            return validator.validateFileType (datasetLocation.get (name), "txt");
+            return validator.validateFileType (datasetLocation.get (name), "txt").isOk ();
         } else return false;
     }
 

@@ -116,6 +116,7 @@ public final class CompressUtils {
 
     /**
      * 把zip文件解压到指定的文件夹
+     * 目标文件夹必须存在的bug已修复
      *
      * @param zipFilePath zip文件路径, 如 "D:/test/aa.zip"
      * @param saveFileDir 解压后的文件存放路径, 如"D:/test/"
@@ -124,6 +125,10 @@ public final class CompressUtils {
         if (isEndsWithZip (zipFilePath)) {
             File file = new File (zipFilePath);
             if (file.exists ()) {
+                File t = new File (saveFileDir);
+                if (!t.exists ()) {
+                    t.mkdirs ();
+                }
                 InputStream is = null;
                 //can read Zip archives
                 ZipArchiveInputStream zais = null;
@@ -144,9 +149,9 @@ public final class CompressUtils {
                         try {
                             //把解压出来的文件写到指定路径
                             File entryFile = new File (entryFilePath);
-                            if (!entryFile.exists ()) {
-                                entryFile.createNewFile ();
-                            }
+//                            if (!entryFile.exists ()) {
+//                                entryFile.createNewFile ();
+//                            }
                             os = new BufferedOutputStream (new FileOutputStream (entryFile));
                             os.write (content);
                         } catch (IOException e) {
