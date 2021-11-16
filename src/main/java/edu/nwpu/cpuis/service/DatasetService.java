@@ -33,16 +33,16 @@ public class DatasetService {
     private final Map<String, String> datasetLocation = new HashMap<> (8);
     @Value("${file.input-base-location}")
     @NotNull
-    private String baseLocation;
+    public String baseLocation;
     @Value("${dataset-nginx-dir}")
     @NotNull
-    private String nginxBaseLocation;
+    public String nginxBaseLocation;
     @NotNull
     @Value("${dataset-download-base-uri}")
-    private String downloadBaseURI;
+    public String downloadBaseURI;
     @Value("${file.tempdir}")
     @NotNull
-    private String tempDir;
+    public String tempDir;
     @Resource
     private List<CompressService> serviceList;
     @Resource
@@ -53,7 +53,7 @@ public class DatasetService {
     private DatasetLoader loader;
     @Value("${dataset-mongo-collection-name}")
     @NotNull
-    private String mongoCollection;
+    public String mongoCollection;
     @Resource
     private DatasetValidator validator;
 
