@@ -1,5 +1,6 @@
 package edu.nwpu.cpuis.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class DatasetManageEntity {
     private String contact;
     private String description;
     private String size;
+    @JSONField(format = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime time;
     private String downloadRelativeURI;//相对路径,磁盘上的
 }
