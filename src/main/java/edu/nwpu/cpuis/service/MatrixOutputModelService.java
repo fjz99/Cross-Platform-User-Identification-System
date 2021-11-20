@@ -25,10 +25,8 @@ public class MatrixOutputModelService extends AbstractModelService {
         return null;
     }
 
-    public @NonNull
-    PageEntity<MongoOutputEntity> getOutput(@NonNull OutputSearchVO searchVO) {
-        final String key = ModelKeyGenerator.generateKey (searchVO.getDataset (),
-                searchVO.getAlgoName (), searchVO.getPhase (), "output");
+    private @NonNull
+    PageEntity<MongoOutputEntity> getOutput0(@NonNull OutputSearchVO searchVO, String key) {
         log.info ("search for key {}", key);
         final int pageSize = Optional.ofNullable (searchVO.getPageSize ()).orElse (20);
         final int pageNum = Optional.ofNullable (searchVO.getPageNum ()).orElse (1);
@@ -55,7 +53,21 @@ public class MatrixOutputModelService extends AbstractModelService {
             }
         }
         entities = preprocessTopK (entities, searchVO.getK ());
-        return PageEntity.byAllDataNum (entities, (int) count, searchVO.getPageNum (), searchVO.getPageSize ());
+        return PageEntity.byAllDataNum (entities, (int) count, pageNum, pageSize);
+    }
+
+    public @NonNull
+    PageEntity<MongoOutputEntity> getOutput(@NonNull OutputSearchVO searchVO) {
+        final String key = ModelKeyGenerator.generateKey (searchVO.getDataset (),
+                searchVO.getAlgoName (), searchVO.getPhase (), "output");
+        return getOutput0 (searchVO, key);
+    }
+
+    public @NonNull
+    PageEntity<MongoOutputEntity> getTracedOutput(@NonNull OutputSearchVO searchVO) {
+        final String key = ModelKeyGenerator.generateKeyWithIncId (searchVO.getDataset (),
+                searchVO.getAlgoName (), searchVO.getPhase (), "output", searchVO.getId ());
+        return getOutput0 (searchVO, key);
     }
 
     private List<MongoOutputEntity> preprocessTopK(List<MongoOutputEntity> list, Integer topK) {

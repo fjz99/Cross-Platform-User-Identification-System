@@ -2,7 +2,10 @@ package edu.nwpu.cpuis.service.model;
 
 import edu.nwpu.cpuis.service.AlgoService;
 import edu.nwpu.cpuis.service.DatasetService;
-import edu.nwpu.cpuis.utils.PythonUtils;
+import edu.nwpu.cpuis.train.ProcessWrapper;
+import edu.nwpu.cpuis.train.SimpleProcessWrapper;
+import edu.nwpu.cpuis.train.PythonUtils;
+import edu.nwpu.cpuis.train.State;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,7 +47,7 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
      */
     @Override
     public boolean train(List<String> datasets, String name, Map<String, String> args) {
-        PythonUtils.ProcessWrapper process = PythonUtils.getTrainProcess (name);
+        ProcessWrapper process = PythonUtils.getTrainProcess (name);
         Assert.isTrue (datasets.size () == 2, "目前只支持2个数据集输入");
         if (process == null) {
             final ModelDefinition.SingleModel singleModel = definition.getDefinition ().get (name);
@@ -91,7 +94,7 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
 
     @Override
     public Double getPercentage(String name) {
-        PythonUtils.ProcessWrapperTrain trainProcess = PythonUtils.getTrainProcess (name);
+        SimpleProcessWrapper trainProcess = PythonUtils.getTrainProcess (name);
         if (trainProcess == null) {
             return null;
         }
@@ -102,7 +105,7 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
         if (!replaceStopped)
             return PythonUtils.getTrainProcess (name) != null;
         else
-            return PythonUtils.getTrainProcess (name) != null && PythonUtils.getTrainProcess (name).getState () == PythonUtils.State.TRAINING;
+            return PythonUtils.getTrainProcess (name) != null && PythonUtils.getTrainProcess (name).getState () == State.TRAINING;
     }
 
     public String getStatus(String name) {

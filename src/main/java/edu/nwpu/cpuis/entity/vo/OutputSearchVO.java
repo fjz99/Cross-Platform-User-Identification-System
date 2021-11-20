@@ -22,4 +22,6 @@ public class OutputSearchVO {
     private String searchText;
 
     private Integer k;//以后可能改
+
+    private Integer id;//traced model,-1即为最新的，或者说不考虑
 }

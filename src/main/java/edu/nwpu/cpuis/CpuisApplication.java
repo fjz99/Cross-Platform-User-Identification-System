@@ -5,7 +5,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -19,6 +18,8 @@ import javax.annotation.Resource;
 @EnableAsync
 @PropertySource("classpath:models.properties")
 @EnableScheduling
+//todo delete
+//todo predict
 public class CpuisApplication {
 
     public static void main(String[] args) {

@@ -143,6 +143,7 @@ public class ModelController {
     //加@Valid！，即使databinder弄了！
     public Response<?> output(@RequestBody @Validated OutputSearchVO searchVO) {
         try {
+            searchVO.setId (-1);
             if (searchVO.getType ().equals ("statistics")) {
                 return Response.ok (matrixOutputModelService.getStatistics (searchVO, false));
             } else {
@@ -153,10 +154,5 @@ public class ModelController {
             return Response.fail ("err " + e.getMessage ());
         }
     }
-
-    //todo model manage
-    /**
-     * 模型一直都使用唯一的key区分
-     */
 
 }

@@ -1,12 +1,15 @@
 package edu.nwpu.cpuis.utils;
 
-/**
- * @author fujiazheng
- */
+
 public final class ModelKeyGenerator {
+
+    private ModelKeyGenerator() {
+
+    }
+
     /**
      * @param phase 即predict、train、test等
-     * @param type  即元数据还是输出
+     * @param type  即统计信息还是输出
      */
     public static String generateKey(String[] dataset, String algoName, String phase, String type) {
         StringBuilder stringBuilder = new StringBuilder ();
@@ -28,5 +31,26 @@ public final class ModelKeyGenerator {
             stringBuilder.deleteCharAt (lastIndex);
         }
         return stringBuilder.toString ();
+    }
+
+    public static String generateKeyWithIncId(String[] dataset, String algoName, String phase, String type, int thisId) {
+        return generateKey (dataset, algoName, phase, type) + "-" + thisId;
+    }
+
+    public static String generateModelInfoKey(String[] dataset, String algoName, String phase, String type, String prefix) {
+        return prefix + ":" + generateKey (dataset, algoName, phase, type);
+    }
+
+    /**
+     * 特殊的方法，隔离不同trainWrapper的statistics collection
+     *
+     * @param dataset
+     * @param algoName
+     * @param phase
+     * @param type
+     * @return
+     */
+    public static String generateKey0(String[] dataset, String algoName, String phase, String type) {
+        return generateKey (dataset, algoName, phase, type) + "TRACED_WRAPPER";
     }
 }

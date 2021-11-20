@@ -24,6 +24,16 @@
       "name": "datasetPrefix",
       "type": "java.lang.String",
       "description": "Description for datasetPrefix."
+    },
+    {
+      "name": "file.algo-base-location",
+      "type": "java.lang.String",
+      "description": "Description for file.algo-base-location."
+    },
+    {
+      "name": "algo-mongo-collection-name",
+      "type": "java.lang.String",
+      "description": "Description for algo-mongo-collection-name."
     }
   ]
 }
