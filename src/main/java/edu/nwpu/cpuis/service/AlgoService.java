@@ -61,7 +61,7 @@ public class AlgoService {
             }
             algoMap.put (x.getName (), x);
         });
-        log.info ("Auto scan algoEntity from collection {}", algoMongoLocation);
+        log.debug ("Auto scan algoEntity {} from collection {}", algoMap, algoMongoLocation);
     }
 
     @CacheEvict(cacheNames = "query", allEntries = true)

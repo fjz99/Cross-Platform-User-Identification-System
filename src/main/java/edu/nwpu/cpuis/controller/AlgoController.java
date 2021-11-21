@@ -58,8 +58,9 @@ public class AlgoController {
         String path = service.getAlgoLocation (name);
 
         Response<?> response;
-        if (!service.exists (name)) {
-            FileUtils.deleteDirectory (new File (path));
+        if (service.exists (name)) {
+//            FileUtils.deleteDirectory (new File (path));
+            service.delete (name);
             log.warn ("算法文件覆盖");
             response = Response.ok ("算法文件覆盖");
         } else {
@@ -106,7 +107,7 @@ public class AlgoController {
     })
     public Response<?> getAlgoPage(@RequestParam(required = false, defaultValue = "20") Integer size,
                                    @RequestParam(required = false, defaultValue = "1") Integer num) throws IOException {
-        return Response.ok (service.query (size,num));
+        return Response.ok (service.query (size, num));
     }
 
     @GetMapping(value = "/getByName/{name}")
