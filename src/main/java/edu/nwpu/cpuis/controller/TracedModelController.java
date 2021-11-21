@@ -28,7 +28,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/model/traced/")
 @Slf4j
-@Api(tags = "model", description = "模型api")
+@Api(tags = "tracedModel", description = "模型api", hidden = true)
 public class TracedModelController {
     @Resource
     private DatasetService fileUploadService;

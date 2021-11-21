@@ -1,6 +1,6 @@
 package edu.nwpu.cpuis.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +18,8 @@ public class DatasetManageEntity {
     private String contact;
     private String description;
     private String size;
-    @JSONField(format = "yyyy-MM-dd hh:mm:ss")
+    //    @JSONField(format = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime time;
     private String downloadRelativeURI;//相对路径,磁盘上的
 }
