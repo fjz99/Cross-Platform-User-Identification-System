@@ -43,6 +43,9 @@ public class DatasetService {
     @Value("${file.tempdir}")
     @NotNull
     public String tempDir;
+    @Value("${dataset-mongo-collection-name}")
+    @NotNull
+    public String mongoCollection;
     @Resource
     private List<CompressService> serviceList;
     @Resource
@@ -51,14 +54,11 @@ public class DatasetService {
     private MongoService<DatasetManageEntity> datasetManageEntityMongoService;
     @Resource
     private DatasetLoader loader;
-    @Value("${dataset-mongo-collection-name}")
-    @NotNull
-    public String mongoCollection;
     @Resource
     private DatasetValidator validator;
 
 
-    public Response<?> uploadInput(MultipartFile file, String datasetName, DatasetManageEntity manageEntity) {
+    public Response<?> uploadInput(MultipartFile file, String datasetName, DatasetManageEntity manageEntity) throws IOException {
         try {
             manageEntity.setDownloadRelativeURI (getDownloadPath (file.getOriginalFilename ()));
             String path = generateDatasetLocation (datasetName);
@@ -86,23 +86,27 @@ public class DatasetService {
             }
         } catch (IOException e) {
             e.printStackTrace ();
-            return Response.fail (String.format ("上传失败，ERR：%s", e.getMessage ()));
+            delete (datasetName);
+            return Response.of (String.format ("上传失败，ERR：%s", e.getMessage ()), false, Response.ErrCode.DATASET_VALIDATION_FAILED);
         }
     }
 
     //依赖于map，因为要查找entity
-    private Response<String> tryParseDataset(String datasetName, String path) {
+    private Response<String> tryParseDataset(String datasetName, String path) throws IOException {
         try {
             //验证文件类型
             DatasetValidator.FileTypeValidatorOutput output = validator.validateFileType (datasetLocation.get (datasetName), "txt");
             if (!output.isOk ()) {
                 log.warn ("数据集验证失败，必须是txt,造成异常的文件名为{}", output.getFailedFile ());
-                return Response.ok (String.format ("上传成功;WARN:数据集 %s 验证失败,数据集格式必须是txt,造成异常的文件名为'%s'",
-                        datasetName, output.getFailedFile ()));
+                delete (datasetName);
+                return Response.of (String.format ("上传失败;WARN:数据集 %s 验证失败,数据集格式必须是txt,造成异常的文件名为'%s'",
+                        datasetName, output.getFailedFile ()), false, Response.ErrCode.DATASET_VALIDATION_FAILED);
             }
             loader.loadDataset (path, datasetName);
         } catch (Exception e) {
-            return Response.ok (String.format ("上传成功\nWARN:数据集 %s 验证失败,ERR %s", datasetName, e.getMessage ()));
+            delete (datasetName);
+            return Response.of (String.format ("上传成功\nWARN:数据集 %s 验证失败,ERR %s", datasetName, e.getMessage ()),
+                    false, Response.ErrCode.DATASET_VALIDATION_FAILED);
         }
         return null;
     }
