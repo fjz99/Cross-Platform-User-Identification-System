@@ -13,10 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author fujiazheng
@@ -78,7 +75,7 @@ public final class PythonUtils {
     }
 
     //!调用方给出inputDir！
-    public static TracedProcessWrapper runTracedScript(String algoName, String sourceName, Map<String, Object> args, List<String> datasetNames, String phase) {
+    public static int runTracedScript(String algoName, String sourceName, Map<String, Object> args, List<String> datasetNames, String phase) {
         try {
             String[] dataset = datasetNames.toArray (new String[]{});
             String modelInfoKey = ModelKeyGenerator.generateModelInfoKey (dataset, algoName, phase, null, modelInfoPrefix);
@@ -86,7 +83,11 @@ public final class PythonUtils {
                 modelInfoMongoService.createCollection (modelInfoKey);
             }
             List<ModelInfo> modelInfos = modelInfoMongoService.selectAll (modelInfoKey, ModelInfo.class);
-            int thisId = modelInfos.size ();
+            int thisId = modelInfos
+                    .stream ()
+                    .map (ModelInfo::getId)
+                    .max (Comparator.naturalOrder ())
+                    .orElse (-1) + 1;
             String key = ModelKeyGenerator.generateKeyWithIncId (dataset, algoName, phase, null, thisId);
             String path = getDirectoryPath (algoName, dataset, phase, thisId);
             checkDirectory (algoName, dataset, phase, thisId);
@@ -98,10 +99,10 @@ public final class PythonUtils {
             TracedProcessWrapper wrapper = new TracedProcessWrapper (exec, algoName, dataset, phase, thisId, path);
             tracedProcesses.put (key, wrapper);
             wrapper.start ();
-            return wrapper;
+            return thisId;
         } catch (IOException e) {
             e.printStackTrace ();
-            return null;
+            return -1;
         }
     }
 

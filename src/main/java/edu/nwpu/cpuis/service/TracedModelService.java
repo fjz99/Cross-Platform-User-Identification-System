@@ -3,6 +3,7 @@ package edu.nwpu.cpuis.service;
 import edu.nwpu.cpuis.entity.AlgoEntity;
 import edu.nwpu.cpuis.entity.DatasetManageEntity;
 import edu.nwpu.cpuis.entity.ModelInfo;
+import edu.nwpu.cpuis.entity.vo.ModelLocationVO;
 import edu.nwpu.cpuis.entity.vo.ModelSearchVO;
 import edu.nwpu.cpuis.entity.vo.ModelVO;
 import edu.nwpu.cpuis.train.ProcessWrapper;
@@ -11,11 +12,14 @@ import edu.nwpu.cpuis.train.State;
 import edu.nwpu.cpuis.train.TracedProcessWrapper;
 import edu.nwpu.cpuis.utils.ModelKeyGenerator;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 import static edu.nwpu.cpuis.train.PythonUtils.modelInfoPrefix;
@@ -79,8 +83,9 @@ public class TracedModelService {
 
     /**
      * @param datasets 文件夹，2个
+     * @return 模型id，如果错误，返回-1
      */
-    public boolean train(List<String> datasets, String name, Map<String, String> args) {
+    public int train(List<String> datasets, String name, Map<String, String> args) {
         ProcessWrapper process = PythonUtils.getTracedProcess (name);
         Assert.isTrue (datasets.size () == 2, "目前只支持2个数据集输入");
         if (process == null) {
@@ -95,12 +100,11 @@ public class TracedModelService {
             //fixme
 //            PythonUtils.runScript (name, singleModel.getTrainSource (), map, datasets);
             if (algoService.getAlgoEntity (name) == null) {
-                return false;
+                return -1;
             }
-            PythonUtils.runTracedScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets, "train");
-            return true;
+            return PythonUtils.runTracedScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets, "train");
         } else {
-            return false;
+            return -1;
         }
     }
 
@@ -156,6 +160,17 @@ public class TracedModelService {
         return trainProcess.getPercentage ();
     }
 
+    public Double getPercentage(ModelLocationVO vo) {
+        String name = ModelKeyGenerator.generateKeyWithIncId (vo.getDataset (), vo.getAlgoName (), vo.getPhase (), null, vo.getId ());
+        TracedProcessWrapper trainProcess = PythonUtils.getTracedProcess (name);
+        if (trainProcess == null) {
+            return null;
+        }
+        return trainProcess.getPercentage ();
+    }
+
+    //based on latest model id
+    //用于判断是否正在训练中
     public boolean contains(String name, String[] dataset, String phase, String type, boolean replaceStopped) {
         String k = getLatestKey (name, dataset, phase, type);
         if (!replaceStopped)
@@ -169,6 +184,10 @@ public class TracedModelService {
         return ModelKeyGenerator.generateKeyWithIncId (dataset, name, phase, type, id);
     }
 
+    public String getKey(String name, String[] dataset, String phase, String type, Integer id) {
+        return ModelKeyGenerator.generateKeyWithIncId (dataset, name, phase, type, id);
+    }
+
     public int getLatestId(String name, String[] dataset, String phase, String type) {
         String key = ModelKeyGenerator.generateModelInfoKey (dataset, name,
                 phase, type, modelInfoPrefix);
@@ -178,5 +197,30 @@ public class TracedModelService {
 
     public String getStatus(String name) {
         return PythonUtils.getTracedProcess (name).getState ().toString ();
+    }
+
+    /**
+     * @return model exists
+     */
+    public boolean delete(ModelLocationVO vo) {
+        String key = ModelKeyGenerator.generateModelInfoKey (vo.getDataset (), vo.getAlgoName (),
+                vo.getPhase (), null, modelInfoPrefix);
+        ModelInfo modelInfo = service.selectById (vo.getId (), ModelInfo.class, key);
+        if (modelInfo != null) {
+            service.deleteByEqualGeneric (vo.getId (), ModelInfo.class, key, "id");
+            service.deleteCollection (modelInfo.getOutputCollectionName ());
+            service.deleteCollection (modelInfo.getReversedOutputCollectionName ());
+            service.deleteCollection (modelInfo.getStatisticsCollectionName ());
+            try {
+                FileUtils.deleteDirectory (new File (modelInfo.getDataLocation ()));
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
+            log.info ("delete vo {},collection {},{},{} ,files {}", vo, modelInfo.getOutputCollectionName (),
+                    modelInfo.getReversedOutputCollectionName (), modelInfo.getStatisticsCollectionName (), modelInfo.getDataLocation ());
+            return true;
+        } else {
+            return false;
+        }
     }
 }

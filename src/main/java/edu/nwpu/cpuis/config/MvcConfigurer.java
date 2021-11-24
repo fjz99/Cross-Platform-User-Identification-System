@@ -65,14 +65,4 @@ public class MvcConfigurer implements WebMvcConfigurer {
         source.registerCorsConfiguration ("/**", corsConfig ());
         return new CorsFilter (source);
     }
-
-    @Bean
-    public Converter<String, LocalDateTime> localDateTimeConverter() {
-        return new Converter<String, LocalDateTime> () {
-            @Override
-            public LocalDateTime convert(String source) {
-                return LocalDateTime.parse (source);
-            }
-        };
-    }
 }

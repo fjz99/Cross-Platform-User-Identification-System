@@ -33,6 +33,7 @@ public final class ModelKeyGenerator {
         return stringBuilder.toString ();
     }
 
+    //mongoDB also use this id.
     public static String generateKeyWithIncId(String[] dataset, String algoName, String phase, String type, int thisId) {
         return generateKey (dataset, algoName, phase, type) + "-" + thisId;
     }

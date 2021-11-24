@@ -1,6 +1,7 @@
 package edu.nwpu.cpuis.controller;
 
 import edu.nwpu.cpuis.entity.Response;
+import edu.nwpu.cpuis.entity.vo.ModelLocationVO;
 import edu.nwpu.cpuis.entity.vo.ModelSearchVO;
 import edu.nwpu.cpuis.entity.vo.OutputSearchVO;
 import edu.nwpu.cpuis.service.DatasetService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -59,7 +61,7 @@ public class TracedModelController {
     public Response<?> output(@RequestBody @Validated OutputSearchVO searchVO) {
         try {
             if (searchVO.getType ().equals ("statistics")) {
-                //忽略trace
+                //忽略trace fixme
                 return Response.ok (matrixOutputModelService.getStatistics (searchVO, false));
             } else {
                 return Response.ok (matrixOutputModelService.getTracedOutput (searchVO));
@@ -71,13 +73,14 @@ public class TracedModelController {
     }
 
     @GetMapping("/{name}/train")
-    @ApiOperation(value = "模型训练", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字;k默认为5")
+    @ApiOperation(value = "模型训练", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字\n" +
+            "会返回这个模型的id")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "name", value = "算法名称", required = true, dataTypeClass = String.class),
             @ApiImplicitParam(paramType = "query", name = "dataset", value = "数据集名称", required = true, dataTypeClass = List.class, allowMultiple = true),
     })
     public Response<?> train(@PathVariable @NotBlank String name,
-                             @RequestParam List<String> dataset) {
+                             @RequestParam @Size(min = 2, max = 2) List<String> dataset) {
         dataset.sort (Comparator.naturalOrder ());
         if (dataset.size () != 2) {
             log.error ("dataset input err {}", dataset);
@@ -90,21 +93,49 @@ public class TracedModelController {
         if (fileUploadService.getDatasetLocation (dataset.get (0)) != null
                 && fileUploadService.getDatasetLocation (dataset.get (1)) != null) {
             Map<String, String> args = new HashMap<> ();
-            service.train (dataset, name, args);
-            return Response.ok ("训练开始");
+            int id = service.train (dataset, name, args);
+            Map<String, Object> map = new HashMap<String, Object> () {
+                {
+                    put ("id", id);
+                    put ("msg", "训练开始");
+                }
+            };
+            return Response.ok (map);
         } else {
             log.error ("dataset input err {}", dataset);
             return Response.fail ("数据集输入错误");
         }
     }
 
-//    @GetMapping("/{name}/trainingPercentage")
-//    @ApiOperation(value = "获得某个模型的训练进度百分比")
-//    @ApiImplicitParam(paramType = "path", name = "name", value = "模型运行id", required = true, dataTypeClass = String.class)
-//    public Response<?> getTrainingPercentage(@PathVariable @NotBlank String name) {
-//        Double percentage = basicModel.getPercentage (name);
-//        if (percentage != null) {
-//            return Response.ok (percentage);
-//        } else return Response.fail ("模型不存在");
-//    }
+    //todo
+    @GetMapping("/trainingPercentage")
+    @ApiOperation(value = "获得某个模型的训练进度百分比")
+    @ApiImplicitParam(paramType = "body", name = "vo", value = "定位一个模型", required = true, dataTypeClass = ModelLocationVO.class)
+    public Response<?> getTrainingPercentage(@RequestBody ModelLocationVO vo) {
+        Double percentage = service.getPercentage (vo);
+        if (percentage != null) {
+            return Response.ok (percentage);
+        } else return Response.fail ("模型不存在或模型已经训练完成");
+    }
+
+    //todo
+    @GetMapping("/{name}/predict")
+    @ApiOperation(value = "模型预测", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "name", value = "算法名称", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(paramType = "query", name = "dataset", value = "数据集名称", required = true, dataTypeClass = List.class, allowMultiple = true),
+    })
+    public Response<?> predict(@PathVariable @NotBlank String name,
+                               @RequestParam @Size(min = 2, max = 2) List<String> dataset) {
+        return null;
+    }
+
+    @DeleteMapping("/delete")
+    @ApiOperation(value = "模型删除", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字")
+    @ApiImplicitParam(paramType = "body", name = "vo", value = "定位一个模型", required = true, dataTypeClass = ModelLocationVO.class)
+    public Response<?> delete(@RequestBody ModelLocationVO vo) {
+        if (service.delete (vo)) {
+            return Response.ok ("ok");
+        } else return Response.fail ("模型不存在");
+    }
 }
