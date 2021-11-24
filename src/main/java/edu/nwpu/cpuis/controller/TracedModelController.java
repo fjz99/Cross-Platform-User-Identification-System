@@ -60,6 +60,9 @@ public class TracedModelController {
     @ApiOperation(value = "获得输出", responseContainer = "List")
     public Response<?> output(@RequestBody @Validated OutputSearchVO searchVO) {
         try {
+            if (!service.contains (searchVO.getAlgoName (), searchVO.getDataset (), searchVO.getPhase (), searchVO.getId ())) {
+                return Response.fail ("模型不存在");
+            }
             if (searchVO.getType ().equals ("statistics")) {
                 //忽略trace fixme
                 return Response.ok (matrixOutputModelService.getStatistics (searchVO, false));
@@ -86,7 +89,7 @@ public class TracedModelController {
             log.error ("dataset input err {}", dataset);
             return Response.fail ("数据集输入错误");
         }
-        if (service.contains (name, dataset.toArray (new String[]{}), "train", null, true)) {
+        if (service.isTraining (name, dataset.toArray (new String[]{}), "train", null, true)) {
             log.error ("模型正在训练中");
             return Response.fail ("模型已经存在了！");
         }

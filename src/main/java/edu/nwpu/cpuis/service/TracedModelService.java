@@ -171,7 +171,7 @@ public class TracedModelService {
 
     //based on latest model id
     //用于判断是否正在训练中
-    public boolean contains(String name, String[] dataset, String phase, String type, boolean replaceStopped) {
+    public boolean isTraining(String name, String[] dataset, String phase, String type, boolean replaceStopped) {
         String k = getLatestKey (name, dataset, phase, type);
         if (!replaceStopped)
             return PythonUtils.getTracedProcess (k) != null;
@@ -222,5 +222,11 @@ public class TracedModelService {
         } else {
             return false;
         }
+    }
+
+    public boolean contains(String algoName, String[] dataset, String phase, Integer id) {
+        String key = ModelKeyGenerator.generateModelInfoKey (dataset, algoName, phase, null, modelInfoPrefix);
+        ModelInfo modelInfo = service.selectById (id, ModelInfo.class, key);
+        return modelInfo != null;
     }
 }
