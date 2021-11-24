@@ -211,7 +211,8 @@ public class DatasetService {
     }
 
     public boolean exists(String name) {
-        return datasetLocation.containsKey (name);
+        List<DatasetManageEntity> name1 = datasetManageEntityMongoService.selectByEquals (mongoCollection, DatasetManageEntity.class, "name", name);
+        return name1 != null && name1.size () != 0;
     }
 
     /**
