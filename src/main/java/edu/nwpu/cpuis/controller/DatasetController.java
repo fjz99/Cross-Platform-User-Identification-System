@@ -57,7 +57,7 @@ public class DatasetController {
     @GetMapping("/all")
     @ApiOperation(value = "获得所有数据集")
     public Response<?> all() {
-        return Response.ok (datasetService.getDatasetLocation ().keySet ());
+        return Response.ok (datasetService.getAll ());
     }
 
     @GetMapping({"/trace/{dataset}/{user}", "/trace/{dataset}/"})

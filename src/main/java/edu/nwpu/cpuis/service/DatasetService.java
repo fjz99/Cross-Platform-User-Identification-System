@@ -54,6 +54,9 @@ public class DatasetService {
     @Resource
     private DatasetValidator validator;
 
+    public List<DatasetManageEntity> getAll() {
+        return datasetManageEntityMongoService.selectAll (mongoCollection, DatasetManageEntity.class);
+    }
 
     public Response<?> uploadInput(MultipartFile file, String datasetName, DatasetManageEntity manageEntity) throws IOException {
         try {
