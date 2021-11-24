@@ -68,7 +68,7 @@ public class DatasetController {
     })
     public Response<?> getTrace(@PathVariable @NotNull String dataset,
                                 @PathVariable(required = false) String user) {
-        if (!datasetService.checkDatasetExists (dataset)) {
+        if (!datasetService.exists (dataset)) {
             return Response.fail (String.format ("数据集%s不存在", dataset));
         }
         List<DatasetEntity> userTrace = datasetService.getUserTrace (user, dataset);

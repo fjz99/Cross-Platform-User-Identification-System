@@ -183,20 +183,18 @@ public class DatasetService {
     }
 
     //    @PostConstruct
+    //应该借助数据库
     public void scanDataset() {
-        File path = new File (baseLocation);
-        if (!path.exists ()) {
-            path.mkdirs ();
-        }
-        for (File file : Objects.requireNonNull (new File (baseLocation).listFiles ())) {
-            if (file.isDirectory ())
-                datasetLocation.put (file.getName (), file.getPath ());
+        List<DatasetManageEntity> all = getAll ();
+        for (DatasetManageEntity manageEntity : all) {
+            String name = manageEntity.getName ();
+            datasetLocation.put (name, generateDatasetLocationByName (name));
         }
         log.info ("auto load datasets {}", datasetLocation.entrySet ());
     }
 
-    public boolean checkDatasetExists(String name) {
-        return getDatasetLocation (name) != null;
+    public String generateDatasetLocationByName(String name) {
+        return baseLocation + name;
     }
 
     public List<DatasetEntity> getUserTrace(String id, String datasetName) {
@@ -223,15 +221,16 @@ public class DatasetService {
      */
     public void delete(String name) throws IOException {
         final String mongoName = loader.generateUserTraceDataCollectionName (name);
-        String s = datasetLocation.get (name);
-        if (s == null) {
+        List<DatasetManageEntity> entities = datasetManageEntityMongoService.selectByEquals (mongoCollection, DatasetManageEntity.class, "name", name);
+        if (entities == null || entities.size () == 0) {
             log.warn ("delete dataset:dataset {} 已经被删除", name);
             return;
         }
+        DatasetManageEntity manageEntity = entities.get (0);
+        String s = generateDatasetLocationByName (manageEntity.getName ());
         datasetLocation.remove (name);
         FileUtils.deleteDirectory (new File (s));
         mongoService.deleteCollection (mongoName);
-        List<DatasetManageEntity> entities = datasetManageEntityMongoService.selectByEquals (mongoCollection, DatasetManageEntity.class, "name", name);
         if (entities.size () > 0) {
             String downloadRelativeURI = entities.get (0).getDownloadRelativeURI ();
             String fileSysPath = getFileSysPath (downloadRelativeURI);
