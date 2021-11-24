@@ -5,8 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-
-//hash-fb-fs-train-output/metadata
+//hash-fb-fs-train-output
 @Slf4j
 public abstract class ProcessWrapper {
 
@@ -32,7 +31,7 @@ public abstract class ProcessWrapper {
     }
 
     public void start() {
-        PythonUtils.executor.submit (daemon);
+        PythonScriptRunner.executor.submit (daemon);
     }
 
     protected abstract void cleanupLastOutput();

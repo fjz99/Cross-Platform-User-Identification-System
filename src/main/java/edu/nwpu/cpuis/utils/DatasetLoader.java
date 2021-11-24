@@ -16,9 +16,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * @author fujiazheng
- */
 @Component
 @Slf4j
 public class DatasetLoader {

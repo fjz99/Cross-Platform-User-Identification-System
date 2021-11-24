@@ -23,9 +23,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-/**
- * @author fujiazheng
- */
 @Service
 @Validated
 @Slf4j

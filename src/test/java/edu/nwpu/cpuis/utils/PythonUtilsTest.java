@@ -2,7 +2,7 @@ package edu.nwpu.cpuis.utils;
 
 import edu.nwpu.cpuis.service.model.ModelDefinition;
 import edu.nwpu.cpuis.train.SimpleProcessWrapper;
-import edu.nwpu.cpuis.train.PythonUtils;
+import edu.nwpu.cpuis.train.PythonScriptRunner;
 import edu.nwpu.cpuis.train.State;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ class PythonUtilsTest {
         List<String> names = new ArrayList<> ();
         names.add ("dataset1");
         names.add ("dataset2");
-        SimpleProcessWrapper demo = PythonUtils.runScript ("demo", "train-template.py", args, names);
+        SimpleProcessWrapper demo = PythonScriptRunner.runScript ("demo", "train-template.py", args, names);
         while (demo.getPercentage () != 100) {
             Thread.sleep (500);
             System.out.println (demo.getPercentage ());
@@ -71,7 +71,7 @@ class PythonUtilsTest {
         List<String> names = new ArrayList<> ();
         names.add ("dataset1");
         names.add ("dataset2");
-        SimpleProcessWrapper demo = PythonUtils.runScript ("demo", "demo-train.py", args, names);
+        SimpleProcessWrapper demo = PythonScriptRunner.runScript ("demo", "demo-train.py", args, names);
         while (demo.getState () != State.SUCCESSFULLY_STOPPED) ;
         System.out.println (demo.getPercentage ());
         System.out.println (demo.getState ());
@@ -100,7 +100,7 @@ class PythonUtilsTest {
         names.add ("fb");
         names.add ("fs");
         args.put ("k", "10");
-        SimpleProcessWrapper demo = PythonUtils.runScript ("hash", "MECS-SDA2.py", args, names);
+        SimpleProcessWrapper demo = PythonScriptRunner.runScript ("hash", "MECS-SDA2.py", args, names);
         while (demo.getState () != State.SUCCESSFULLY_STOPPED) ;
         System.out.println (demo.getPercentage ());
         System.out.println (demo.getState ());

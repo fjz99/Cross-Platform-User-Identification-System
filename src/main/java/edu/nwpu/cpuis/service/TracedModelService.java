@@ -7,7 +7,7 @@ import edu.nwpu.cpuis.entity.vo.ModelLocationVO;
 import edu.nwpu.cpuis.entity.vo.ModelSearchVO;
 import edu.nwpu.cpuis.entity.vo.ModelVO;
 import edu.nwpu.cpuis.train.ProcessWrapper;
-import edu.nwpu.cpuis.train.PythonUtils;
+import edu.nwpu.cpuis.train.PythonScriptRunner;
 import edu.nwpu.cpuis.train.State;
 import edu.nwpu.cpuis.train.TracedProcessWrapper;
 import edu.nwpu.cpuis.utils.ModelKeyGenerator;
@@ -22,7 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import static edu.nwpu.cpuis.train.PythonUtils.modelInfoPrefix;
+import static edu.nwpu.cpuis.train.PythonScriptRunner.modelInfoPrefix;
 
 @Service
 @Slf4j
@@ -86,7 +86,7 @@ public class TracedModelService {
      * @return 模型id，如果错误，返回-1
      */
     public int train(List<String> datasets, String name, Map<String, String> args) {
-        ProcessWrapper process = PythonUtils.getTracedProcess (name);
+        ProcessWrapper process = PythonScriptRunner.getTracedProcess (name);
         Assert.isTrue (datasets.size () == 2, "目前只支持2个数据集输入");
         if (process == null) {
             Map<String, Object> map = new HashMap<> ();
@@ -102,14 +102,14 @@ public class TracedModelService {
             if (algoService.getAlgoEntity (name) == null) {
                 return -1;
             }
-            return PythonUtils.runTracedScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets, "train");
+            return PythonScriptRunner.runTracedScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets, "train");
         } else {
             return -1;
         }
     }
 
     public boolean predict(List<String> datasets, String name, Map<String, String> args, Integer relatedTrainModel) {
-        ProcessWrapper process = PythonUtils.getTracedProcess (name);
+        ProcessWrapper process = PythonScriptRunner.getTracedProcess (name);
         Assert.isTrue (datasets.size () == 2, "目前只支持2个数据集输入");
         if (process == null) {
             //获得训练的模型
@@ -132,7 +132,7 @@ public class TracedModelService {
             if (algoService.getAlgoEntity (name) == null) {
                 return false;
             }
-            PythonUtils.runTracedScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets, "predict");
+            PythonScriptRunner.runTracedScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets, "predict");
             return true;
         } else {
             return false;
@@ -141,11 +141,11 @@ public class TracedModelService {
 
 
     public boolean destroy(String name) {
-        if (PythonUtils.getTracedProcess (name) == null) {
+        if (PythonScriptRunner.getTracedProcess (name) == null) {
             log.info ("模型删除失败");
             return false;
         } else {
-            PythonUtils.getTracedProcess (name).kill ();
+            PythonScriptRunner.getTracedProcess (name).kill ();
             log.info ("模型删除成功");
             return true;
         }
@@ -153,7 +153,7 @@ public class TracedModelService {
 
 
     public Double getPercentage(String name) {
-        TracedProcessWrapper trainProcess = PythonUtils.getTracedProcess (name);
+        TracedProcessWrapper trainProcess = PythonScriptRunner.getTracedProcess (name);
         if (trainProcess == null) {
             return null;
         }
@@ -162,7 +162,7 @@ public class TracedModelService {
 
     public Double getPercentage(ModelLocationVO vo) {
         String name = ModelKeyGenerator.generateKeyWithIncId (vo.getDataset (), vo.getAlgoName (), vo.getPhase (), null, vo.getId ());
-        TracedProcessWrapper trainProcess = PythonUtils.getTracedProcess (name);
+        TracedProcessWrapper trainProcess = PythonScriptRunner.getTracedProcess (name);
         if (trainProcess == null) {
             return null;
         }
@@ -174,9 +174,9 @@ public class TracedModelService {
     public boolean isTraining(String name, String[] dataset, String phase, String type, boolean replaceStopped) {
         String k = getLatestKey (name, dataset, phase, type);
         if (!replaceStopped)
-            return PythonUtils.getTracedProcess (k) != null;
+            return PythonScriptRunner.getTracedProcess (k) != null;
         else
-            return PythonUtils.getTracedProcess (k) != null && PythonUtils.getTracedProcess (k).getState () == State.TRAINING;
+            return PythonScriptRunner.getTracedProcess (k) != null && PythonScriptRunner.getTracedProcess (k).getState () == State.TRAINING;
     }
 
     public String getLatestKey(String name, String[] dataset, String phase, String type) {
@@ -196,7 +196,7 @@ public class TracedModelService {
     }
 
     public String getStatus(String name) {
-        return PythonUtils.getTracedProcess (name).getState ().toString ();
+        return PythonScriptRunner.getTracedProcess (name).getState ().toString ();
     }
 
     /**

@@ -44,17 +44,17 @@ public class SimpleProcessWrapper extends ProcessWrapper {
 //            key = ModelKeyGenerator.generateKey (dataset, algoName, phase, METADATA_TYPE);
 //            mongoService.deleteCollection (key);
 
-        key = ModelKeyGenerator.generateKey (dataset, algoName, phase, PythonUtils.OUTPUT_TYPE);
-        PythonUtils.mongoService.deleteCollection (key);
-        PythonUtils.mongoService.createCollection (key);
-        PythonUtils.mongoService.createIndex (key, "userName", false, true);
-        PythonUtils.mongoService.createTextIndex (key, "userName", false);
+        key = ModelKeyGenerator.generateKey (dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE);
+        PythonScriptRunner.mongoService.deleteCollection (key);
+        PythonScriptRunner.mongoService.createCollection (key);
+        PythonScriptRunner.mongoService.createIndex (key, "userName", false, true);
+        PythonScriptRunner.mongoService.createTextIndex (key, "userName", false);
 
-        final String key = getReversedKey (PythonUtils.OUTPUT_TYPE);
-        PythonUtils.mongoService.deleteCollection (getReversedKey (PythonUtils.OUTPUT_TYPE));
-        PythonUtils.mongoService.createCollection (key);
-        PythonUtils.mongoService.createIndex (key, "userName", false, true);
-        PythonUtils.mongoService.createTextIndex (key, "userName", false);
+        final String key = getReversedKey (PythonScriptRunner.OUTPUT_TYPE);
+        PythonScriptRunner.mongoService.deleteCollection (getReversedKey (PythonScriptRunner.OUTPUT_TYPE));
+        PythonScriptRunner.mongoService.createCollection (key);
+        PythonScriptRunner.mongoService.createIndex (key, "userName", false, true);
+        PythonScriptRunner.mongoService.createTextIndex (key, "userName", false);
 
 //            mongoService.deleteCollection (getReversedKey (METADATA_TYPE));
         log.info ("cleanup output done");
@@ -118,7 +118,7 @@ public class SimpleProcessWrapper extends ProcessWrapper {
             } catch (IOException e) {
                 e.printStackTrace ();
                 state = State.ERROR_STOPPED;
-                PythonUtils.processes.remove (key);
+                PythonScriptRunner.processes.remove (key);
                 log.error ("{} err stop process :{}", key, e.getMessage ());
             }
         });
@@ -129,7 +129,7 @@ public class SimpleProcessWrapper extends ProcessWrapper {
         for (Map.Entry<String, Object> stringObjectEntry : ((Map<String, Object>) output.getOutput ()).entrySet ()) {
             final String k = stringObjectEntry.getKey ();
             final List<List<String>> v = (List<List<String>>) stringObjectEntry.getValue ();
-            final String key = ModelKeyGenerator.generateKey (dataset, algoName, phase, PythonUtils.OUTPUT_TYPE);
+            final String key = ModelKeyGenerator.generateKey (dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE);
             MongoOutputEntity mongoOutputEntity = new MongoOutputEntity ();
             mongoOutputEntity.setUserName (k);
             mongoOutputEntity.setOthers (new ArrayList<> ());
@@ -141,14 +141,14 @@ public class SimpleProcessWrapper extends ProcessWrapper {
                 mongoOutputEntity.getOthers ().add (otherUser);
             }
             mongoOutputEntity.getOthers ().sort (Comparator.comparing (MongoOutputEntity.OtherUser::getSimilarity).reversed ());
-            PythonUtils.mongoService.insert (mongoOutputEntity, key);
+            PythonScriptRunner.mongoService.insert (mongoOutputEntity, key);
 //            log.debug ("{} data is",mongoOutputEntity);
         }
         //存储统计信息
         String key = ModelKeyGenerator.generateKey (dataset, algoName, phase, "statistics");
         saveStatisticsToMongoDB (key, output);
         log.info ("{} saved output to mongodb", key);
-        PythonUtils.executor.submit (reversedOutput (true));
+        PythonScriptRunner.executor.submit (reversedOutput (true));
     }
 
     protected void saveStatisticsToMongoDB(String key, Output output) {
@@ -158,12 +158,12 @@ public class SimpleProcessWrapper extends ProcessWrapper {
         statistics.put ("trainTimeStamp", format);
         statistics.put ("time", output.getTime ());
         statistics.putAll (output.getOther ());
-        PythonUtils.mapMongoService.insert (statistics, key);
+        PythonScriptRunner.mapMongoService.insert (statistics, key);
     }
 
     protected Runnable reversedOutput(final boolean saveStatistics2Mongo) {
         return () -> {
-            String key = getReversedKey (PythonUtils.OUTPUT_TYPE);
+            String key = getReversedKey (PythonScriptRunner.OUTPUT_TYPE);
             Map<String, Object> map = (Map<String, Object>) output.getOutput ();
             Map<String, MongoOutputEntity> result = new HashMap<> ();
             for (Map.Entry<String, Object> stringObjectEntry : map.entrySet ()) {
@@ -186,7 +186,7 @@ public class SimpleProcessWrapper extends ProcessWrapper {
 
             result.forEach ((k, v) -> {
                 v.getOthers ().sort (Comparator.comparing (MongoOutputEntity.OtherUser::getSimilarity).reversed ());
-                PythonUtils.mongoService.insert (v, key);
+                PythonScriptRunner.mongoService.insert (v, key);
             });
 
             //存储统计信息
@@ -211,6 +211,6 @@ public class SimpleProcessWrapper extends ProcessWrapper {
     @Override
     public void kill() {
         super.kill ();
-        PythonUtils.processes.remove (key);
+        PythonScriptRunner.processes.remove (key);
     }
 }

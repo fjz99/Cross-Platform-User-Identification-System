@@ -4,7 +4,7 @@ import edu.nwpu.cpuis.service.AlgoService;
 import edu.nwpu.cpuis.service.DatasetService;
 import edu.nwpu.cpuis.train.ProcessWrapper;
 import edu.nwpu.cpuis.train.SimpleProcessWrapper;
-import edu.nwpu.cpuis.train.PythonUtils;
+import edu.nwpu.cpuis.train.PythonScriptRunner;
 import edu.nwpu.cpuis.train.State;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -18,13 +18,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author fujiazheng
- */
 @Service
 @Data
 @Slf4j
-public class BasicModel<A, B> implements CheckableModel<A, B> {
+public class BasicModel<A, B>{
     private static final String datasetKey = "dirs";
     private final ModelDefinition definition;
     @Value("${file.input-base-location}")
@@ -45,9 +42,8 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
     /**
      * @param datasets 文件夹，2个
      */
-    @Override
     public boolean train(List<String> datasets, String name, Map<String, String> args) {
-        ProcessWrapper process = PythonUtils.getTrainProcess (name);
+        ProcessWrapper process = PythonScriptRunner.getTrainProcess (name);
         Assert.isTrue (datasets.size () == 2, "目前只支持2个数据集输入");
         if (process == null) {
             final ModelDefinition.SingleModel singleModel = definition.getDefinition ().get (name);
@@ -63,38 +59,26 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
             if (algoService.getAlgoEntity (name) == null) {
                 return false;
             }
-            PythonUtils.runScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets);
+            PythonScriptRunner.runScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets);
             return true;
         } else {
             return false;
         }
     }
 
-    @Override
-    public boolean load(String name) {
-        return false;
-    }
-
-    @Override
     public boolean destroy(String name) {
-        if (PythonUtils.getTrainProcess (name) == null) {
+        if (PythonScriptRunner.getTrainProcess (name) == null) {
             log.info ("模型删除失败");
             return false;
         } else {
-            PythonUtils.getTrainProcess (name).kill ();
+            PythonScriptRunner.getTrainProcess (name).kill ();
             log.info ("模型删除成功");
             return true;
         }
     }
 
-    @Override
-    public B predict(A data, String name) {
-        return null;
-    }
-
-    @Override
     public Double getPercentage(String name) {
-        SimpleProcessWrapper trainProcess = PythonUtils.getTrainProcess (name);
+        SimpleProcessWrapper trainProcess = PythonScriptRunner.getTrainProcess (name);
         if (trainProcess == null) {
             return null;
         }
@@ -103,12 +87,12 @@ public class BasicModel<A, B> implements CheckableModel<A, B> {
 
     public boolean contains(String name, boolean replaceStopped) {
         if (!replaceStopped)
-            return PythonUtils.getTrainProcess (name) != null;
+            return PythonScriptRunner.getTrainProcess (name) != null;
         else
-            return PythonUtils.getTrainProcess (name) != null && PythonUtils.getTrainProcess (name).getState () == State.TRAINING;
+            return PythonScriptRunner.getTrainProcess (name) != null && PythonScriptRunner.getTrainProcess (name).getState () == State.TRAINING;
     }
 
     public String getStatus(String name) {
-        return PythonUtils.getTrainProcess (name).getState ().toString ();
+        return PythonScriptRunner.getTrainProcess (name).getState ().toString ();
     }
 }

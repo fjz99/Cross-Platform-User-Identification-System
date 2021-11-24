@@ -9,9 +9,6 @@ import org.springframework.data.mongodb.core.index.TextIndexed;
 import java.util.List;
 
 //这个仅仅是输出的信息
-/**
- * @author fujiazheng
- */
 @Data
 @Builder
 @NoArgsConstructor

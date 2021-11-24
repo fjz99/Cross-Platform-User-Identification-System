@@ -4,9 +4,6 @@ import lombok.Data;
 
 import java.util.List;
 
-/**
- * @author fujiazheng
- */
 @Data
 public class DatasetEntity {
     private String id;

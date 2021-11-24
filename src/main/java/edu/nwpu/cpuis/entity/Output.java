@@ -4,9 +4,6 @@ import lombok.Data;
 
 import java.util.Map;
 
-/**
- * @author fujiazheng
- */
 @Data
 public class Output {
     private String name;

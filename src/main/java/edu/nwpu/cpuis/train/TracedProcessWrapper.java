@@ -16,8 +16,8 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static edu.nwpu.cpuis.train.PythonUtils.modelInfoPrefix;
-import static edu.nwpu.cpuis.train.PythonUtils.mongoService;
+import static edu.nwpu.cpuis.train.PythonScriptRunner.modelInfoPrefix;
+import static edu.nwpu.cpuis.train.PythonScriptRunner.mongoService;
 
 /**
  * 实现了训练历史
@@ -27,7 +27,7 @@ import static edu.nwpu.cpuis.train.PythonUtils.mongoService;
  */
 @Slf4j
 public class TracedProcessWrapper extends ProcessWrapper {
-    private static final MongoService<ModelInfo> modelInfoMongoService = PythonUtils.modelInfoMongoService;
+    private static final MongoService<ModelInfo> modelInfoMongoService = PythonScriptRunner.modelInfoMongoService;
     private volatile double percentage = 0;
     private volatile boolean parseOutput = false;
     private Output output;
@@ -62,7 +62,7 @@ public class TracedProcessWrapper extends ProcessWrapper {
     @Override
     public void kill() {
         super.kill ();
-        PythonUtils.tracedProcesses.remove (key);
+        PythonScriptRunner.tracedProcesses.remove (key);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class TracedProcessWrapper extends ProcessWrapper {
             } catch (IOException e) {
                 e.printStackTrace ();
                 state = State.ERROR_STOPPED;
-                PythonUtils.tracedProcesses.remove (key);
+                PythonScriptRunner.tracedProcesses.remove (key);
                 log.error ("{} err stop process :{}", key, e.getMessage ());
             }
         });
@@ -122,7 +122,7 @@ public class TracedProcessWrapper extends ProcessWrapper {
 
     private void saveToMongoDB() {
         //检查mongoCollection
-        String key = ModelKeyGenerator.generateKeyWithIncId (dataset, algoName, phase, PythonUtils.OUTPUT_TYPE, thisId);
+        String key = ModelKeyGenerator.generateKeyWithIncId (dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, thisId);
         if (mongoService.collectionExists (key)) {
             mongoService.deleteCollection (key);
             log.warn ("{} 输出的mongo collection已存在", key);
@@ -152,7 +152,7 @@ public class TracedProcessWrapper extends ProcessWrapper {
         key = ModelKeyGenerator.generateKey0 (dataset, algoName, phase, "statistics");
         saveStatisticsToMongoDB (key, output);
         log.info ("{} saved output to mongodb", key);
-        PythonUtils.executor.submit (reversedOutput (true));
+        PythonScriptRunner.executor.submit (reversedOutput (true));
 
         //下面保存ModelInfo等
         ModelInfo modelInfo = ModelInfo.builder ()
@@ -160,8 +160,8 @@ public class TracedProcessWrapper extends ProcessWrapper {
                 .time (LocalDateTime.now ())
                 .dataLocation (directoryPath)
                 .statisticsCollectionName (key)
-                .outputCollectionName (ModelKeyGenerator.generateKeyWithIncId (dataset, algoName, phase, PythonUtils.OUTPUT_TYPE, thisId))
-                .reversedOutputCollectionName (getReversedKey (PythonUtils.OUTPUT_TYPE, thisId))
+                .outputCollectionName (ModelKeyGenerator.generateKeyWithIncId (dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, thisId))
+                .reversedOutputCollectionName (getReversedKey (PythonScriptRunner.OUTPUT_TYPE, thisId))
                 .algo (algoName)
                 .dataset (dataset)
                 .build ();
@@ -176,7 +176,7 @@ public class TracedProcessWrapper extends ProcessWrapper {
         statistics.put ("time", output.getTime ());
         statistics.put ("relatedId", thisId);
         statistics.putAll (output.getOther ());
-        PythonUtils.mapMongoService.insert (statistics, key);
+        PythonScriptRunner.mapMongoService.insert (statistics, key);
     }
 
     protected String getReversedKey(String type, Integer thisId) {
@@ -199,7 +199,7 @@ public class TracedProcessWrapper extends ProcessWrapper {
 
     protected Runnable reversedOutput(final boolean saveStatistics2Mongo) {
         return () -> {
-            String key = getReversedKey (PythonUtils.OUTPUT_TYPE, thisId);
+            String key = getReversedKey (PythonScriptRunner.OUTPUT_TYPE, thisId);
             //检查mongoCollection
             if (mongoService.collectionExists (key)) {
                 mongoService.deleteCollection (key);

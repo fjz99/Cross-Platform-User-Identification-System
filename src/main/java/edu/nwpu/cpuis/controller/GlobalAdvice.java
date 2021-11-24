@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.ServletException;
 
-/**
- * @author fujiazheng
- */
 @RestControllerAdvice
 @Slf4j
 public class GlobalAdvice {

@@ -18,9 +18,8 @@ import java.util.Map;
 /**
  * python源文件目录为python/model/ <br/>
  * 配置文件前缀为 "models.definition"
- *
- * @author fujiazheng
  */
+@Deprecated
 @ConfigurationProperties(prefix = "models")
 @Component
 @Data

@@ -15,13 +15,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-/**
- * @author fujiazheng
- */
 @Component
 @Slf4j
 @SuppressWarnings("rawtypes")
-public final class PythonUtils {
+public final class PythonScriptRunner {
     public static final String OUTPUT_TYPE = "output";
     public static final String METADATA_TYPE = "metadata";
     public static final String modelInfoPrefix = "model-traced";
@@ -38,16 +35,16 @@ public final class PythonUtils {
     static MongoService<AlgoEntity> algoEntityMongoService;
     static MongoService<DatasetManageEntity> datasetManageEntityMongoService;
 
-    private PythonUtils(ThreadPoolTaskExecutor executor, MongoService<MongoOutputEntity> mongoService,
-                        MongoService<Map> mapMongoService, MongoService<ModelInfo> modelInfoMongoService,
-                        MongoService<AlgoEntity> algoEntityMongoService,
-                        MongoService<DatasetManageEntity> datasetManageEntityMongoService) {
-        PythonUtils.mongoService = mongoService;
-        PythonUtils.executor = executor;
-        PythonUtils.mapMongoService = mapMongoService;
-        PythonUtils.modelInfoMongoService = modelInfoMongoService;
-        PythonUtils.algoEntityMongoService = algoEntityMongoService;
-        PythonUtils.datasetManageEntityMongoService = datasetManageEntityMongoService;
+    private PythonScriptRunner(ThreadPoolTaskExecutor executor, MongoService<MongoOutputEntity> mongoService,
+                               MongoService<Map> mapMongoService, MongoService<ModelInfo> modelInfoMongoService,
+                               MongoService<AlgoEntity> algoEntityMongoService,
+                               MongoService<DatasetManageEntity> datasetManageEntityMongoService) {
+        PythonScriptRunner.mongoService = mongoService;
+        PythonScriptRunner.executor = executor;
+        PythonScriptRunner.mapMongoService = mapMongoService;
+        PythonScriptRunner.modelInfoMongoService = modelInfoMongoService;
+        PythonScriptRunner.algoEntityMongoService = algoEntityMongoService;
+        PythonScriptRunner.datasetManageEntityMongoService = datasetManageEntityMongoService;
     }
 
     /**

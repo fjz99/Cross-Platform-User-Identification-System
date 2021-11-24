@@ -18,7 +18,6 @@ import javax.annotation.Resource;
 @EnableAsync
 @PropertySource("classpath:models.properties")
 @EnableScheduling
-//todo delete
 //todo predict
 public class CpuisApplication {
 

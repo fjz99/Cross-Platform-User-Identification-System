@@ -11,9 +11,6 @@ import org.springframework.stereotype.Component;
 import java.io.*;
 import java.util.List;
 
-/**
- * @author fujiazheng
- */
 @Component
 public class ZipCompressService implements CompressService, Ordered {
     @Override
