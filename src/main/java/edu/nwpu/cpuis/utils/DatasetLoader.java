@@ -32,6 +32,9 @@ public class DatasetLoader {
      * @param path 目录
      */
     public void loadDataset(String path, String datasetName) throws IOException {
+        if(true){
+            return;
+        }
         final String collectionName = generateUserTraceDataCollectionName (datasetName);
         if (replace) {
             log.warn ("replace dataset {}", datasetName);
@@ -55,6 +58,7 @@ public class DatasetLoader {
             entity.setId (name.substring (0, name.lastIndexOf ('.')));
             List<DatasetEntity.PathEntity> list = new ArrayList<> ();
             entity.setPath (list);
+            //fixme 数组越界异常
             FileUtils.readLines (x).
                     forEach (line -> {
                                 String[] split = line.trim ().split ("\\s+");

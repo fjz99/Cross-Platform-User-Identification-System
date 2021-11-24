@@ -101,6 +101,7 @@ public class DatasetService {
             }
             loader.loadDataset (path, datasetName);
         } catch (Exception e) {
+            e.printStackTrace ();
             delete (datasetName);
             return Response.of (String.format ("上传成功\nWARN:数据集 %s 验证失败,ERR %s", datasetName, e.getMessage ()),
                     true, Response.ErrCode.DATASET_VALIDATION_FAILED);
