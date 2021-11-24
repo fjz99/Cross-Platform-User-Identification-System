@@ -1,13 +1,19 @@
 package edu.nwpu.cpuis.config;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 /**
@@ -15,6 +21,21 @@ import java.time.LocalDateTime;
  */
 @Configuration
 public class MvcConfigurer implements WebMvcConfigurer {
+
+    @Bean
+    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter(ObjectMapper objectMapper){
+        objectMapper.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object> () {
+            @Override
+            public void serialize(Object param, JsonGenerator jsonGenerator,
+                                  SerializerProvider paramSerializerProvider) throws IOException {
+                jsonGenerator.writeString("");
+            }
+        });
+
+        MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
+        mappingJackson2HttpMessageConverter.setObjectMapper(objectMapper);
+        return mappingJackson2HttpMessageConverter;
+    }
 
 //    @Override
 //    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -64,5 +85,15 @@ public class MvcConfigurer implements WebMvcConfigurer {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource ();
         source.registerCorsConfiguration ("/**", corsConfig ());
         return new CorsFilter (source);
+    }
+
+    @Bean
+    public Converter<String, LocalDateTime> localDateTimeConverter() {
+        return new Converter<String, LocalDateTime> () {
+            @Override
+            public LocalDateTime convert(String source) {
+                return LocalDateTime.parse (source);
+            }
+        };
     }
 }
