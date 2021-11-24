@@ -87,7 +87,7 @@ public class DatasetController {
             datasetService.delete (name);
             return Response.ok ("删除成功");
         } else {
-            return Response.fail ("算法不存在");
+            return Response.fail ("数据集不存在");
         }
     }
 
