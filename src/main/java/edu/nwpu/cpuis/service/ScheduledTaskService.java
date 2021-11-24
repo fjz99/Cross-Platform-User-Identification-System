@@ -13,14 +13,4 @@ public class ScheduledTaskService {
     public ScheduledTaskService(DatasetService service) {
         this.service = service;
     }
-
-    /**
-     * 检查数据集一致性，即map和mongo和文件夹一致性，如果不一致，就会删除数据集
-     */
-    //todo
-    public void checkDatasetConsistency() {
-        service.getDatasetLocation ().forEach ((k, v) -> {
-
-        });
-    }
 }

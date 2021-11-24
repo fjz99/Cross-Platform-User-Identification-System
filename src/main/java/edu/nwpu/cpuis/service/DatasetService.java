@@ -23,6 +23,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * 在数据集上传的时候进行验证
+ */
 @Service
 @Validated
 @Slf4j
@@ -54,13 +57,30 @@ public class DatasetService {
     @Resource
     private DatasetValidator validator;
 
+    public static String getDatasetSizePretty(long bytes) {
+        final String[] f = new String[]{
+                "B", "KB", "MB", "GB", "TB", "PB"
+        };
+        int i = 0;
+        double c = bytes;
+        while (c >= 1024) {
+            c /= 1024;
+            i++;
+        }
+        if (i >= f.length) {
+            return String.format ("%.2fB", c);
+        } else {
+            return String.format ("%.2f%s", c, f[i]);
+        }
+    }
+
     public List<DatasetManageEntity> getAll() {
         return datasetManageEntityMongoService.selectAll (mongoCollection, DatasetManageEntity.class);
     }
 
     public Response<?> uploadInput(MultipartFile file, String datasetName, DatasetManageEntity manageEntity) throws IOException {
         try {
-            manageEntity.setDownloadRelativeURI (getDownloadPath (file.getOriginalFilename ()));
+            manageEntity.setDownloadRelativeURI (getZipDownloadPath (file.getOriginalFilename ()));
             String path = generateDatasetLocation (datasetName);
             boolean exist = checkPath (path);
             delete (datasetName);//delete 依赖于dataset location map
@@ -68,7 +88,6 @@ public class DatasetService {
                 log.warn ("数据集{}已经存在,自动覆盖", datasetName);
                 delete (datasetName);
             }
-            datasetLocation.put (datasetName, path);
             decompressAndSave (file, path, manageEntity);
             if (!mongoService.collectionExists (mongoCollection)) {
                 mongoService.createCollection (mongoCollection);
@@ -95,7 +114,7 @@ public class DatasetService {
     private Response<String> tryParseDataset(String datasetName, String path) throws IOException {
         try {
             //验证文件类型
-            DatasetValidator.FileTypeValidatorOutput output = validator.validateFileType (datasetLocation.get (datasetName), "txt");
+            DatasetValidator.FileTypeValidatorOutput output = validator.validateFileType (generateDatasetLocation (datasetName), "txt");
             if (!output.isOk ()) {
                 log.warn ("数据集验证失败，必须是txt,造成异常的文件名为{}", output.getFailedFile ());
                 delete (datasetName);
@@ -112,13 +131,13 @@ public class DatasetService {
         return null;
     }
 
-    private String getDownloadPath(String originalFilename) {
+    private String getZipDownloadPath(String originalFilename) {
         if (downloadBaseURI.lastIndexOf ('/') == downloadBaseURI.length () - 1) {
             return downloadBaseURI + originalFilename;
         } else return downloadBaseURI + "/" + originalFilename;
     }
 
-    private String getFileSysPath(String downloadBaseURI) {
+    private String getZipFileSysPath(String downloadBaseURI) {
         if (!downloadBaseURI.contains ("/")) {
             throw new IllegalStateException ();
         }
@@ -131,10 +150,6 @@ public class DatasetService {
 
     /**
      * 解压并且保存到nignx映射的静态文件夹下
-     *
-     * @param file
-     * @param path
-     * @throws IOException
      */
     private void decompressAndSave(MultipartFile file, String path, DatasetManageEntity entity) throws IOException {
         String originalFilename = file.getOriginalFilename ();
@@ -150,7 +165,7 @@ public class DatasetService {
         }
         //移动到下载位置
         File srcFile = new File (realPath);
-        File destFile = new File (getFileSysPath (entity.getDownloadRelativeURI ()));
+        File destFile = new File (getZipFileSysPath (entity.getDownloadRelativeURI ()));
         if (destFile.exists ()) {
             destFile.delete ();
         }
@@ -173,28 +188,11 @@ public class DatasetService {
         }
     }
 
-    public Map<String, String> getDatasetLocation() {
-        return datasetLocation;
-    }
-
     public @Nullable
     String getDatasetLocation(String name) {
-        return datasetLocation.getOrDefault (name, null);
-    }
-
-    //    @PostConstruct
-    //应该借助数据库
-    public void scanDataset() {
-        List<DatasetManageEntity> all = getAll ();
-        for (DatasetManageEntity manageEntity : all) {
-            String name = manageEntity.getName ();
-            datasetLocation.put (name, generateDatasetLocationByName (name));
-        }
-        log.info ("auto load datasets {}", datasetLocation.entrySet ());
-    }
-
-    public String generateDatasetLocationByName(String name) {
-        return baseLocation + name;
+        if (exists (name)) {
+            return generateDatasetLocation (name);
+        } else return null;
     }
 
     public List<DatasetEntity> getUserTrace(String id, String datasetName) {
@@ -209,59 +207,32 @@ public class DatasetService {
     }
 
     public boolean exists(String name) {
-        List<DatasetManageEntity> name1 = datasetManageEntityMongoService.selectByEquals (mongoCollection, DatasetManageEntity.class, "name", name);
+        List<DatasetManageEntity> name1 = getDatasetManageEntityByName (name);
         return name1 != null && name1.size () != 0;
     }
 
-    /**
-     * 这个方法要求datasetLocation map中存在数据才能删除
-     *
-     * @param name
-     * @throws IOException
-     */
+    private List<DatasetManageEntity> getDatasetManageEntityByName(String name) {
+        return datasetManageEntityMongoService.selectByEquals (mongoCollection, DatasetManageEntity.class, "name", name);
+    }
+
     public void delete(String name) throws IOException {
         final String mongoName = loader.generateUserTraceDataCollectionName (name);
-        List<DatasetManageEntity> entities = datasetManageEntityMongoService.selectByEquals (mongoCollection, DatasetManageEntity.class, "name", name);
+        List<DatasetManageEntity> entities = getDatasetManageEntityByName (name);
         if (entities == null || entities.size () == 0) {
             log.warn ("delete dataset:dataset {} 已经被删除", name);
             return;
         }
         DatasetManageEntity manageEntity = entities.get (0);
-        String s = generateDatasetLocationByName (manageEntity.getName ());
-        datasetLocation.remove (name);
+        String s = generateDatasetLocation (manageEntity.getName ());
         FileUtils.deleteDirectory (new File (s));
         mongoService.deleteCollection (mongoName);
         if (entities.size () > 0) {
             String downloadRelativeURI = entities.get (0).getDownloadRelativeURI ();
-            String fileSysPath = getFileSysPath (downloadRelativeURI);
+            String fileSysPath = getZipFileSysPath (downloadRelativeURI);
             FileUtils.forceDelete (new File (fileSysPath));
         }
         datasetManageEntityMongoService.deleteByEqual (name, DatasetManageEntity.class, mongoCollection, "name");
         log.info ("delete dataset {},{},{} ok.", name, s, mongoName);
-    }
-
-    //todo
-    public boolean validate(String name) throws IOException {
-        if (datasetLocation.containsKey (name)) {
-            return validator.validateFileType (datasetLocation.get (name), "txt").isOk ();
-        } else return false;
-    }
-
-    public String getDatasetSizePretty(long bytes) {
-        final String[] f = new String[]{
-                "B", "KB", "MB", "GB", "TB", "PB"
-        };
-        int i = 0;
-        double c = bytes;
-        while (c >= 1024) {
-            c /= 1024;
-            i++;
-        }
-        if (i >= f.length) {
-            return String.format ("%.2fB", c);
-        } else {
-            return String.format ("%.2f%s", c, f[i]);
-        }
     }
 
     public PageEntity<DatasetManageEntity> getEntityPage(Integer num, Integer size) {
@@ -275,7 +246,7 @@ public class DatasetService {
     }
 
     public DatasetManageEntity getEntity(String name) {
-        List<DatasetManageEntity> name1 = datasetManageEntityMongoService.selectByEquals (mongoCollection, DatasetManageEntity.class, "name", name);
+        List<DatasetManageEntity> name1 = getDatasetManageEntityByName (name);
         if (name1.size () == 0) {
             return null;
         } else return name1.get (0);

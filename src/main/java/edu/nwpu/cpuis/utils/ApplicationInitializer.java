@@ -19,10 +19,6 @@ public class ApplicationInitializer {
     }
 
     public void init() {
-        datasetService.scanDataset ();
-//        datasetService.getDatasetLocation ().forEach ((k, v) -> {
-//            loader.loadDataset (v, k);
-//        });
         //不需要了，每次上传数据集之后，都会自动扫描至mongo
         algoService.scanAlgo ();
         log.info ("应用程序启动完成");
