@@ -16,9 +16,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-/**
- * @author fujiazheng
- */
 @Configuration
 public class MvcConfigurer implements WebMvcConfigurer {
 

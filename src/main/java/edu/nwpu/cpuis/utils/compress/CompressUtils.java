@@ -9,6 +9,7 @@ import org.apache.commons.compress.archivers.zip.Zip64Mode;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
+import org.apache.commons.compress.utils.IOUtils;
 
 import java.io.*;
 import java.util.List;
@@ -143,8 +144,8 @@ public final class CompressUtils {
                         String entryFileName = archiveEntry.getName ();
                         //构造解压出来的文件存放路径
                         String entryFilePath = saveFileDir + entryFileName;
-                        byte[] content = new byte[(int) archiveEntry.getSize ()];
-                        zais.read (content);
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream (((int) archiveEntry.getSize ()));
+                        IOUtils.copy (zais, baos);
                         OutputStream os = null;
                         try {
                             //把解压出来的文件写到指定路径
@@ -153,7 +154,7 @@ public final class CompressUtils {
 //                                entryFile.createNewFile ();
 //                            }
                             os = new BufferedOutputStream (new FileOutputStream (entryFile));
-                            os.write (content);
+                            os.write (baos.toByteArray ());
                         } catch (IOException e) {
                             throw new IOException (e);
                         } finally {
@@ -161,6 +162,7 @@ public final class CompressUtils {
                                 os.flush ();
                                 os.close ();
                             }
+                            baos.close ();
                         }
 
                     }
