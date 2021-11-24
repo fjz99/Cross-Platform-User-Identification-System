@@ -55,6 +55,7 @@ public class ModelController {
     @GetMapping("{name}/info")
     @ApiOperation(value = "获得模型的详细信息", notes = "传入模型的key，即'算法-数据集1-数据集2-train/predict'")
     @ApiImplicitParam(paramType = "path", name = "name", value = "模型名称", required = true, dataType = "String")
+    @Deprecated
     public Response<?> getInfo(@PathVariable("name") @NotBlank String name) {
         if (definition.getDefinition ().containsKey (name)) {
             return Response.ok (definition.getDefinition ().get (name));
@@ -66,12 +67,14 @@ public class ModelController {
     @GetMapping("/stage/{id}")
     @ApiOperation(value = "获得某个阶段的所有算法")
     @ApiImplicitParam(paramType = "path", name = "id", value = "阶段", required = true, dataTypeClass = Integer.class)
+    @Deprecated
     public Response<?> getByStage(@PathVariable @Range(min = 1, max = 4) int id) {
         return Response.ok (definition.getByStage (id));
     }
 
     @GetMapping("/all")
     @ApiOperation(value = "获得所有模型信息")
+    @Deprecated
     public Response<?> getAll() {
         return Response.ok (definition.getAll ());
     }
