@@ -106,7 +106,7 @@ public class DatasetService {
         } catch (Exception e) {
             delete (datasetName);
             return Response.of (String.format ("上传成功\nWARN:数据集 %s 验证失败,ERR %s", datasetName, e.getMessage ()),
-                    false, Response.ErrCode.DATASET_VALIDATION_FAILED);
+                    true, Response.ErrCode.DATASET_VALIDATION_FAILED);
         }
         return null;
     }
