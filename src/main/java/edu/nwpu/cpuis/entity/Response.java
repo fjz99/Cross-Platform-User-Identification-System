@@ -95,7 +95,7 @@ public final class Response<T> {
         //dataset
         DATASET_VALIDATION_FAILED (0x2001),
         DATASET_NOT_EXISTS (0x2002),
-        //dataset
+        //algo
         ALGO_VALIDATION_FAILED (0x3001),
         ALGO_NOT_EXISTS (0x3002),
         //interact
