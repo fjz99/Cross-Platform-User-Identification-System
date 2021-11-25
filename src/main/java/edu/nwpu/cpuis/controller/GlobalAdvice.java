@@ -1,6 +1,7 @@
 package edu.nwpu.cpuis.controller;
 
 import edu.nwpu.cpuis.entity.Response;
+import edu.nwpu.cpuis.entity.exception.CpuisException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.http.HttpStatus;
@@ -37,5 +38,14 @@ public class GlobalAdvice {
         log.error ("请求参数错误 " + e);
         e.printStackTrace ();
         return Response.fail ("请求参数错误 :\n" + HttpStatus.BAD_REQUEST.getReasonPhrase () + ":" + e.getMessage ());
+    }
+
+    //自定义错误码错误
+    @ExceptionHandler(CpuisException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Response<?> cpuisException(CpuisException e) {
+        log.error ("自定义错误码错误：CpuisException " + e);
+        e.printStackTrace ();
+        return Response.ofFailed (e.getReason ());
     }
 }

@@ -8,7 +8,7 @@ public final class ModelKeyGenerator {
     }
 
     /**
-     * @param phase 即predict、train、test等
+     * @param phase 即predict、getDaemon、test等
      * @param type  即统计信息还是输出
      */
     public static String generateKey(String[] dataset, String algoName, String phase, String type) {

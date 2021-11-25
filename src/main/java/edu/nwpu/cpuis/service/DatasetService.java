@@ -1,9 +1,6 @@
 package edu.nwpu.cpuis.service;
 
-import edu.nwpu.cpuis.entity.DatasetEntity;
-import edu.nwpu.cpuis.entity.DatasetManageEntity;
-import edu.nwpu.cpuis.entity.PageEntity;
-import edu.nwpu.cpuis.entity.Response;
+import edu.nwpu.cpuis.entity.*;
 import edu.nwpu.cpuis.service.validator.DatasetValidator;
 import edu.nwpu.cpuis.utils.DatasetLoader;
 import edu.nwpu.cpuis.utils.compress.CompressService;
@@ -84,7 +81,7 @@ public class DatasetService {
     public Response<?> uploadInput(MultipartFile file, String datasetName, DatasetManageEntity manageEntity) throws IOException {
         try {
             manageEntity.setDownloadRelativeURI (getZipDownloadPath (file.getOriginalFilename ()));
-            String path = generateDatasetLocation (datasetName);
+            String path = generateDatasetLocation (datasetName) + "/";
             boolean exist = checkPath (path);
             delete (datasetName);//delete 依赖于dataset location map
             if (exist) {
@@ -109,7 +106,7 @@ public class DatasetService {
         } catch (IOException e) {
             e.printStackTrace ();
             delete (datasetName);
-            return Response.of (String.format ("上传失败，ERR：%s", e.getMessage ()), false, Response.ErrCode.DATASET_VALIDATION_FAILED);
+            return Response.of (String.format ("上传失败，ERR：%s", e.getMessage ()), false, ErrCode.DATASET_VALIDATION_FAILED);
         }
     }
 
@@ -122,14 +119,14 @@ public class DatasetService {
                 log.warn ("数据集验证失败，必须是txt,造成异常的文件名为{}", output.getFailedFile ());
                 delete (datasetName);
                 return Response.of (String.format ("上传失败;WARN:数据集 %s 验证失败,数据集格式必须是txt,造成异常的文件名为'%s'",
-                        datasetName, output.getFailedFile ()), false, Response.ErrCode.DATASET_VALIDATION_FAILED);
+                        datasetName, output.getFailedFile ()), false, ErrCode.DATASET_VALIDATION_FAILED);
             }
             loader.loadDataset (path, datasetName);
         } catch (Exception e) {
             e.printStackTrace ();
             delete (datasetName);
             return Response.of (String.format ("上传成功\nWARN:数据集 %s 验证失败,ERR %s", datasetName, e.getMessage ()),
-                    true, Response.ErrCode.DATASET_VALIDATION_FAILED);
+                    true, ErrCode.DATASET_VALIDATION_FAILED);
         }
         return null;
     }

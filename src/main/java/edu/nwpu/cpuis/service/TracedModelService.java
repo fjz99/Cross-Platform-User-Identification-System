@@ -6,7 +6,7 @@ import edu.nwpu.cpuis.entity.ModelInfo;
 import edu.nwpu.cpuis.entity.vo.ModelLocationVO;
 import edu.nwpu.cpuis.entity.vo.ModelSearchVO;
 import edu.nwpu.cpuis.entity.vo.ModelVO;
-import edu.nwpu.cpuis.train.ProcessWrapper;
+import edu.nwpu.cpuis.train.AbstractProcessWrapper;
 import edu.nwpu.cpuis.train.PythonScriptRunner;
 import edu.nwpu.cpuis.train.State;
 import edu.nwpu.cpuis.train.TracedProcessWrapper;
@@ -86,7 +86,7 @@ public class TracedModelService {
      * @return 模型id，如果错误，返回-1
      */
     public int train(List<String> datasets, String name, Map<String, String> args) {
-        ProcessWrapper process = PythonScriptRunner.getTracedProcess (name);
+        AbstractProcessWrapper process = PythonScriptRunner.getTracedProcess (name);
         Assert.isTrue (datasets.size () == 2, "目前只支持2个数据集输入");
         if (process == null) {
             Map<String, Object> map = new HashMap<> ();
@@ -102,19 +102,19 @@ public class TracedModelService {
             if (algoService.getAlgoEntity (name) == null) {
                 return -1;
             }
-            return PythonScriptRunner.runTracedScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets, "train");
+            return PythonScriptRunner.runTracedScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets, "getDaemon");
         } else {
             return -1;
         }
     }
 
     public boolean predict(List<String> datasets, String name, Map<String, String> args, Integer relatedTrainModel) {
-        ProcessWrapper process = PythonScriptRunner.getTracedProcess (name);
+        AbstractProcessWrapper process = PythonScriptRunner.getTracedProcess (name);
         Assert.isTrue (datasets.size () == 2, "目前只支持2个数据集输入");
         if (process == null) {
             //获得训练的模型
             String key = ModelKeyGenerator.generateModelInfoKey (datasets.toArray (new String[]{}), name,
-                    "train", null, modelInfoPrefix);
+                    "getDaemon", null, modelInfoPrefix);
             List<ModelInfo> modelInfos = service.selectByEquals (key, ModelInfo.class, "id", String.valueOf (relatedTrainModel));
             if (modelInfos.size () != 1) {
                 log.error ("找不到modelInfo，relatedTrainModel id={}", relatedTrainModel);
@@ -145,7 +145,7 @@ public class TracedModelService {
             log.info ("模型删除失败");
             return false;
         } else {
-            PythonScriptRunner.getTracedProcess (name).kill ();
+            PythonScriptRunner.getTracedProcess (name).removeFromMap ();
             log.info ("模型删除成功");
             return true;
         }

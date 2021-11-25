@@ -2,7 +2,7 @@ package edu.nwpu.cpuis.service.model;
 
 import edu.nwpu.cpuis.service.AlgoService;
 import edu.nwpu.cpuis.service.DatasetService;
-import edu.nwpu.cpuis.train.ProcessWrapper;
+import edu.nwpu.cpuis.train.AbstractProcessWrapper;
 import edu.nwpu.cpuis.train.PythonScriptRunner;
 import edu.nwpu.cpuis.train.SimpleProcessWrapper;
 import edu.nwpu.cpuis.train.State;
@@ -71,7 +71,7 @@ public class BasicModel<A, B> {
      * @param datasets 文件夹，2个
      */
     public boolean train(List<String> datasets, String name, Map<String, String> args) {
-        ProcessWrapper process = PythonScriptRunner.getTrainProcess (name);
+        AbstractProcessWrapper process = PythonScriptRunner.getTrainProcess (name);
         Assert.isTrue (datasets.size () == 2, "目前只支持2个数据集输入");
         if (process == null) {
             final ModelDefinition.SingleModel singleModel = definition.getDefinition ().get (name);
@@ -99,7 +99,7 @@ public class BasicModel<A, B> {
             log.info ("模型删除失败");
             return false;
         } else {
-            PythonScriptRunner.getTrainProcess (name).kill ();
+            PythonScriptRunner.getTrainProcess (name).removeFromMap ();
             log.info ("模型删除成功");
             return true;
         }

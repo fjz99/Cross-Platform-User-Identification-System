@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class MongoServiceTest {
-    String name = "hash-fb-fs-train-output";
-    String name2 = "hash-fs-fb-train-output";
+    String name = "hash-fb-fs-getDaemon-output";
+    String name2 = "hash-fs-fb-getDaemon-output";
     @Autowired
     private MongoService<MongoOutputEntity> service;
 

@@ -35,8 +35,10 @@ public final class PythonScriptRunner {
     static MongoService<AlgoEntity> algoEntityMongoService;
     static MongoService<DatasetManageEntity> datasetManageEntityMongoService;
 
-    private PythonScriptRunner(ThreadPoolTaskExecutor executor, MongoService<MongoOutputEntity> mongoService,
-                               MongoService<Map> mapMongoService, MongoService<ModelInfo> modelInfoMongoService,
+    private PythonScriptRunner(ThreadPoolTaskExecutor executor,
+                               MongoService<MongoOutputEntity> mongoService,
+                               MongoService<Map> mapMongoService,
+                               MongoService<ModelInfo> modelInfoMongoService,
                                MongoService<AlgoEntity> algoEntityMongoService,
                                MongoService<DatasetManageEntity> datasetManageEntityMongoService) {
         PythonScriptRunner.mongoService = mongoService;
@@ -48,11 +50,7 @@ public final class PythonScriptRunner {
     }
 
     /**
-     * @param algoName
-     * @param sourceName
-     * @param args         存在dirs=[E:/hou,xx]，是数据集的位置
-     * @param datasetNames
-     * @return
+     * @param args 存在dirs=[E:/hou,xx]，是数据集的位置
      */
     public static SimpleProcessWrapper runScript(String algoName, String sourceName, Map<String, Object> args, List<String> datasetNames) {
         try {

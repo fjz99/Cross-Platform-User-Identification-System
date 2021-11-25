@@ -1,5 +1,6 @@
 package edu.nwpu.cpuis.controller;
 
+import edu.nwpu.cpuis.entity.ErrCode;
 import edu.nwpu.cpuis.entity.Response;
 import edu.nwpu.cpuis.entity.vo.ModelLocationVO;
 import edu.nwpu.cpuis.entity.vo.ModelSearchVO;
@@ -56,7 +57,7 @@ public class TracedModelController {
     }
 
     /**
-     * 算法名-数据集1-数据集2-train/predict,数据集1和2必须是升序排列
+     * 算法名-数据集1-数据集2-getDaemon/predict,数据集1和2必须是升序排列
      */
     @RequestMapping(value = "/output", consumes = MediaType.APPLICATION_JSON_VALUE, method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "获得输出", responseContainer = "List")
@@ -86,7 +87,7 @@ public class TracedModelController {
             log.error ("dataset input err {}", dataset);
             return ofFailed (ErrCode.WRONG_DATASET_INPUT);
         }
-        if (service.isTraining (name, dataset.toArray (new String[]{}), "train", null, true)) {
+        if (service.isTraining (name, dataset.toArray (new String[]{}), "getDaemon", null, true)) {
             log.error ("模型正在训练中");
             return ofFailed (ErrCode.MODEL_IN_TRAINING);
         }

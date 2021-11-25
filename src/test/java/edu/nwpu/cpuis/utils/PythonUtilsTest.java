@@ -34,20 +34,20 @@ class PythonUtilsTest {
         List<String> names = new ArrayList<> ();
         names.add ("dataset1");
         names.add ("dataset2");
-        SimpleProcessWrapper demo = PythonScriptRunner.runScript ("demo", "train-template.py", args, names);
+        SimpleProcessWrapper demo = PythonScriptRunner.runScript ("demo", "getDaemon-template.py", args, names);
         while (demo.getPercentage () != 100) {
             Thread.sleep (500);
             System.out.println (demo.getPercentage ());
         }
         Thread.sleep (2000); //否则会因为主线程停止导致测试结束，导致错误
         System.out.println (demo.getPercentage ());
-//        demo.kill ();
+//        demo.removeFromMap ();
     }
 
     @Test
     void test() throws IOException {
         ResourcePatternResolver context = new PathMatchingResourcePatternResolver ();
-        String path = context.getResources ("classpath:/**/train-template.py")[0].getFile ().getPath ();
+        String path = context.getResources ("classpath:/**/getDaemon-template.py")[0].getFile ().getPath ();
 //        String path = resource[0].getFile ().getPath ();
         System.out.println (path);
         String x = "python " + path + " --dirs=[123.txt,456.txt]";
@@ -71,7 +71,7 @@ class PythonUtilsTest {
         List<String> names = new ArrayList<> ();
         names.add ("dataset1");
         names.add ("dataset2");
-        SimpleProcessWrapper demo = PythonScriptRunner.runScript ("demo", "demo-train.py", args, names);
+        SimpleProcessWrapper demo = PythonScriptRunner.runScript ("demo", "demo-getDaemon.py", args, names);
         while (demo.getState () != State.SUCCESSFULLY_STOPPED) ;
         System.out.println (demo.getPercentage ());
         System.out.println (demo.getState ());

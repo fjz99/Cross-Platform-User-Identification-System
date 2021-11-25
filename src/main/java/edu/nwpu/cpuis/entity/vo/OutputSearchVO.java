@@ -16,7 +16,7 @@ public class OutputSearchVO {
     private Integer pageSize, pageNum;//可以为空
     //    private Integer[] range;//都是included
 //    private Integer id;//只查询某个id
-    private String phase;//train，test，predict，evaluate
+    private String phase;//getDaemon，test，predict，evaluate
     private String type;//output、statistics等
     private String searchType;//默认是fulltext
     private String searchText;

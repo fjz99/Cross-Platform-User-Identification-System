@@ -1,5 +1,6 @@
 package edu.nwpu.cpuis.controller;
 
+import edu.nwpu.cpuis.entity.ErrCode;
 import edu.nwpu.cpuis.entity.Response;
 import edu.nwpu.cpuis.entity.vo.OutputSearchVO;
 import edu.nwpu.cpuis.service.DatasetService;
@@ -53,7 +54,7 @@ public class ModelController {
     }
 
     @GetMapping("{name}/info")
-    @ApiOperation(value = "获得模型的详细信息", notes = "传入模型的key，即'算法-数据集1-数据集2-train/predict'")
+    @ApiOperation(value = "获得模型的详细信息", notes = "传入模型的key，即'算法-数据集1-数据集2-getDaemon/predict'")
     @ApiImplicitParam(paramType = "path", name = "name", value = "模型名称", required = true, dataType = "String")
     @Deprecated
     public Response<?> getInfo(@PathVariable("name") @NotBlank String name) {
@@ -98,7 +99,7 @@ public class ModelController {
             return modelNotExists ();
         }
         if (state != State.TRAINING) {
-            return ofFailed (state, Response.ErrCode.MODEL_ALREADY_STOPPED);
+            return ofFailed (state, ErrCode.MODEL_ALREADY_STOPPED);
         }
         if (basicModel.stopTrain (name)) {
             return ok ();
@@ -126,11 +127,11 @@ public class ModelController {
                              @RequestParam List<String> dataset) {
         if (dataset.size () != 2) {
             log.error ("dataset input err {}", dataset);
-            return ofFailed (Response.ErrCode.WRONG_DATASET_INPUT);
+            return ofFailed (ErrCode.WRONG_DATASET_INPUT);
         }
-        if (basicModel.contains (ModelKeyGenerator.generateKey (dataset.toArray (new String[]{}), name, "train", null), true)) {
+        if (basicModel.contains (ModelKeyGenerator.generateKey (dataset.toArray (new String[]{}), name, "getDaemon", null), true)) {
             log.error ("模型正在训练中");
-            return ofFailed (Response.ErrCode.MODEL_IN_TRAINING);
+            return ofFailed (ErrCode.MODEL_IN_TRAINING);
         }
         if (fileUploadService.getDatasetLocation (dataset.get (0)) != null
                 && fileUploadService.getDatasetLocation (dataset.get (1)) != null) {
@@ -139,7 +140,7 @@ public class ModelController {
             return ok ("训练开始");
         } else {
             log.error ("dataset input err {}", dataset);
-            return ofFailed (Response.ErrCode.WRONG_DATASET_INPUT);
+            return ofFailed (ErrCode.WRONG_DATASET_INPUT);
         }
     }
 
@@ -154,7 +155,7 @@ public class ModelController {
     }
 
     /**
-     * 算法名-数据集1-数据集2-train/predict,数据集1和2必须是升序排列
+     * 算法名-数据集1-数据集2-getDaemon/predict,数据集1和2必须是升序排列
      */
     @RequestMapping(value = "/output", consumes = MediaType.APPLICATION_JSON_VALUE, method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "获得输出", responseContainer = "List")

@@ -1,6 +1,7 @@
 package edu.nwpu.cpuis.controller;
 
 import edu.nwpu.cpuis.entity.AlgoEntity;
+import edu.nwpu.cpuis.entity.ErrCode;
 import edu.nwpu.cpuis.entity.Response;
 import edu.nwpu.cpuis.service.AlgoService;
 import io.swagger.annotations.Api;
@@ -98,7 +99,7 @@ public class AlgoController {
             service.delete (name);
             return ok ("删除成功");
         } else {
-            return ofFailed (Response.ErrCode.ALGO_NOT_EXISTS);
+            return ofFailed (ErrCode.ALGO_NOT_EXISTS);
         }
     }
 
@@ -122,7 +123,7 @@ public class AlgoController {
         if (service.exists (name)) {
             return ok (service.getAlgoEntity (name));
         } else {
-            return ofFailed (Response.ErrCode.ALGO_NOT_EXISTS);
+            return ofFailed (ErrCode.ALGO_NOT_EXISTS);
         }
     }
 }

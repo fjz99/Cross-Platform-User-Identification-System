@@ -25,7 +25,7 @@ public class MongoTest {
                 });
             }
         });
-        String key = "demo-d1-d2-train";
+        String key = "demo-d1-d2-getDaemon";
         map.put ("_id", key);
         mongoTemplate.insert (map, "output");
     }

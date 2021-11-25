@@ -1,16 +1,12 @@
 package edu.nwpu.cpuis.train;
 
-import com.alibaba.fastjson.JSON;
 import edu.nwpu.cpuis.entity.ModelInfo;
 import edu.nwpu.cpuis.entity.MongoOutputEntity;
 import edu.nwpu.cpuis.entity.Output;
 import edu.nwpu.cpuis.service.MongoService;
 import edu.nwpu.cpuis.utils.ModelKeyGenerator;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -26,15 +22,11 @@ import static edu.nwpu.cpuis.train.PythonScriptRunner.mongoService;
  * @see SimpleProcessWrapper
  */
 @Slf4j
-public class TracedProcessWrapper extends ProcessWrapper {
+public class TracedProcessWrapper extends AbstractProcessWrapper {
     private static final MongoService<ModelInfo> modelInfoMongoService = PythonScriptRunner.modelInfoMongoService;
-    private volatile double percentage = 0;
-    private volatile boolean parseOutput = false;
-    private Output output;
-    private MongoOutputEntity mongoOutputEntity;
-    private Integer thisId;
-    private String directoryPath;
-    private String modelInfoKey;
+    private final Integer thisId;
+    private final String directoryPath;
+    private final String modelInfoKey;
 
     public TracedProcessWrapper(Process process, String algoName, String[] dataset, String phase, Integer thisId, String directoryPath) {
         super (process, algoName, dataset, phase);
@@ -60,8 +52,7 @@ public class TracedProcessWrapper extends ProcessWrapper {
     }
 
     @Override
-    public void kill() {
-        super.kill ();
+    public void removeFromMap() {
         PythonScriptRunner.tracedProcesses.remove (key);
     }
 
@@ -70,62 +61,7 @@ public class TracedProcessWrapper extends ProcessWrapper {
     }
 
     @Override
-    protected Thread getDaemon() {
-        return new Thread (() -> {
-            String s;
-            StringBuilder sb = new StringBuilder ();
-            key = String.format ("%s-%s-%s-%d", algoName, Arrays.toString (dataset), phase, thisId);//只是log用的key而已
-            try {
-                while (state == State.TRAINING) {
-                    if (stopFlag) {
-                        state = State.INTERRUPTED;
-                        log.info ("{} 被stop杀死", key);
-                        return;
-                    }
-                    //没有数据读会阻塞，如果返回null，就是进程结束了
-                    if ((s = reader.readLine ()) == null) {
-                        if (parseOutput && processOutput (sb.toString ().trim ())) {
-                            state = State.SUCCESSFULLY_STOPPED;
-                            saveToMongoDB ();
-                            log.info ("{} successfully stopped", key);
-                        } else {
-                            log.error ("{} err shutdown stream", key);
-                            state = State.ERROR_STOPPED;
-                        }
-                        break;
-                    }
-                    if (parseOutput) {
-                        //处理JSON
-                        sb.append (s.trim ());
-                    } else if (NumberUtils.isCreatable (s)) {
-                        percentage = Double.parseDouble (s);
-                        log.debug ("{} percentage changed: {}", key, percentage);
-                    } else {
-                        //不是小数，规定结束符为DONE_LITERAL
-                        if (StringUtils.equals (s, DONE_LITERAL)) {
-                            parseOutput = true;
-                            if (percentage != 100) {
-                                log.warn ("{} err max percentage is: {}", key, percentage);
-                                percentage = 100;
-                            } else {
-                                log.debug ("{} changed to get output", key);
-                            }
-                        } else {
-                            state = State.ERROR_STOPPED;
-                            log.error ("{} err input: {}", key, s);
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace ();
-                state = State.ERROR_STOPPED;
-                PythonScriptRunner.tracedProcesses.remove (key);
-                log.error ("{} err stop process :{}", key, e.getMessage ());
-            }
-        });
-    }
-
-    private void saveToMongoDB() {
+    protected void afterScriptDone() {
         //检查mongoCollection
         String key = ModelKeyGenerator.generateKeyWithIncId (dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, thisId);
         if (mongoService.collectionExists (key)) {
@@ -245,16 +181,5 @@ public class TracedProcessWrapper extends ProcessWrapper {
             }
             log.info ("reversed output {} saved", key);
         };
-    }
-
-    protected boolean processOutput(String s) {
-        try {
-            output = JSON.parseObject (s, Output.class);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace ();
-            log.error ("output parse err " + e.getMessage ());
-            return false;
-        }
     }
 }
