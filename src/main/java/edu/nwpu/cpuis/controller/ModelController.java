@@ -6,8 +6,8 @@ import edu.nwpu.cpuis.service.DatasetService;
 import edu.nwpu.cpuis.service.MatrixOutputModelService;
 import edu.nwpu.cpuis.service.model.BasicModel;
 import edu.nwpu.cpuis.service.model.ModelDefinition;
-import edu.nwpu.cpuis.utils.ModelKeyGenerator;
 import edu.nwpu.cpuis.service.validator.OutputVoValidator;
+import edu.nwpu.cpuis.utils.ModelKeyGenerator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -125,6 +125,7 @@ public class ModelController {
     @GetMapping("/{name}/status")
     @ApiOperation(value = "获得模型状态")
     @ApiImplicitParam(paramType = "path", name = "name", value = "模型运行id", required = true, dataTypeClass = String.class)
+    @Deprecated
     public Response<?> status(@PathVariable @NotBlank String name) {
         try {
             if (basicModel.contains (name, true))

@@ -3,8 +3,8 @@ package edu.nwpu.cpuis.service.model;
 import edu.nwpu.cpuis.service.AlgoService;
 import edu.nwpu.cpuis.service.DatasetService;
 import edu.nwpu.cpuis.train.ProcessWrapper;
-import edu.nwpu.cpuis.train.SimpleProcessWrapper;
 import edu.nwpu.cpuis.train.PythonScriptRunner;
+import edu.nwpu.cpuis.train.SimpleProcessWrapper;
 import edu.nwpu.cpuis.train.State;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ import java.util.Map;
 @Service
 @Data
 @Slf4j
-public class BasicModel<A, B>{
+public class BasicModel<A, B> {
     private static final String datasetKey = "dirs";
     private final ModelDefinition definition;
     @Value("${file.input-base-location}")
@@ -78,11 +78,18 @@ public class BasicModel<A, B>{
     }
 
     public Double getPercentage(String name) {
+        String[] strings = name.split ("-");
+        String string = strings[1];
+        strings[1] = strings[2];
+        strings[2] = string;
+        String name2 = String.join ("-", strings);
         SimpleProcessWrapper trainProcess = PythonScriptRunner.getTrainProcess (name);
-        if (trainProcess == null) {
+        SimpleProcessWrapper t2 = PythonScriptRunner.getTrainProcess (name2);
+        if (trainProcess == null && t2 == null) {
             return null;
-        }
-        return trainProcess.getPercentage ();
+        } else if (t2 != null) {
+            return t2.getPercentage ();
+        } else return trainProcess.getPercentage ();
     }
 
     public boolean contains(String name, boolean replaceStopped) {

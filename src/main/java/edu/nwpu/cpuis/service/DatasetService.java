@@ -21,7 +21,10 @@ import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 在数据集上传的时候进行验证
@@ -144,8 +147,9 @@ public class DatasetService {
         return nginxBaseLocation + "/" + downloadBaseURI.substring (downloadBaseURI.lastIndexOf ("/") + 1);
     }
 
+    //E:/123 !!
     private String generateDatasetLocation(@NonNull String datasetName) {
-        return baseLocation.endsWith ("/") ? baseLocation + datasetName + "/" : baseLocation + "/" + datasetName + "/";
+        return baseLocation.endsWith ("/") ? baseLocation + datasetName : baseLocation + "/" + datasetName;
     }
 
     /**
