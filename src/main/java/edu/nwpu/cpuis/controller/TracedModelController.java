@@ -61,7 +61,7 @@ public class TracedModelController {
     public Response<?> output(@RequestBody @Validated OutputSearchVO searchVO) {
         try {
             if (!service.contains (searchVO.getAlgoName (), searchVO.getDataset (), searchVO.getPhase (), searchVO.getId ())) {
-                return Response.fail ("模型不存在");
+                return Response.modelNotExists ();
             }
             if (searchVO.getType ().equals ("statistics")) {
                 //忽略trace fixme
@@ -118,7 +118,7 @@ public class TracedModelController {
         Double percentage = service.getPercentage (vo);
         if (percentage != null) {
             return Response.ok (percentage);
-        } else return Response.fail ("模型不存在或模型已经训练完成");
+        } else return Response.modelNotExists ();
     }
 
     //todo
@@ -139,6 +139,6 @@ public class TracedModelController {
     public Response<?> delete(@RequestBody ModelLocationVO vo) {
         if (service.delete (vo)) {
             return Response.ok ("ok");
-        } else return Response.fail ("模型不存在");
+        } else return Response.modelNotExists ();
     }
 }

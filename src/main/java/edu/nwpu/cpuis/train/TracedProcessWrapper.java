@@ -77,6 +77,11 @@ public class TracedProcessWrapper extends ProcessWrapper {
             key = String.format ("%s-%s-%s-%d", algoName, Arrays.toString (dataset), phase, thisId);//只是log用的key而已
             try {
                 while (state == State.TRAINING) {
+                    if (stopFlag) {
+                        state = State.INTERRUPTED;
+                        log.info ("{} 被stop杀死", key);
+                        return;
+                    }
                     //没有数据读会阻塞，如果返回null，就是进程结束了
                     if ((s = reader.readLine ()) == null) {
                         if (parseOutput && processOutput (sb.toString ().trim ())) {

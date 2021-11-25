@@ -29,20 +29,67 @@ public final class Response<T> {
         return new Response<> (a, true);
     }
 
+    public static Response<?> ok() {
+        return new Response<> ("ok", true);
+    }
+
+    public static <Q> Response<Q> ofOk(Q a, ErrCode errCode) {
+        return new Response<> (a, true, errCode);
+    }
+
+    public static Response<?> ofOk(ErrCode errCode) {
+        return new Response<> ("", true, errCode);
+    }
+
     public static <Q> Response<Q> fail(Q a) {
         return new Response<> (a, false, ErrCode.GENERIC_ERR);
+    }
+
+    public static <Q> Response<Q> ofFailed(Q a, ErrCode errCode) {
+        return new Response<> (a, false, errCode);
+    }
+
+    public static Response<?> ofFailed(ErrCode errCode) {
+        return new Response<> ("", false, errCode);
     }
 
     public static <Q> Response<Q> of(Q a, boolean success, ErrCode errCode) {
         return new Response<> (a, success, errCode);
     }
 
+    public static Response<?> modelNotExists() {
+        return ofFailed ("模型不存在", Response.ErrCode.MODEL_NOT_EXISTS);
+    }
+
+    public static Response<?> genericErr() {
+        return ofFailed ("ERROR!", ErrCode.GENERIC_ERR);
+    }
+
+    public static <Q> Response<Q> genericErr(Q a) {
+        return ofFailed (a, ErrCode.GENERIC_ERR);
+    }
+
+    public static <Q> Response<Q> serverErr(Q a) {
+        return ofFailed (a, ErrCode.UNKNOWN_ERR);
+    }
+
+    public static Response<?> serverErr() {
+        return ofFailed ("INTERNAL_SERVER_ERROR[emergency:contact fjz]", ErrCode.UNKNOWN_ERR);
+    }
+
     @JsonSerialize(using = TypeSerializer.class)
     public static enum ErrCode {
         SUCCESS (0x0),
-        UNKNOWN_ERR (0xffff_ffff),
-        GENERIC_ERR (0xefff_ffff),
-        DATASET_VALIDATION_FAILED (0x01);
+        UNKNOWN_ERR (0xffff_ffff), //服务器发生异常，如空指针异常等
+        GENERIC_ERR (0xefff_ffff), //普通错误
+        //dataset
+        DATASET_VALIDATION_FAILED (0x2001),
+        //model
+        MODEL_NOT_EXISTS (0x1001),
+        MODEL_ALREADY_STOPPED (0x1002),
+        MODEL_IN_TRAINING (0x1003),
+        //interact
+        WRONG_DATASET_INPUT (0x3001);
         private final int code;
         private final String msg;
 

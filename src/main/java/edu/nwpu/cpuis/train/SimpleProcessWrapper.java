@@ -79,6 +79,11 @@ public class SimpleProcessWrapper extends ProcessWrapper {
             key = String.format ("%s-%s-%s", algoName, Arrays.toString (dataset), phase);
             try {
                 while (state == State.TRAINING) {
+                    if (stopFlag) {
+                        state = State.INTERRUPTED;
+                        log.info ("{} 被stop杀死", key);
+                        return;
+                    }
                     //没有数据读会阻塞，如果返回null，就是进程结束了
                     if ((s = reader.readLine ()) == null) {
                         if (parseOutput && processOutput (sb.toString ().trim ())) {

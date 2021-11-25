@@ -7,6 +7,7 @@ import edu.nwpu.cpuis.service.MatrixOutputModelService;
 import edu.nwpu.cpuis.service.model.BasicModel;
 import edu.nwpu.cpuis.service.model.ModelDefinition;
 import edu.nwpu.cpuis.service.validator.OutputVoValidator;
+import edu.nwpu.cpuis.train.State;
 import edu.nwpu.cpuis.utils.ModelKeyGenerator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -24,6 +25,8 @@ import javax.validation.constraints.NotBlank;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static edu.nwpu.cpuis.entity.Response.*;
 
 @RestController
 @RequestMapping("/model")
@@ -55,9 +58,9 @@ public class ModelController {
     @Deprecated
     public Response<?> getInfo(@PathVariable("name") @NotBlank String name) {
         if (definition.getDefinition ().containsKey (name)) {
-            return Response.ok (definition.getDefinition ().get (name));
+            return ok (definition.getDefinition ().get (name));
         } else {
-            return Response.fail ("no content");
+            return fail ("no content");
         }
     }
 
@@ -66,14 +69,14 @@ public class ModelController {
     @ApiImplicitParam(paramType = "path", name = "id", value = "阶段", required = true, dataTypeClass = Integer.class)
     @Deprecated
     public Response<?> getByStage(@PathVariable @Range(min = 1, max = 4) int id) {
-        return Response.ok (definition.getByStage (id));
+        return ok (definition.getByStage (id));
     }
 
     @GetMapping("/all")
     @ApiOperation(value = "获得所有模型信息")
     @Deprecated
     public Response<?> getAll() {
-        return Response.ok (definition.getAll ());
+        return ok (definition.getAll ());
     }
 
     @GetMapping("/{name}/trainingPercentage")
@@ -82,8 +85,26 @@ public class ModelController {
     public Response<?> getTrainingPercentage(@PathVariable @NotBlank String name) {
         Double percentage = basicModel.getPercentage (name);
         if (percentage != null) {
-            return Response.ok (percentage);
-        } else return Response.fail ("模型不存在");
+            return ok (percentage);
+        } else return modelNotExists ();
+    }
+
+    @GetMapping("/{name}/stop")
+    @ApiOperation(value = "终止某个模型训练过程")
+    @ApiImplicitParam(paramType = "path", name = "name", value = "模型运行id", required = true, dataTypeClass = String.class)
+    public Response<?> stop(@PathVariable @NotBlank String name) {
+        State state = basicModel.getState (name);
+        if (state == null) {
+            return modelNotExists ();
+        }
+        if (state != State.TRAINING) {
+            return ofFailed (state, Response.ErrCode.MODEL_ALREADY_STOPPED);
+        }
+        if (basicModel.stopTrain (name)) {
+            return ok ();
+        } else {
+            return genericErr ();
+        }
     }
 
     @DeleteMapping("/{name}/delete")
@@ -91,8 +112,8 @@ public class ModelController {
     @ApiImplicitParam(paramType = "path", name = "name", value = "模型运行id", required = true, dataTypeClass = String.class)
     public Response<?> delete(@PathVariable @NotBlank String name) {
         if (basicModel.destroy (name)) {
-            return Response.ok ("模型已经删除");
-        } else return Response.fail ("模型不存在");
+            return ok ();
+        } else return modelNotExists ();
     }
 
     @GetMapping("/{name}/train")
@@ -105,20 +126,20 @@ public class ModelController {
                              @RequestParam List<String> dataset) {
         if (dataset.size () != 2) {
             log.error ("dataset input err {}", dataset);
-            return Response.fail ("数据集输入错误");
+            return ofFailed (Response.ErrCode.WRONG_DATASET_INPUT);
         }
         if (basicModel.contains (ModelKeyGenerator.generateKey (dataset.toArray (new String[]{}), name, "train", null), true)) {
             log.error ("模型正在训练中");
-            return Response.fail ("模型已经存在了！");
+            return ofFailed (Response.ErrCode.MODEL_IN_TRAINING);
         }
         if (fileUploadService.getDatasetLocation (dataset.get (0)) != null
                 && fileUploadService.getDatasetLocation (dataset.get (1)) != null) {
             Map<String, String> args = new HashMap<> ();
             basicModel.train (dataset, name, args);//模型名字
-            return Response.ok ("训练开始");
+            return ok ("训练开始");
         } else {
             log.error ("dataset input err {}", dataset);
-            return Response.fail ("数据集输入错误");
+            return ofFailed (Response.ErrCode.WRONG_DATASET_INPUT);
         }
     }
 
@@ -129,10 +150,10 @@ public class ModelController {
     public Response<?> status(@PathVariable @NotBlank String name) {
         try {
             if (basicModel.contains (name, true))
-                return Response.ok (basicModel.getStatus (name));
-            else return Response.fail ("模型不存在");
+                return ok (basicModel.getStatus (name));
+            else return modelNotExists ();
         } catch (Exception e) {
-            return Response.fail ("err " + e.getMessage ());
+            return serverErr ("err " + e.getMessage ());
         }
     }
 
@@ -152,7 +173,7 @@ public class ModelController {
             }
         } catch (Exception e) {
             e.printStackTrace ();
-            return Response.fail ("err " + e.getMessage ());
+            return Response.serverErr ("err " + e.getMessage ());
         }
     }
 

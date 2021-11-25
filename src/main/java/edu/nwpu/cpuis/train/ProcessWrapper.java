@@ -18,6 +18,7 @@ public abstract class ProcessWrapper {
     protected String phase;
     protected String algoName;
     protected String key;
+    protected volatile boolean stopFlag;
 
     public ProcessWrapper(Process process, String algoName, String[] dataset, String phase) {
         this.state = State.TRAINING;
@@ -25,9 +26,14 @@ public abstract class ProcessWrapper {
         this.dataset = dataset;
         this.process = process;
         this.phase = phase;
+        this.stopFlag = false;
         reader = new BufferedReader (new InputStreamReader (process.getInputStream ()));
         daemon = getDaemon ();
         cleanupLastOutput ();
+    }
+
+    public void stop() {
+        this.stopFlag = true;
     }
 
     public void start() {

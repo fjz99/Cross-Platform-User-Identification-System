@@ -6,5 +6,6 @@ public enum State {
     TRAINING,
     ERROR_STOPPED,//任何异常
     SUCCESSFULLY_STOPPED,
-    PREDICTING
+    PREDICTING,
+    INTERRUPTED //被终止
 }

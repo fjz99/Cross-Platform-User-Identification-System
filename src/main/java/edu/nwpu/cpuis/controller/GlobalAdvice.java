@@ -19,7 +19,7 @@ public class GlobalAdvice {
     public Response<?> exception(Exception e) {
         log.error ("global err " + e);
         e.printStackTrace ();
-        return Response.fail ("服务器异常");
+        return Response.serverErr ();
     }
 
     @ExceptionHandler(ServletException.class)

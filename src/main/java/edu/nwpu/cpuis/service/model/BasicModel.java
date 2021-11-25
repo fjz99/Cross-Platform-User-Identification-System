@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Data
@@ -37,6 +34,37 @@ public class BasicModel<A, B> {
 
     public static String getDatasetKey() {
         return datasetKey;
+    }
+
+    public boolean stopTrain(String name) {
+        SimpleProcessWrapper wrapper = getWrapper (name);
+        if (wrapper == null) return false;
+        wrapper.stop ();
+        return true;
+    }
+
+    public State getState(String name) {
+        SimpleProcessWrapper wrapper = getWrapper (name);
+        if (wrapper == null) return null;
+        return wrapper.getState ();
+    }
+
+    private String getAnotherName(String name) {
+        String[] strings = name.split ("-");
+        String string = strings[1];
+        strings[1] = strings[2];
+        strings[2] = string;
+        return String.join ("-", strings);
+    }
+
+    private SimpleProcessWrapper getWrapper(String name) {
+        SimpleProcessWrapper trainProcess = PythonScriptRunner.getTrainProcess (name);
+        SimpleProcessWrapper t2 = PythonScriptRunner.getTrainProcess (getAnotherName (name));
+        if (trainProcess == null && t2 == null) {
+            return null;
+        } else if (t2 != null) {
+            return t2;
+        } else return trainProcess;
     }
 
     /**
@@ -78,18 +106,7 @@ public class BasicModel<A, B> {
     }
 
     public Double getPercentage(String name) {
-        String[] strings = name.split ("-");
-        String string = strings[1];
-        strings[1] = strings[2];
-        strings[2] = string;
-        String name2 = String.join ("-", strings);
-        SimpleProcessWrapper trainProcess = PythonScriptRunner.getTrainProcess (name);
-        SimpleProcessWrapper t2 = PythonScriptRunner.getTrainProcess (name2);
-        if (trainProcess == null && t2 == null) {
-            return null;
-        } else if (t2 != null) {
-            return t2.getPercentage ();
-        } else return trainProcess.getPercentage ();
+        return Optional.ofNullable (getWrapper (name)).map (SimpleProcessWrapper::getPercentage).orElse (null);
     }
 
     public boolean contains(String name, boolean replaceStopped) {
