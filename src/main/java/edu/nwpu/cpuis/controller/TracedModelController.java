@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static edu.nwpu.cpuis.entity.Response.*;
+
 
 @RestController
 @RequestMapping("/model/traced/")
@@ -50,7 +52,7 @@ public class TracedModelController {
     @GetMapping(value = "/get")
     @ApiOperation(value = "分页查找", responseContainer = "List")
     public Response<?> getPage(@RequestBody ModelSearchVO searchVO) throws IOException {
-        return Response.ok (service.query (searchVO));
+        return ok (service.query (searchVO));
     }
 
     /**
@@ -59,19 +61,14 @@ public class TracedModelController {
     @RequestMapping(value = "/output", consumes = MediaType.APPLICATION_JSON_VALUE, method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "获得输出", responseContainer = "List")
     public Response<?> output(@RequestBody @Validated OutputSearchVO searchVO) {
-        try {
-            if (!service.contains (searchVO.getAlgoName (), searchVO.getDataset (), searchVO.getPhase (), searchVO.getId ())) {
-                return Response.modelNotExists ();
-            }
-            if (searchVO.getType ().equals ("statistics")) {
-                //忽略trace fixme
-                return Response.ok (matrixOutputModelService.getStatistics (searchVO, false));
-            } else {
-                return Response.ok (matrixOutputModelService.getTracedOutput (searchVO));
-            }
-        } catch (Exception e) {
-            e.printStackTrace ();
-            return Response.fail ("err " + e.getMessage ());
+        if (!service.contains (searchVO.getAlgoName (), searchVO.getDataset (), searchVO.getPhase (), searchVO.getId ())) {
+            return modelNotExists ();
+        }
+        if (searchVO.getType ().equals ("statistics")) {
+            //忽略trace fixme
+            return ok (matrixOutputModelService.getStatistics (searchVO, false));
+        } else {
+            return ok (matrixOutputModelService.getTracedOutput (searchVO));
         }
     }
 
@@ -87,11 +84,11 @@ public class TracedModelController {
         dataset.sort (Comparator.naturalOrder ());
         if (dataset.size () != 2) {
             log.error ("dataset input err {}", dataset);
-            return Response.fail ("数据集输入错误");
+            return ofFailed (ErrCode.WRONG_DATASET_INPUT);
         }
         if (service.isTraining (name, dataset.toArray (new String[]{}), "train", null, true)) {
             log.error ("模型正在训练中");
-            return Response.fail ("模型已经存在了！");
+            return ofFailed (ErrCode.MODEL_IN_TRAINING);
         }
         if (fileUploadService.getDatasetLocation (dataset.get (0)) != null
                 && fileUploadService.getDatasetLocation (dataset.get (1)) != null) {
@@ -103,10 +100,10 @@ public class TracedModelController {
                     put ("msg", "训练开始");
                 }
             };
-            return Response.ok (map);
+            return ok (map);
         } else {
             log.error ("dataset input err {}", dataset);
-            return Response.fail ("数据集输入错误");
+            return ofFailed (ErrCode.WRONG_DATASET_INPUT);
         }
     }
 
@@ -117,8 +114,8 @@ public class TracedModelController {
     public Response<?> getTrainingPercentage(@RequestBody ModelLocationVO vo) {
         Double percentage = service.getPercentage (vo);
         if (percentage != null) {
-            return Response.ok (percentage);
-        } else return Response.modelNotExists ();
+            return ok (percentage);
+        } else return modelNotExists ();
     }
 
     //todo
@@ -138,7 +135,7 @@ public class TracedModelController {
     @ApiImplicitParam(paramType = "body", name = "vo", value = "定位一个模型", required = true, dataTypeClass = ModelLocationVO.class)
     public Response<?> delete(@RequestBody ModelLocationVO vo) {
         if (service.delete (vo)) {
-            return Response.ok ("ok");
-        } else return Response.modelNotExists ();
+            return ok ();
+        } else return modelNotExists ();
     }
 }

@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static edu.nwpu.cpuis.entity.Response.*;
+
 @RestController
 @RequestMapping("/dataset")
 @Slf4j
@@ -57,7 +59,7 @@ public class DatasetController {
     @GetMapping("/all")
     @ApiOperation(value = "获得所有数据集")
     public Response<?> all() {
-        return Response.ok (datasetService.getAll ());
+        return ok (datasetService.getAll ());
     }
 
     @GetMapping({"/trace/{dataset}/{user}", "/trace/{dataset}/"})
@@ -69,12 +71,12 @@ public class DatasetController {
     public Response<?> getTrace(@PathVariable @NotNull String dataset,
                                 @PathVariable(required = false) String user) {
         if (!datasetService.exists (dataset)) {
-            return Response.fail (String.format ("数据集%s不存在", dataset));
+            return ofFailed (String.format ("数据集%s不存在", dataset), ErrCode.DATASET_NOT_EXISTS);
         }
         List<DatasetEntity> userTrace = datasetService.getUserTrace (user, dataset);
         if (userTrace == null || userTrace.size () == 0) {
-            return Response.ok ("用户不存在");
-        } else return Response.ok (userTrace);
+            return ok ("用户不存在");
+        } else return ok (userTrace);
     }
 
     @DeleteMapping(value = "/delete/{name}")
@@ -85,9 +87,9 @@ public class DatasetController {
     public Response<?> deleteDataset(@PathVariable String name) throws IOException {
         if (datasetService.exists (name)) {
             datasetService.delete (name);
-            return Response.ok ("删除成功");
+            return ok ();
         } else {
-            return Response.fail ("数据集不存在");
+            return ofFailed (ErrCode.DATASET_NOT_EXISTS);
         }
     }
 
@@ -99,7 +101,7 @@ public class DatasetController {
     })
     public Response<?> getDatasetPage(@RequestParam(required = false, defaultValue = "20") Integer size,
                                       @RequestParam(required = false, defaultValue = "1") Integer num) {
-        return Response.ok (datasetService.getEntityPage (num, size));
+        return ok (datasetService.getEntityPage (num, size));
     }
 
     @GetMapping(value = "/getByName/{name}")
@@ -109,9 +111,9 @@ public class DatasetController {
     })
     public Response<?> getDatasetPage(@PathVariable String name) {
         if (datasetService.exists (name)) {
-            return Response.ok (datasetService.getEntity (name));
+            return ok (datasetService.getEntity (name));
         } else {
-            return Response.fail ("数据集不存在");
+            return ofFailed (ErrCode.DATASET_NOT_EXISTS);
         }
     }
 }

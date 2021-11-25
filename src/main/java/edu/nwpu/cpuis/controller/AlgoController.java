@@ -19,6 +19,9 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+import static edu.nwpu.cpuis.entity.Response.ofFailed;
+import static edu.nwpu.cpuis.entity.Response.ok;
+
 @RestController()
 @RequestMapping("/algo")
 @Slf4j
@@ -62,9 +65,9 @@ public class AlgoController {
 //            FileUtils.deleteDirectory (new File (path));
             service.delete (name);
             log.warn ("算法文件覆盖");
-            response = Response.ok ("算法文件覆盖");
+            response = ok ("算法文件覆盖");
         } else {
-            response = Response.ok ("ok");
+            response = ok ("ok");
         }
         FileUtils.forceMkdir (new File (path));
 
@@ -93,9 +96,9 @@ public class AlgoController {
     public Response<?> deleteAlgo(@PathVariable String name) throws IOException {
         if (service.exists (name)) {
             service.delete (name);
-            return Response.ok ("删除成功");
+            return ok ("删除成功");
         } else {
-            return Response.fail ("算法不存在");
+            return ofFailed (Response.ErrCode.ALGO_NOT_EXISTS);
         }
     }
 
@@ -107,7 +110,7 @@ public class AlgoController {
     })
     public Response<?> getAlgoPage(@RequestParam(required = false, defaultValue = "20") Integer size,
                                    @RequestParam(required = false, defaultValue = "1") Integer num) throws IOException {
-        return Response.ok (service.query (size, num));
+        return ok (service.query (size, num));
     }
 
     @GetMapping(value = "/getByName/{name}")
@@ -117,9 +120,9 @@ public class AlgoController {
     })
     public Response<?> getByName(@PathVariable String name) {
         if (service.exists (name)) {
-            return Response.ok (service.getAlgoEntity (name));
+            return ok (service.getAlgoEntity (name));
         } else {
-            return Response.fail ("算法不存在");
+            return ofFailed (Response.ErrCode.ALGO_NOT_EXISTS);
         }
     }
 }

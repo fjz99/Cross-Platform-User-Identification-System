@@ -148,13 +148,9 @@ public class ModelController {
     @ApiImplicitParam(paramType = "path", name = "name", value = "模型运行id", required = true, dataTypeClass = String.class)
     @Deprecated
     public Response<?> status(@PathVariable @NotBlank String name) {
-        try {
-            if (basicModel.contains (name, true))
-                return ok (basicModel.getStatus (name));
-            else return modelNotExists ();
-        } catch (Exception e) {
-            return serverErr ("err " + e.getMessage ());
-        }
+        if (basicModel.contains (name, true))
+            return ok (basicModel.getStatus (name));
+        else return modelNotExists ();
     }
 
     /**
@@ -164,16 +160,11 @@ public class ModelController {
     @ApiOperation(value = "获得输出", responseContainer = "List")
     //加@Valid！，即使databinder弄了！
     public Response<?> output(@RequestBody @Validated OutputSearchVO searchVO) {
-        try {
-            searchVO.setId (-1);
-            if (searchVO.getType ().equals ("statistics")) {
-                return Response.ok (matrixOutputModelService.getStatistics (searchVO, false));
-            } else {
-                return Response.ok (matrixOutputModelService.getOutput (searchVO));
-            }
-        } catch (Exception e) {
-            e.printStackTrace ();
-            return Response.serverErr ("err " + e.getMessage ());
+        searchVO.setId (-1);
+        if (searchVO.getType ().equals ("statistics")) {
+            return Response.ok (matrixOutputModelService.getStatistics (searchVO, false));
+        } else {
+            return Response.ok (matrixOutputModelService.getOutput (searchVO));
         }
     }
 
