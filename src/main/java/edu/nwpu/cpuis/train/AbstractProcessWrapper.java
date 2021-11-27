@@ -35,6 +35,7 @@ public abstract class AbstractProcessWrapper {
     protected String[] dataset;
     protected Future<?> future;
     protected Output output;
+    protected String errMsg;
 
     public AbstractProcessWrapper(Process process, String algoName, String[] dataset, String phase) {
         this.state = State.TRAINING;
@@ -89,6 +90,27 @@ public abstract class AbstractProcessWrapper {
                 log.error ("{} err stop process :{}", key, e.getMessage ());
             }
         });
+
+        PythonScriptRunner.executor.submit (this::readFromErrStream);
+    }
+
+    protected void readFromErrStream() {
+        StringBuilder sb = new StringBuilder ();
+        Arrays.sort (dataset);
+        key = String.format ("%s-%s-%s-%s", algoName, dataset[0], dataset[1], phase);
+        String s;
+        try {
+            while ((s = reader.readLine ()) != null) {
+                sb.append (s);
+            }
+            if (sb.length () > 0) {
+                this.errMsg = sb.toString ();
+                this.state = State.ERROR_STOPPED;
+                log.error ("{} 获得标准错误流输出 {}", key, errMsg);
+            }
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
     }
 
     protected abstract void cleanupLastOutput();
