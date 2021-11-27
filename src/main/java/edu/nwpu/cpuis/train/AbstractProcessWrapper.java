@@ -77,6 +77,7 @@ public abstract class AbstractProcessWrapper {
             }
         }
         log.info ("{} is canceled successfully.", key);
+        log.info ("{} err stream output:\n {}", key, errMsg);
     }
 
     public void start() {
