@@ -46,6 +46,9 @@ public class GlobalAdvice {
     public Response<?> cpuisException(CpuisException e) {
         log.error ("自定义错误码错误：CpuisException " + e);
         e.printStackTrace ();
-        return Response.ofFailed (e.getReason ());
+        if (e.getData () != null) {
+            return Response.ofFailed (e.getData (), e.getReason ());
+        } else
+            return Response.ofFailed (e.getReason ());
     }
 }

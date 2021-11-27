@@ -21,9 +21,9 @@ public abstract class AbstractProcessWrapper {
 
     protected static final String DONE_LITERAL = "done";
     protected static final long waitProcessTerminationTimeout = 1000;//ms
-
     protected final Process process;
-    protected final BufferedReader reader;
+    protected final BufferedReader inputStreamReader;
+    protected final BufferedReader errStreamReader;
 
     protected volatile State state;
     protected volatile double percentage = 0;
@@ -43,7 +43,8 @@ public abstract class AbstractProcessWrapper {
         this.dataset = dataset;
         this.process = process;
         this.phase = phase;
-        reader = new BufferedReader (new InputStreamReader (process.getInputStream ()));
+        this.inputStreamReader = new BufferedReader (new InputStreamReader (process.getInputStream ()));
+        this.errStreamReader = new BufferedReader (new InputStreamReader (process.getErrorStream ()));
         cleanupLastOutput ();
     }
 
@@ -52,10 +53,10 @@ public abstract class AbstractProcessWrapper {
      * 资源有2个：监视线程，运行计算的进程
      */
     public final void stop() {
-        if (state != State.TRAINING || state != State.PREDICTING) {
+        if (state != State.TRAINING && state != State.PREDICTING) {
             log.error ("{} stop失败，因为当前状态为 {}", key, state);
             throw new CpuisException (ErrCode.MODEL_CANNOT_CANCELED,
-                    String.format ("%s无法stop，因为模型当前状态为%s，并不在训练中", key, state));
+                    String.format ("%s无法stop，因为模型当前状态为%s，不在训练中", key, state));
         }
         boolean canceled = false;
         try {
@@ -107,7 +108,7 @@ public abstract class AbstractProcessWrapper {
         key = String.format ("%s-%s-%s-%s", algoName, dataset[0], dataset[1], phase);
         String s;
         try {
-            while ((s = reader.readLine ()) != null) {
+            while ((s = errStreamReader.readLine ()) != null) {
                 sb.append (s);
             }
             if (sb.length () > 0) {
@@ -148,7 +149,7 @@ public abstract class AbstractProcessWrapper {
         String s;
         while (state == State.TRAINING) {
             //没有数据读会阻塞，如果返回null，就是进程结束了
-            if ((s = reader.readLine ()) == null) {
+            if ((s = inputStreamReader.readLine ()) == null) {
                 if (parseOutput && processOutput (sb.toString ().trim ())) {
                     state = State.SUCCESSFULLY_STOPPED;
                     afterScriptDone ();

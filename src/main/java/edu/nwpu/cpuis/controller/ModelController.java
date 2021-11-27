@@ -98,9 +98,10 @@ public class ModelController {
         if (state == null) {
             return modelNotExists ();
         }
-        if (state != State.TRAINING) {
-            return ofFailed (state, ErrCode.MODEL_ALREADY_STOPPED);
-        }
+        //stop方法会进行验证
+//        if (state != State.TRAINING) {
+//            return ofFailed (state, ErrCode.MODEL_ALREADY_STOPPED);
+//        }
         if (basicModel.stopTrain (name)) {
             return ok ();
         } else {

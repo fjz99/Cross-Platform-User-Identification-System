@@ -1,9 +1,12 @@
 package edu.nwpu.cpuis.entity;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public final class Response<T> {
+    private static final Response<?> GENERIC_ERR = ofFailed ("ERROR!", ErrCode.GENERIC_ERR);
+    private static final Response<?> MODEL_NOT_EXISTS = ofFailed ("模型不存在", ErrCode.MODEL_NOT_EXISTS);
+    private static final Response<?> INTERNAL_SERVER_ERR = ofFailed ("INTERNAL_SERVER_ERROR[emergency:contact fjz]", ErrCode.UNKNOWN_ERR);
     private final long timeStamp;
     private final T data;
     private final boolean success;
@@ -56,11 +59,11 @@ public final class Response<T> {
     }
 
     public static Response<?> modelNotExists() {
-        return ofFailed ("模型不存在", ErrCode.MODEL_NOT_EXISTS);
+        return MODEL_NOT_EXISTS;
     }
 
     public static Response<?> genericErr() {
-        return ofFailed ("ERROR!", ErrCode.GENERIC_ERR);
+        return GENERIC_ERR;
     }
 
     public static <Q> Response<Q> genericErr(Q a) {
@@ -72,7 +75,7 @@ public final class Response<T> {
     }
 
     public static Response<?> serverErr() {
-        return ofFailed ("INTERNAL_SERVER_ERROR[emergency:contact fjz]", ErrCode.UNKNOWN_ERR);
+        return INTERNAL_SERVER_ERR;
     }
 
 }
