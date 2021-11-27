@@ -52,6 +52,11 @@ public abstract class AbstractProcessWrapper {
      * 资源有2个：监视线程，运行计算的进程
      */
     public final void stop() {
+        if (state != State.TRAINING || state != State.PREDICTING) {
+            log.error ("{} stop失败，因为当前状态为 {}", key, state);
+            throw new CpuisException (ErrCode.MODEL_CANNOT_CANCELED,
+                    String.format ("%s无法stop，因为模型当前状态为%s，并不在训练中", key, state));
+        }
         boolean canceled = false;
         try {
             process.destroyForcibly ();
@@ -76,6 +81,7 @@ public abstract class AbstractProcessWrapper {
                 throw new CpuisException (ErrCode.MODEL_CANNOT_CANCELED, "thread canceled failed");
             }
         }
+        cleanupLastOutput ();//
         log.info ("{} is canceled successfully.", key);
         log.info ("{} err stream output:\n {}", key, errMsg);
     }
