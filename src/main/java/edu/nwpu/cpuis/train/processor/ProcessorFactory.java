@@ -18,11 +18,11 @@ public final class ProcessorFactory {
     public ModelPostProcessor getProcessor(String phase, int stage) {
         switch (stage) {
             case 1: {
-                return map.get ("matrixValuePostProcessor");
+                return map.get (ProcessorNames.matrixValuePostProcessor);
             }
             case 2: {
                 if (phase.equals ("train")) {
-                    return map.get ("doNothingPostProcessor");
+                    return map.get (ProcessorNames.doNothingPostProcessor);
                 } else return null;
             }
             case 3: {

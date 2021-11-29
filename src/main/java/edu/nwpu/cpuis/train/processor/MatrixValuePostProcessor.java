@@ -23,7 +23,7 @@ import static edu.nwpu.cpuis.train.PythonScriptRunner.mongoService;
  * 这个是为了兼容算法1
  */
 @Slf4j
-@Component("matrixValuePostProcessor")
+@Component(ProcessorNames.matrixValuePostProcessor)
 public class MatrixValuePostProcessor extends ModelPostProcessor {
 
     private void saveStatisticsToMongoDB(String key, Output output) {

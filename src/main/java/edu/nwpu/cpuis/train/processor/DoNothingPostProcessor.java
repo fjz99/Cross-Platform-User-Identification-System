@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component("doNothingPostProcessor")
+@Component(ProcessorNames.doNothingPostProcessor)
 @Slf4j
 public class DoNothingPostProcessor extends ModelPostProcessor{
     @Override
