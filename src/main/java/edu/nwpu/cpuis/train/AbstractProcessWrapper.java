@@ -125,15 +125,13 @@ public abstract class AbstractProcessWrapper {
 
     protected abstract void removeFromMap();
 
-    protected void afterScriptDone() {
-        //todo processors
-    }
+    protected abstract void afterScriptDone();
 
     public final State getState() {
         return state;
     }
 
-    protected boolean processOutput(String s) {
+    protected final boolean processOutput(String s) {
         try {
             output = JSON.parseObject (s, Output.class);
             return true;
@@ -144,7 +142,7 @@ public abstract class AbstractProcessWrapper {
         }
     }
 
-    protected void readFromScript() throws IOException {
+    protected final void readFromScript() throws IOException {
         StringBuilder sb = new StringBuilder ();
         Arrays.sort (dataset);
         key = String.format ("%s-%s-%s-%s", algoName, dataset[0], dataset[1], phase);
