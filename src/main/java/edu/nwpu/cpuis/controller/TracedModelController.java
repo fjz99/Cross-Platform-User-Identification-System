@@ -5,6 +5,7 @@ import edu.nwpu.cpuis.entity.Response;
 import edu.nwpu.cpuis.entity.vo.ModelLocationVO;
 import edu.nwpu.cpuis.entity.vo.ModelSearchVO;
 import edu.nwpu.cpuis.entity.vo.OutputSearchVO;
+import edu.nwpu.cpuis.entity.vo.PredictVO;
 import edu.nwpu.cpuis.service.DatasetService;
 import edu.nwpu.cpuis.service.MatrixOutputModelService;
 import edu.nwpu.cpuis.service.TracedModelService;
@@ -57,7 +58,7 @@ public class TracedModelController {
     }
 
     /**
-     * 算法名-数据集1-数据集2-getDaemon/predict,数据集1和2必须是升序排列
+     * 算法名-数据集1-数据集2-train/predict,数据集1和2必须是升序排列
      */
     @RequestMapping(value = "/output", consumes = MediaType.APPLICATION_JSON_VALUE, method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "获得输出", responseContainer = "List")
@@ -87,7 +88,8 @@ public class TracedModelController {
             log.error ("dataset input err {}", dataset);
             return ofFailed (ErrCode.WRONG_DATASET_INPUT);
         }
-        if (service.isTraining (name, dataset.toArray (new String[]{}), "getDaemon", null, true)) {
+        //只能串行化训练
+        if (service.isTraining (name, dataset.toArray (new String[]{}), "train", true, -1)) {
             log.error ("模型正在训练中");
             return ofFailed (ErrCode.MODEL_IN_TRAINING);
         }
@@ -119,15 +121,18 @@ public class TracedModelController {
         } else return modelNotExists ();
     }
 
-    //todo
-    @GetMapping("/{name}/predict")
+    /**
+     * 目前输入暂定为String
+     * id 指定模型id，id可以=-1，表示最新的模型
+     */
+    @GetMapping("/predict")
     @ApiOperation(value = "模型预测", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "name", value = "算法名称", required = true, dataTypeClass = String.class),
             @ApiImplicitParam(paramType = "query", name = "dataset", value = "数据集名称", required = true, dataTypeClass = List.class, allowMultiple = true),
     })
-    public Response<?> predict(@PathVariable @NotBlank String name,
-                               @RequestParam @Size(min = 2, max = 2) List<String> dataset) {
+    public Response<?> predict(@RequestBody PredictVO vo) {
+        service.predict (vo);//todo
         return null;
     }
 

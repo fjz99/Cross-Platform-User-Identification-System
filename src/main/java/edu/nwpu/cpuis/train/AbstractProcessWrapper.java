@@ -125,7 +125,9 @@ public abstract class AbstractProcessWrapper {
 
     protected abstract void removeFromMap();
 
-    protected abstract void afterScriptDone();
+    protected void afterScriptDone() {
+        //todo processors
+    }
 
     public final State getState() {
         return state;

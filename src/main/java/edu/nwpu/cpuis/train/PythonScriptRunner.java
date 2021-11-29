@@ -4,7 +4,9 @@ import edu.nwpu.cpuis.entity.AlgoEntity;
 import edu.nwpu.cpuis.entity.DatasetManageEntity;
 import edu.nwpu.cpuis.entity.ModelInfo;
 import edu.nwpu.cpuis.entity.MongoOutputEntity;
+import edu.nwpu.cpuis.service.AlgoService;
 import edu.nwpu.cpuis.service.MongoService;
+import edu.nwpu.cpuis.train.processor.ProcessorFactory;
 import edu.nwpu.cpuis.utils.ModelKeyGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -28,25 +30,31 @@ public final class PythonScriptRunner {
     static final Map<String, TracedProcessWrapper> tracedProcesses = new HashMap<> ();
     private static final String TRAIN_TYPE_NAME = "train";
     private static final String PREDICT_TYPE_NAME = "predict";
-    static MongoService<MongoOutputEntity> mongoService;
-    static MongoService<Map> mapMongoService;
-    static MongoService<ModelInfo> modelInfoMongoService;
-    static ThreadPoolTaskExecutor executor;
-    static MongoService<AlgoEntity> algoEntityMongoService;
-    static MongoService<DatasetManageEntity> datasetManageEntityMongoService;
+    public static MongoService<MongoOutputEntity> mongoService;
+    public static MongoService<Map> mapMongoService;
+    public static MongoService<ModelInfo> modelInfoMongoService;
+    public static ThreadPoolTaskExecutor executor;
+    public static MongoService<AlgoEntity> algoEntityMongoService;
+    public static MongoService<DatasetManageEntity> datasetManageEntityMongoService;
+    static ProcessorFactory processorFactory;
+    static AlgoService algoService;
 
     private PythonScriptRunner(ThreadPoolTaskExecutor executor,
                                MongoService<MongoOutputEntity> mongoService,
                                MongoService<Map> mapMongoService,
                                MongoService<ModelInfo> modelInfoMongoService,
                                MongoService<AlgoEntity> algoEntityMongoService,
-                               MongoService<DatasetManageEntity> datasetManageEntityMongoService) {
+                               MongoService<DatasetManageEntity> datasetManageEntityMongoService,
+                               ProcessorFactory processorFactory,
+                               AlgoService algoService) {
         PythonScriptRunner.mongoService = mongoService;
         PythonScriptRunner.executor = executor;
         PythonScriptRunner.mapMongoService = mapMongoService;
         PythonScriptRunner.modelInfoMongoService = modelInfoMongoService;
         PythonScriptRunner.algoEntityMongoService = algoEntityMongoService;
         PythonScriptRunner.datasetManageEntityMongoService = datasetManageEntityMongoService;
+        PythonScriptRunner.processorFactory = processorFactory;
+        PythonScriptRunner.algoService = algoService;
     }
 
     /**
@@ -130,7 +138,7 @@ public final class PythonScriptRunner {
         return directoryPath;
     }
 
-    private static String getDirectoryPath(String algoName, String[] dataset, String phase, Integer thisId) {
+    public static String getDirectoryPath(String algoName, String[] dataset, String phase, Integer thisId) {
         Arrays.sort (dataset);//!
         return String.format ("%s%s/%s-%s/%s/%s/", directoryLocationBase, algoName, dataset[0], dataset[1], phase, thisId);
     }

@@ -2,11 +2,13 @@ package edu.nwpu.cpuis.service;
 
 import edu.nwpu.cpuis.entity.AlgoEntity;
 import edu.nwpu.cpuis.entity.DatasetManageEntity;
+import edu.nwpu.cpuis.entity.ErrCode;
 import edu.nwpu.cpuis.entity.ModelInfo;
+import edu.nwpu.cpuis.entity.exception.CpuisException;
 import edu.nwpu.cpuis.entity.vo.ModelLocationVO;
 import edu.nwpu.cpuis.entity.vo.ModelSearchVO;
 import edu.nwpu.cpuis.entity.vo.ModelVO;
-import edu.nwpu.cpuis.train.AbstractProcessWrapper;
+import edu.nwpu.cpuis.entity.vo.PredictVO;
 import edu.nwpu.cpuis.train.PythonScriptRunner;
 import edu.nwpu.cpuis.train.State;
 import edu.nwpu.cpuis.train.TracedProcessWrapper;
@@ -22,12 +24,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import static edu.nwpu.cpuis.entity.ErrCode.ALGO_NOT_EXISTS;
+import static edu.nwpu.cpuis.train.PythonScriptRunner.getDirectoryPath;
 import static edu.nwpu.cpuis.train.PythonScriptRunner.modelInfoPrefix;
+import static edu.nwpu.cpuis.utils.ModelKeyGenerator.generateKeyWithIncId;
 
+//type=null
 @Service
 @Slf4j
 public class TracedModelService {
     private static final String datasetKey = "dirs";
+    public static final String PREDICT_PHASE = "predict";
     @Resource
     private MongoService<ModelInfo> service;
     @Value("${file.input-base-location}")
@@ -82,63 +89,64 @@ public class TracedModelService {
     }
 
     /**
+     * 调用是肯定没有在训练中的
+     *
      * @param datasets 文件夹，2个
      * @return 模型id，如果错误，返回-1
      */
     public int train(List<String> datasets, String name, Map<String, String> args) {
-        AbstractProcessWrapper process = PythonScriptRunner.getTracedProcess (name);
-        Assert.isTrue (datasets.size () == 2, "目前只支持2个数据集输入");
-        if (process == null) {
-            Map<String, Object> map = new HashMap<> ();
-            List<String> out = new ArrayList<> (datasets.size ());
-            for (String s : datasets) {
-                out.add (datasetService.getDatasetLocation (s));
-            }
-            map.put (datasetKey, out);
+        checkAlgoAndDataset (name, datasets);
+        Map<String, Object> map = new HashMap<> ();
+        List<String> out = new ArrayList<> (datasets.size ());
+        for (String s : datasets) {
+            out.add (datasetService.getDatasetLocation (s));
+        }
+        map.put (datasetKey, out);
 //            map.put ("inputDir", null);//train是没有这个的
 //            map.putAll (args);//会覆盖
-            //fixme
+        //fixme
 //            PythonUtils.runScript (name, singleModel.getTrainSource (), map, datasets);
-            if (algoService.getAlgoEntity (name) == null) {
-                return -1;
+        return PythonScriptRunner.runTracedScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets, "train");
+    }
+
+    private void checkAlgoAndDataset(String algo, List<String> datasets) {
+        if (!algoService.exists (algo)) {
+            throw new CpuisException (ALGO_NOT_EXISTS, algo);
+        }
+        Assert.isTrue (datasets.size () == 2, "");
+        for (String dataset : datasets) {
+            if (!datasetService.exists (dataset)) {
+                throw new CpuisException (ErrCode.DATASET_NOT_EXISTS);
             }
-            return PythonScriptRunner.runTracedScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets, "getDaemon");
-        } else {
-            return -1;
         }
     }
 
-    public boolean predict(List<String> datasets, String name, Map<String, String> args, Integer relatedTrainModel) {
-        AbstractProcessWrapper process = PythonScriptRunner.getTracedProcess (name);
-        Assert.isTrue (datasets.size () == 2, "目前只支持2个数据集输入");
-        if (process == null) {
-            //获得训练的模型
-            String key = ModelKeyGenerator.generateModelInfoKey (datasets.toArray (new String[]{}), name,
-                    "getDaemon", null, modelInfoPrefix);
-            List<ModelInfo> modelInfos = service.selectByEquals (key, ModelInfo.class, "id", String.valueOf (relatedTrainModel));
-            if (modelInfos.size () != 1) {
-                log.error ("找不到modelInfo，relatedTrainModel id={}", relatedTrainModel);
-                return false;
-            }
-            ModelInfo m = modelInfos.get (0);
+    public void predict(PredictVO vo) {
+        String[] dataset = vo.getDataset ().toArray (new String[]{});
+        int id = vo.getId ();
+        String name = vo.getAlgoName ();
+        List<String> datasets = vo.getDataset ();
 
-            Map<String, Object> map = new HashMap<> ();
-            List<String> out = new ArrayList<> (datasets.size ());
-            for (String s : datasets) {
-                out.add (datasetService.getDatasetLocation (s));
-            }
-            map.put ("inputDir", m.getDataLocation ());
-            map.put (datasetKey, out);
-            if (algoService.getAlgoEntity (name) == null) {
-                return false;
-            }
-            PythonScriptRunner.runTracedScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets, "predict");
-            return true;
-        } else {
-            return false;
+        if (id == -1) {
+            id = getLatestId (name, dataset, PREDICT_PHASE);
         }
-    }
+        if (!contains (name, dataset, PREDICT_PHASE, id)) {
+            throw new CpuisException (ErrCode.MODEL_NOT_EXISTS);
+        }
 
+        checkAlgoAndDataset (name, datasets);
+        Map<String, Object> map = new HashMap<> ();
+        List<String> out = new ArrayList<> (datasets.size ());
+        for (String s : datasets) {
+            out.add (datasetService.getDatasetLocation (s));
+        }
+        map.put (datasetKey, out);
+
+        String directoryPath = getDirectoryPath (name, dataset, PREDICT_PHASE, id);
+        map.put ("inputDir", directoryPath);//!!
+        //fixme
+        PythonScriptRunner.runTracedScript (name, algoService.getAlgoEntity (name).getPredictSource (), map, datasets, PREDICT_PHASE);
+    }
 
     public boolean destroy(String name) {
         if (PythonScriptRunner.getTracedProcess (name) == null) {
@@ -161,7 +169,7 @@ public class TracedModelService {
     }
 
     public Double getPercentage(ModelLocationVO vo) {
-        String name = ModelKeyGenerator.generateKeyWithIncId (vo.getDataset (), vo.getAlgoName (), vo.getPhase (), null, vo.getId ());
+        String name = generateKeyWithIncId (vo.getDataset (), vo.getAlgoName (), vo.getPhase (), null, vo.getId ());
         TracedProcessWrapper trainProcess = PythonScriptRunner.getTracedProcess (name);
         if (trainProcess == null) {
             return null;
@@ -169,30 +177,39 @@ public class TracedModelService {
         return trainProcess.getPercentage ();
     }
 
-    //based on latest model id
     //用于判断是否正在训练中
-    public boolean isTraining(String name, String[] dataset, String phase, String type, boolean replaceStopped) {
-        String k = getLatestKey (name, dataset, phase, type);
+    public boolean isTraining(String name, String[] dataset, String phase, boolean replaceStopped, int id) {
+        String k;
+        if (id == -1) {
+            k = getLatestKey (name, dataset, phase);
+        } else {
+            k = generateKeyWithIncId (dataset, name, phase, null, id);
+        }
         if (!replaceStopped)
             return PythonScriptRunner.getTracedProcess (k) != null;
         else
             return PythonScriptRunner.getTracedProcess (k) != null && PythonScriptRunner.getTracedProcess (k).getState () == State.TRAINING;
     }
 
-    public String getLatestKey(String name, String[] dataset, String phase, String type) {
-        int id = getLatestId (name, dataset, phase, type);
-        return ModelKeyGenerator.generateKeyWithIncId (dataset, name, phase, type, id);
+
+    public String getLatestKey(String name, String[] dataset, String phase) {
+        int id = getLatestId (name, dataset, phase);
+        return generateKeyWithIncId (dataset, name, phase, null, id);
     }
 
     public String getKey(String name, String[] dataset, String phase, String type, Integer id) {
-        return ModelKeyGenerator.generateKeyWithIncId (dataset, name, phase, type, id);
+        return generateKeyWithIncId (dataset, name, phase, type, id);
     }
 
-    public int getLatestId(String name, String[] dataset, String phase, String type) {
+    public int getLatestId(String name, String[] dataset, String phase) {
         String key = ModelKeyGenerator.generateModelInfoKey (dataset, name,
-                phase, type, modelInfoPrefix);
+                phase, null, modelInfoPrefix);
         List<ModelInfo> modelInfos = service.selectAll (key, ModelInfo.class);
-        return modelInfos.size ();
+        return modelInfos
+                .stream ()
+                .map (ModelInfo::getId)
+                .max (Comparator.naturalOrder ())
+                .orElse (-1) + 1;
     }
 
     public String getStatus(String name) {
