@@ -25,8 +25,8 @@ public class TracedProcessWrapper extends AbstractProcessWrapper {
     private final Integer thisId;
     private final String directoryPath;
     private final String modelInfoKey;
-    private Object outputData;
     private final Class<?> outputType;
+    private Object outputData;
 
     public TracedProcessWrapper(Process process, String algoName, String[] dataset, String phase, Integer thisId, String directoryPath, Class<?> outputType) {
         super (process, algoName, dataset, phase);
@@ -91,7 +91,7 @@ public class TracedProcessWrapper extends AbstractProcessWrapper {
                     .build ();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace ();
-            throw new IllegalStateException ();
+            throw new IllegalStateException (e);
         }
     }
 
