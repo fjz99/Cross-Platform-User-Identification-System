@@ -43,6 +43,7 @@ public class AlgoService {
         return false;
     }
 
+    @CacheEvict(cacheNames = "query", allEntries = true)
     public void saveToMongoDB(AlgoEntity entity) {
         if (!mongoService.collectionExists (algoMongoLocation)) {
             mongoService.createCollection (algoMongoLocation);

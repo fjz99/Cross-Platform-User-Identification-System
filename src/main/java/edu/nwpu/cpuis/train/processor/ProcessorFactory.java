@@ -3,33 +3,24 @@ package edu.nwpu.cpuis.train.processor;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
+import java.util.List;
 
 @Component
 @Data
 public final class ProcessorFactory {
-    private final Map<String, ModelPostProcessor> map;
+    private final List<ModelPostProcessor> list;
 
-    public ProcessorFactory(Map<String, ModelPostProcessor> map) {
-        this.map = map;
+    public ProcessorFactory(List<ModelPostProcessor> list) {
+        this.list = list;
     }
 
-    //简单工厂模式
-    public ModelPostProcessor getProcessor(String phase, int stage) {
-        switch (stage) {
-            case 1: {
-                return map.get (ProcessorNames.matrixValuePostProcessor);
+
+    public ModelPostProcessor getProcessor(Class<?> outputType) {
+        for (ModelPostProcessor modelPostProcessor : list) {
+            if (modelPostProcessor.supports (outputType)) {
+                return modelPostProcessor;
             }
-            case 2: {
-                if (phase.equals ("train")) {
-                    return map.get (ProcessorNames.doNothingPostProcessor);
-                } else return null;
-            }
-            case 3: {
-                return null;
-            }
-            default:
-                throw new IllegalArgumentException ();
         }
+        throw new AssertionError ();
     }
 }

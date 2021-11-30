@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import edu.nwpu.cpuis.entity.ErrCode;
 import edu.nwpu.cpuis.entity.Output;
 import edu.nwpu.cpuis.entity.exception.CpuisException;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -17,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 //hash-fb-fs-train-output
 @Slf4j
+@Getter
 public abstract class AbstractProcessWrapper {
 
     protected static final String DONE_LITERAL = "done";
@@ -105,7 +107,7 @@ public abstract class AbstractProcessWrapper {
     protected void readFromErrStream() {
         StringBuilder sb = new StringBuilder ();
         Arrays.sort (dataset);
-        key = String.format ("%s-%s-%s-%s", algoName, dataset[0], dataset[1], phase);
+        key = getKey ();
         String s;
         try {
             while ((s = errStreamReader.readLine ()) != null) {
@@ -131,7 +133,7 @@ public abstract class AbstractProcessWrapper {
         return state;
     }
 
-    protected final boolean processOutput(String s) {
+    protected boolean processOutput(String s) {
         try {
             output = JSON.parseObject (s, Output.class);
             return true;
@@ -142,10 +144,18 @@ public abstract class AbstractProcessWrapper {
         }
     }
 
+    private String getKey() {
+        StringBuilder builder = new StringBuilder ();
+        for (String s : dataset) {
+            builder.append (s).append ('-');
+        }
+        return algoName + "-" + builder + phase;
+    }
+
     protected final void readFromScript() throws IOException {
         StringBuilder sb = new StringBuilder ();
         Arrays.sort (dataset);
-        key = String.format ("%s-%s-%s-%s", algoName, dataset[0], dataset[1], phase);
+        key = getKey ();
         String s;
         while (state == State.TRAINING) {
             //没有数据读会阻塞，如果返回null，就是进程结束了

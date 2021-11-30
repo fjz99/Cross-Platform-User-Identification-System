@@ -10,6 +10,7 @@ import edu.nwpu.cpuis.service.DatasetService;
 import edu.nwpu.cpuis.service.MatrixOutputModelService;
 import edu.nwpu.cpuis.service.TracedModelService;
 import edu.nwpu.cpuis.service.validator.OutputVoValidator;
+import edu.nwpu.cpuis.train.PythonScriptRunner;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -23,10 +24,7 @@ import javax.annotation.Resource;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static edu.nwpu.cpuis.entity.Response.*;
 
@@ -82,35 +80,25 @@ public class TracedModelController {
             @ApiImplicitParam(paramType = "query", name = "dataset", value = "数据集名称", required = true, dataTypeClass = List.class, allowMultiple = true),
     })
     public Response<?> train(@PathVariable @NotBlank String name,
-                             @RequestParam @Size(min = 2, max = 2) List<String> dataset) {
+                             @RequestParam @Size(min = 1, max = 2) List<String> dataset) {
         dataset.sort (Comparator.naturalOrder ());
-        if (dataset.size () != 2) {
-            log.error ("dataset input err {}", dataset);
-            return ofFailed (ErrCode.WRONG_DATASET_INPUT);
-        }
-        //只能串行化训练
+        //只能串行化训练,fixme queue?
         if (service.isTraining (name, dataset.toArray (new String[]{}), "train", true, -1)) {
             log.error ("模型正在训练中");
             return ofFailed (ErrCode.MODEL_IN_TRAINING);
         }
-        if (fileUploadService.getDatasetLocation (dataset.get (0)) != null
-                && fileUploadService.getDatasetLocation (dataset.get (1)) != null) {
-            Map<String, String> args = new HashMap<> ();
-            int id = service.train (dataset, name, args);
-            Map<String, Object> map = new HashMap<String, Object> () {
-                {
-                    put ("id", id);
-                    put ("msg", "训练开始");
-                }
-            };
-            return ok (map);
-        } else {
-            log.error ("dataset input err {}", dataset);
-            return ofFailed (ErrCode.WRONG_DATASET_INPUT);
-        }
+        Map<String, String> args = new HashMap<> ();
+        int id = service.train (dataset, name, args);
+        Map<String, Object> map = new HashMap<String, Object> () {
+            {
+                put ("id", id);
+                put ("msg", "训练开始");
+            }
+        };
+        return ok (map);
     }
 
-    //todo
+
     @GetMapping("/trainingPercentage")
     @ApiOperation(value = "获得某个模型的训练进度百分比")
     @ApiImplicitParam(paramType = "body", name = "vo", value = "定位一个模型", required = true, dataTypeClass = ModelLocationVO.class)
@@ -132,8 +120,12 @@ public class TracedModelController {
             @ApiImplicitParam(paramType = "query", name = "dataset", value = "数据集名称", required = true, dataTypeClass = List.class, allowMultiple = true),
     })
     public Response<?> predict(@RequestBody PredictVO vo) {
-        service.predict (vo);//todo
-        return null;
+        if (vo.getDataset () == null) {
+            vo.setDataset (new ArrayList<> ());
+        }
+        vo.getDataset ().sort (Comparator.naturalOrder ());
+        PythonScriptRunner.TracedScriptOutput predict = service.predict (vo);
+        return Response.ok (predict.getOutput ());
     }
 
     @DeleteMapping("/delete")

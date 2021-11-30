@@ -17,14 +17,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import static edu.nwpu.cpuis.entity.ErrCode.ALGO_NOT_EXISTS;
 import static edu.nwpu.cpuis.train.PythonScriptRunner.getDirectoryPath;
 import static edu.nwpu.cpuis.train.PythonScriptRunner.modelInfoPrefix;
 import static edu.nwpu.cpuis.utils.ModelKeyGenerator.generateKeyWithIncId;
@@ -35,6 +33,7 @@ import static edu.nwpu.cpuis.utils.ModelKeyGenerator.generateKeyWithIncId;
 public class TracedModelService {
     private static final String datasetKey = "dirs";
     public static final String PREDICT_PHASE = "predict";
+    public static final String TRAIN_PHASE = "train";
     @Resource
     private MongoService<ModelInfo> service;
     @Value("${file.input-base-location}")
@@ -63,9 +62,10 @@ public class TracedModelService {
         List<ModelVO> VOS = new ArrayList<> ();
         for (ModelInfo modelInfo : modelInfos) {
             AlgoEntity algoInfo = algoService.getAlgoEntity (modelInfo.getAlgo ());
-            DatasetManageEntity[] manageEntities = new DatasetManageEntity[2];
-            manageEntities[0] = datasetService.getEntity (modelInfo.getDataset ()[0]);
-            manageEntities[1] = datasetService.getEntity (modelInfo.getDataset ()[1]);
+            List<DatasetManageEntity> manageEntities = new ArrayList<> ();
+            for (String s : modelInfo.getDataset ()) {
+                manageEntities.add (datasetService.getEntity (s));
+            }
             Map<?, ?> statistics;
             String key0 = ModelKeyGenerator.generateKey0 (searchVO.getDataset (), searchVO.getAlgoName (), searchVO.getPhase ()
                     , "statistics");
@@ -80,7 +80,7 @@ public class TracedModelService {
                     .id (modelInfo.getId ())
                     .time (modelInfo.getTime ())
                     .algoInfo (algoInfo)
-                    .datasetInfo (Arrays.asList (manageEntities))
+                    .datasetInfo (manageEntities)
                     .statistics (statistics)
                     .build ();
             VOS.add (vo);
@@ -95,7 +95,6 @@ public class TracedModelService {
      * @return 模型id，如果错误，返回-1
      */
     public int train(List<String> datasets, String name, Map<String, String> args) {
-        checkAlgoAndDataset (name, datasets);
         Map<String, Object> map = new HashMap<> ();
         List<String> out = new ArrayList<> (datasets.size ());
         for (String s : datasets) {
@@ -106,46 +105,35 @@ public class TracedModelService {
 //            map.putAll (args);//会覆盖
         //fixme
 //            PythonUtils.runScript (name, singleModel.getTrainSource (), map, datasets);
-        return PythonScriptRunner.runTracedScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets, "train");
+        return PythonScriptRunner.runTracedScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets, TRAIN_PHASE, false).getId ();
     }
 
-    private void checkAlgoAndDataset(String algo, List<String> datasets) {
-        if (!algoService.exists (algo)) {
-            throw new CpuisException (ALGO_NOT_EXISTS, algo);
-        }
-        Assert.isTrue (datasets.size () == 2, "");
-        for (String dataset : datasets) {
-            if (!datasetService.exists (dataset)) {
-                throw new CpuisException (ErrCode.DATASET_NOT_EXISTS);
-            }
-        }
-    }
-
-    public void predict(PredictVO vo) {
+    public PythonScriptRunner.TracedScriptOutput predict(PredictVO vo) {
         String[] dataset = vo.getDataset ().toArray (new String[]{});
         int id = vo.getId ();
         String name = vo.getAlgoName ();
-        List<String> datasets = vo.getDataset ();
+//        List<String> datasets = vo.getDataset ();
 
         if (id == -1) {
-            id = getLatestId (name, dataset, PREDICT_PHASE);
+            id = getLatestId (name, dataset, TRAIN_PHASE);
         }
-        if (!contains (name, dataset, PREDICT_PHASE, id)) {
+        if (!contains (name, dataset, TRAIN_PHASE, id)) {
             throw new CpuisException (ErrCode.MODEL_NOT_EXISTS);
         }
-
-        checkAlgoAndDataset (name, datasets);
         Map<String, Object> map = new HashMap<> ();
-        List<String> out = new ArrayList<> (datasets.size ());
-        for (String s : datasets) {
-            out.add (datasetService.getDatasetLocation (s));
-        }
-        map.put (datasetKey, out);
+//        List<String> out = new ArrayList<> (datasets.size ());
+//        for (String s : datasets) {
+//            out.add (datasetService.getDatasetLocation (s));
+//        }
+//        map.put (datasetKey, out);
 
-        String directoryPath = getDirectoryPath (name, dataset, PREDICT_PHASE, id);
+        String directoryPath = getDirectoryPath (name, dataset, TRAIN_PHASE, id);
         map.put ("inputDir", directoryPath);//!!
+        map.put ("input", vo.getInput ());//!!
         //fixme
-        PythonScriptRunner.runTracedScript (name, algoService.getAlgoEntity (name).getPredictSource (), map, datasets, PREDICT_PHASE);
+        PythonScriptRunner.TracedScriptOutput output = PythonScriptRunner.runTracedScript (name,
+                algoService.getAlgoEntity (name).getPredictSource (), map, new ArrayList<> (), PREDICT_PHASE, true);
+        return output;
     }
 
     public boolean destroy(String name) {

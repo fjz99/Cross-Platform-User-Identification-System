@@ -4,6 +4,8 @@ import edu.nwpu.cpuis.entity.ModelInfo;
 import edu.nwpu.cpuis.entity.MongoOutputEntity;
 import edu.nwpu.cpuis.entity.Output;
 import edu.nwpu.cpuis.train.PythonScriptRunner;
+import edu.nwpu.cpuis.train.TracedProcessWrapper;
+import edu.nwpu.cpuis.train.output.MatrixSimilarityOutput;
 import edu.nwpu.cpuis.utils.ModelKeyGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -13,8 +15,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static edu.nwpu.cpuis.train.PythonScriptRunner.modelInfoMongoService;
-import static edu.nwpu.cpuis.train.PythonScriptRunner.mongoService;
+import static edu.nwpu.cpuis.train.PythonScriptRunner.*;
 
 /**
  * 处理矩阵形式的输出
@@ -24,7 +25,14 @@ import static edu.nwpu.cpuis.train.PythonScriptRunner.mongoService;
  */
 @Slf4j
 @Component(ProcessorNames.matrixValuePostProcessor)
-public class MatrixValuePostProcessor extends ModelPostProcessor {
+public class MatrixValuePostProcessor implements ModelPostProcessor {
+    protected Output output;
+    protected int thisId;
+    protected String[] dataset;
+    protected String algoName;
+    protected String phase;
+    protected String directoryPath;//模型的checkpoint文件存储位置位置
+    protected String modelInfoKey;
 
     private void saveStatisticsToMongoDB(String key, Output output) {
         Map<String, Object> statistics = new HashMap<> ();
@@ -101,8 +109,15 @@ public class MatrixValuePostProcessor extends ModelPostProcessor {
     }
 
     @Override
-    public void process(Output output, String algoName, List<String> dataset, String phase, int thisId, String directoryPath) {
-        super.postProcess (output, algoName, dataset, phase, thisId, directoryPath);
+    public void process(TracedProcessWrapper processWrapper) {
+        this.output = (Output) processWrapper.getOutputData ();
+        this.algoName = processWrapper.getAlgoName ();
+        this.dataset = processWrapper.getDataset ();
+        this.phase = processWrapper.getPhase ();
+        this.thisId = processWrapper.getThisId ();
+        this.directoryPath = processWrapper.getDirectoryPath ();
+        this.modelInfoKey = ModelKeyGenerator.generateModelInfoKey (this.dataset, algoName, phase, null, modelInfoPrefix);
+
 
         //检查mongoCollection
         String key = ModelKeyGenerator.generateKeyWithIncId (this.dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, thisId);
@@ -149,5 +164,10 @@ public class MatrixValuePostProcessor extends ModelPostProcessor {
                 .dataset (this.dataset)
                 .build ();
         modelInfoMongoService.insert (modelInfo, modelInfoKey);
+    }
+
+    @Override
+    public boolean supports(Class<?> outputType) {
+        return outputType == MatrixSimilarityOutput.class;
     }
 }

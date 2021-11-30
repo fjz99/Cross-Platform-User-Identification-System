@@ -3,8 +3,8 @@ package edu.nwpu.cpuis.train.processor;
 import edu.nwpu.cpuis.entity.ModelInfo;
 import edu.nwpu.cpuis.train.TracedProcessWrapper;
 import edu.nwpu.cpuis.utils.ModelKeyGenerator;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -12,13 +12,12 @@ import java.time.LocalDateTime;
 import static edu.nwpu.cpuis.train.PythonScriptRunner.modelInfoMongoService;
 import static edu.nwpu.cpuis.train.PythonScriptRunner.modelInfoPrefix;
 
-@Component(ProcessorNames.doNothingPostProcessor)
 @Slf4j
-@Order
-public class DoNothingPostProcessor implements ModelPostProcessor {
+@Component
+public class SaveOutput2MemoryProcessor implements ModelPostProcessor{
     @Override
     public void process(TracedProcessWrapper processWrapper) {
-        log.info ("DoNothingPostProcessor 只保存modelInfo和statistics");
+        log.info ("SaveOutput2MemoryProcessor 只保存modelInfo和statistics");
 
         //下面保存ModelInfo等
         ModelInfo modelInfo = ModelInfo.builder ()

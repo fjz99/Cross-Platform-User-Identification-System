@@ -1,13 +1,16 @@
 package edu.nwpu.cpuis.train;
 
-import edu.nwpu.cpuis.entity.AlgoEntity;
-import edu.nwpu.cpuis.entity.DatasetManageEntity;
-import edu.nwpu.cpuis.entity.ModelInfo;
-import edu.nwpu.cpuis.entity.MongoOutputEntity;
+import edu.nwpu.cpuis.entity.*;
+import edu.nwpu.cpuis.entity.exception.CpuisException;
 import edu.nwpu.cpuis.service.AlgoService;
+import edu.nwpu.cpuis.service.DatasetService;
 import edu.nwpu.cpuis.service.MongoService;
 import edu.nwpu.cpuis.train.processor.ProcessorFactory;
 import edu.nwpu.cpuis.utils.ModelKeyGenerator;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -38,6 +41,8 @@ public final class PythonScriptRunner {
     public static MongoService<DatasetManageEntity> datasetManageEntityMongoService;
     static ProcessorFactory processorFactory;
     static AlgoService algoService;
+    static ProcessWrapperFactory processWrapperFactory;
+    static DatasetService fileUploadService;
 
     private PythonScriptRunner(ThreadPoolTaskExecutor executor,
                                MongoService<MongoOutputEntity> mongoService,
@@ -46,7 +51,8 @@ public final class PythonScriptRunner {
                                MongoService<AlgoEntity> algoEntityMongoService,
                                MongoService<DatasetManageEntity> datasetManageEntityMongoService,
                                ProcessorFactory processorFactory,
-                               AlgoService algoService) {
+                               AlgoService algoService,
+                               ProcessWrapperFactory processWrapperFactory, DatasetService fileUploadService) {
         PythonScriptRunner.mongoService = mongoService;
         PythonScriptRunner.executor = executor;
         PythonScriptRunner.mapMongoService = mapMongoService;
@@ -55,6 +61,8 @@ public final class PythonScriptRunner {
         PythonScriptRunner.datasetManageEntityMongoService = datasetManageEntityMongoService;
         PythonScriptRunner.processorFactory = processorFactory;
         PythonScriptRunner.algoService = algoService;
+        PythonScriptRunner.processWrapperFactory = processWrapperFactory;
+        PythonScriptRunner.fileUploadService = fileUploadService;
     }
 
     /**
@@ -77,10 +85,21 @@ public final class PythonScriptRunner {
         }
     }
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class TracedScriptOutput {
+        private int id;
+        private Object output;
+        private Class<?> outputType;
+    }
+
     //!调用方给出inputDir！
-    public static int runTracedScript(String algoName, String sourceName, Map<String, Object> args, List<String> datasetNames, String phase) {
+    public static TracedScriptOutput runTracedScript(String algoName, String sourceName, Map<String, Object> args, List<String> datasetNames, String phase, boolean sync) {
         try {
             String[] dataset = datasetNames.toArray (new String[]{});
+            checkAlgoAndDatasetInput (algoName, phase, dataset);
             String modelInfoKey = ModelKeyGenerator.generateModelInfoKey (dataset, algoName, phase, null, modelInfoPrefix);
             if (!modelInfoMongoService.collectionExists (modelInfoKey)) {
                 modelInfoMongoService.createCollection (modelInfoKey);
@@ -99,16 +118,30 @@ public final class PythonScriptRunner {
             String cmd = buildCmd (args, sourceName);
             log.info ("run script cmd '{}'", cmd);
             Process exec = Runtime.getRuntime ().exec (cmd);
-            TracedProcessWrapper wrapper = new TracedProcessWrapper (exec, algoName, dataset, phase, thisId, path);
+            ProcessWrapperFactory.ProcessWrapperInput input = ProcessWrapperFactory
+                    .ProcessWrapperInput
+                    .builder ()
+                    .algoName (algoName)
+                    .dataset (dataset)
+                    .directoryPath (path)
+                    .phase (phase)
+                    .process (exec)
+                    .thisId (thisId)
+                    .build ();
+            AlgoEntity algoEntity = algoService.getAlgoEntity (algoName);
+            TracedProcessWrapper wrapper = processWrapperFactory.newProcessWrapper (algoEntity.getStage (), phase, input);
             tracedProcesses.put (key, wrapper);
             wrapper.start ();
-            return thisId;
+            TracedScriptOutput output = new TracedScriptOutput ();
+            output.setId (thisId);
+            if (sync) {
+                return wrapper.waitForDone ();
+            } else return output;//predict的话，这个id永远为0.。
         } catch (IOException e) {
             e.printStackTrace ();
-            return -1;
+            return null;
         }
     }
-
 
     private static String buildCmd(Map<String, Object> args, String sourceName) throws IOException {
         String path = sourceName;
@@ -138,9 +171,43 @@ public final class PythonScriptRunner {
         return directoryPath;
     }
 
+    private static void checkAlgoAndDatasetInput(String algoName, String phase, String... dataset) {
+        if (phase.equals (PREDICT_TYPE_NAME)) {
+            return;
+        }
+        AlgoEntity algoEntity = algoService.getAlgoEntity (algoName);
+        if (algoEntity == null) {
+            throw new CpuisException (ErrCode.ALGO_NOT_EXISTS);
+        }
+        int max, min;
+        String stage = algoEntity.getStage ();
+        if (stage.equals ("1")) {
+            max = 2;
+            min = 2;
+        } else if (stage.equals ("2")) {
+            max = 1;
+            min = 1;
+        } else throw new IllegalStateException ();
+        if (!(dataset.length >= min && dataset.length <= max)) {
+            throw new CpuisException (ErrCode.WRONG_DATASET_INPUT, String.format ("need size = [%d,%d] ,got %d", min, max, dataset.length));
+        }
+        for (String s : dataset) {
+            if (fileUploadService.getDatasetLocation (s) == null) {
+                throw new CpuisException (ErrCode.DATASET_NOT_EXISTS);
+            }
+        }
+    }
+
     public static String getDirectoryPath(String algoName, String[] dataset, String phase, Integer thisId) {
         Arrays.sort (dataset);//!
-        return String.format ("%s%s/%s-%s/%s/%s/", directoryLocationBase, algoName, dataset[0], dataset[1], phase, thisId);
+        String prefix = String.format ("%s%s/", directoryLocationBase, algoName);
+        String postfix = String.format ("/%s/%s/", phase, thisId);
+        StringBuilder builder = new StringBuilder (prefix);
+        for (String s : dataset) {
+            builder.append (s).append ('-');
+        }
+        builder.deleteCharAt (builder.length () - 1);
+        return builder + postfix;
     }
 
     public static SimpleProcessWrapper getTrainProcess(String key) {
