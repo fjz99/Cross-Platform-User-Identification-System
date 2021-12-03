@@ -7,6 +7,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
+import java.util.Arrays;
+
 /**
  * @author fujiazheng
  */
@@ -21,7 +23,7 @@ public class ControllerLoggingAspect {
     public Object logAroundControllers(ProceedingJoinPoint joinPoint) {
         final String name = joinPoint.getTarget ().getClass ().getName () + "#" + joinPoint.getSignature ().getName ();
         try {
-            log.info ("调用方法 {}", name);
+            log.info ("调用方法 {}，入参 {}", name, Arrays.toString (joinPoint.getArgs ()));
             Object o = joinPoint.proceed ();
             log.info ("{} 方法调用成功，返回值 {}", name, o);
             return o;

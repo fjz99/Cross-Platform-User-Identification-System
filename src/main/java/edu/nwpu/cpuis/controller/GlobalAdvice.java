@@ -3,14 +3,18 @@ package edu.nwpu.cpuis.controller;
 import edu.nwpu.cpuis.entity.Response;
 import edu.nwpu.cpuis.entity.exception.CpuisException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.BindException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 @Slf4j
@@ -22,6 +26,18 @@ public class GlobalAdvice {
         e.printStackTrace ();
         return Response.serverErr ();
     }
+
+    @InitBinder
+    public void init(HttpServletRequest request) {
+        String remoteAddr = request.getRemoteAddr ();
+        log.info ("收到请求 ip {}", map.getOrDefault (remoteAddr, remoteAddr));
+    }
+
+    private static Map<String, String> map = new HashMap<String, String> () {
+        {
+            put ("10.69.231.168", "付佳正");
+        }
+    };
 
     @ExceptionHandler(ServletException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

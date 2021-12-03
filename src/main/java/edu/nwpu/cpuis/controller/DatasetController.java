@@ -21,7 +21,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static edu.nwpu.cpuis.entity.Response.*;
+import static edu.nwpu.cpuis.entity.Response.ofFailed;
+import static edu.nwpu.cpuis.entity.Response.ok;
 
 @RestController
 @RequestMapping("/dataset")
