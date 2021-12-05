@@ -25,4 +25,12 @@ public class CpuisException extends RuntimeException {
     public String getData() {
         return data;
     }
+
+    @Override
+    public String toString() {
+        return "super.toString () {" +
+                "reason=" + reason +
+                ", data='" + data + '\'' +
+                '}';
+    }
 }

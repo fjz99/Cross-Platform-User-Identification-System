@@ -33,7 +33,7 @@ public class GlobalAdvice {
         log.info ("收到请求 ip {}", map.getOrDefault (remoteAddr, remoteAddr));
     }
 
-    private static Map<String, String> map = new HashMap<String, String> () {
+    private static final Map<String, String> map = new HashMap<String, String> () {
         {
             put ("10.69.231.168", "付佳正");
         }
