@@ -1,6 +1,5 @@
 package edu.nwpu.cpuis.train;
 
-import edu.nwpu.cpuis.train.output.EmptyOutput;
 import edu.nwpu.cpuis.train.output.LocationPredictOutput;
 import edu.nwpu.cpuis.train.output.MatrixSimilarityOutput;
 import edu.nwpu.cpuis.train.output.NoOutputOutput;

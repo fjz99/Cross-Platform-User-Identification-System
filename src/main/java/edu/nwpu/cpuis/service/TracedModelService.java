@@ -16,6 +16,8 @@ import edu.nwpu.cpuis.utils.ModelKeyGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,9 +33,11 @@ import static edu.nwpu.cpuis.utils.ModelKeyGenerator.generateKeyWithIncId;
 @Service
 @Slf4j
 public class TracedModelService {
-    private static final String datasetKey = "dirs";
     public static final String PREDICT_PHASE = "predict";
     public static final String TRAIN_PHASE = "train";
+    private static final String datasetKey = "dirs";
+    private static final String PREDICT_OUTPUT_CACHE_NAME = "predictOutput";
+    private static final String tracedModelQueryCacheName = "tracedModelQuery";
     @Resource
     private MongoService<ModelInfo> service;
     @Value("${file.input-base-location}")
@@ -49,6 +53,8 @@ public class TracedModelService {
         return datasetKey;
     }
 
+    @Cacheable(cacheNames = tracedModelQueryCacheName,
+            key = "T(String).format('%s-%s-%s-%s-%s',#searchVO.algoName,#a0.dataset,#p0.phase,#p0.pageNum,#p0.pageSize)")
     public List<ModelVO> query(ModelSearchVO searchVO) {
         if (searchVO.getPageSize () == null) {
             searchVO.setPageSize (20);
@@ -108,6 +114,8 @@ public class TracedModelService {
         return PythonScriptRunner.runTracedScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets, TRAIN_PHASE, false).getId ();
     }
 
+    @Cacheable(cacheNames = PREDICT_OUTPUT_CACHE_NAME,
+            key = "T(String).format('%s-%s-%s-%s',#vo.algoName,#a0.dataset,#p0.id,vo.input)")
     public PythonScriptRunner.TracedScriptOutput predict(PredictVO vo) {
         String[] dataset = vo.getDataset ().toArray (new String[]{});
         int id = vo.getId ();
@@ -147,7 +155,6 @@ public class TracedModelService {
         }
     }
 
-
     public Double getPercentage(String name) {
         TracedProcessWrapper trainProcess = PythonScriptRunner.getTracedProcess (name);
         if (trainProcess == null) {
@@ -179,7 +186,6 @@ public class TracedModelService {
             return PythonScriptRunner.getTracedProcess (k) != null && PythonScriptRunner.getTracedProcess (k).getState () == State.TRAINING;
     }
 
-
     public String getLatestKey(String name, String[] dataset, String phase) {
         int id = getLatestId (name, dataset, phase);
         return generateKeyWithIncId (dataset, name, phase, null, id);
@@ -207,6 +213,7 @@ public class TracedModelService {
     /**
      * @return model exists
      */
+    @CacheEvict(cacheNames = {PREDICT_OUTPUT_CACHE_NAME, tracedModelQueryCacheName}, allEntries = true)
     public boolean delete(ModelLocationVO vo) {
         String key = ModelKeyGenerator.generateModelInfoKey (vo.getDataset (), vo.getAlgoName (),
                 vo.getPhase (), null, modelInfoPrefix);
