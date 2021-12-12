@@ -126,7 +126,7 @@ public class ModelController {
     })
     public Response<?> train(@PathVariable @NotBlank String name,
                              @RequestParam List<String> dataset) {
-        if (dataset.size () != 2) {
+        if (dataset.size () != 2 || dataset.get (0).equalsIgnoreCase (dataset.get (1))) {
             log.error ("dataset input err {}", dataset);
             return ofFailed (ErrCode.WRONG_DATASET_INPUT);
         }
