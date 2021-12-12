@@ -58,7 +58,7 @@ public class GlobalAdvice {
 
     //自定义错误码错误
     @ExceptionHandler(CpuisException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     public Response<?> cpuisException(CpuisException e) {
         log.error ("自定义错误码错误：CpuisException " + e);
         e.printStackTrace ();
