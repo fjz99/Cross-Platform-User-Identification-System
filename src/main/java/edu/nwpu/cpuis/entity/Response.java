@@ -6,7 +6,7 @@ import lombok.Getter;
 public final class Response<T> {
     private static final Response<?> GENERIC_ERR = ofFailed ("ERROR!", ErrCode.GENERIC_ERR);
     private static final Response<?> MODEL_NOT_EXISTS = ofFailed ("模型不存在", ErrCode.MODEL_NOT_EXISTS);
-    private static final Response<?> INTERNAL_SERVER_ERR = ofFailed ("INTERNAL_SERVER_ERROR[emergency:contact fjz]", ErrCode.UNKNOWN_ERR);
+    private static final Response<?> INTERNAL_SERVER_ERR = ofFailed ("INTERNAL_SERVER_ERROR", ErrCode.UNKNOWN_ERR);
     private final long timeStamp;
     private final T data;
     private final boolean success;
