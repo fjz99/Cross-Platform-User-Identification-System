@@ -78,4 +78,13 @@ public final class Response<T> {
         return INTERNAL_SERVER_ERR;
     }
 
+    @Override
+    public String toString() {
+        return "Response{" +
+                "timeStamp=" + timeStamp +
+                ", data=" + "masked" +
+                ", success=" + success +
+                ", err=" + err +
+                '}';
+    }
 }
