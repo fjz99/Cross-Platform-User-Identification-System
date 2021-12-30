@@ -6,7 +6,6 @@ import edu.nwpu.cpuis.entity.vo.OutputSearchVO;
 import edu.nwpu.cpuis.service.DatasetService;
 import edu.nwpu.cpuis.service.MatrixOutputModelService;
 import edu.nwpu.cpuis.service.model.BasicModel;
-import edu.nwpu.cpuis.service.model.ModelDefinition;
 import edu.nwpu.cpuis.service.validator.OutputVoValidator;
 import edu.nwpu.cpuis.train.State;
 import edu.nwpu.cpuis.utils.ModelKeyGenerator;
@@ -15,7 +14,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -38,8 +36,6 @@ public class ModelController {
     @Resource
     private BasicModel basicModel;
     @Resource
-    private ModelDefinition definition;
-    @Resource
     private DatasetService fileUploadService;
     @Resource
     private MatrixOutputModelService matrixOutputModelService;
@@ -53,32 +49,6 @@ public class ModelController {
         dataBinder.setValidator (validator);
     }
 
-    @GetMapping("{name}/info")
-    @ApiOperation(value = "获得模型的详细信息", notes = "传入模型的key，即'算法-数据集1-数据集2-getDaemon/predict'")
-    @ApiImplicitParam(paramType = "path", name = "name", value = "模型名称", required = true, dataType = "String")
-    @Deprecated
-    public Response<?> getInfo(@PathVariable("name") @NotBlank String name) {
-        if (definition.getDefinition ().containsKey (name)) {
-            return ok (definition.getDefinition ().get (name));
-        } else {
-            return fail ("no content");
-        }
-    }
-
-    @GetMapping("/stage/{id}")
-    @ApiOperation(value = "获得某个阶段的所有算法")
-    @ApiImplicitParam(paramType = "path", name = "id", value = "阶段", required = true, dataTypeClass = Integer.class)
-    @Deprecated
-    public Response<?> getByStage(@PathVariable @Range(min = 1, max = 4) int id) {
-        return ok (definition.getByStage (id));
-    }
-
-    @GetMapping("/all")
-    @ApiOperation(value = "获得所有模型信息")
-    @Deprecated
-    public Response<?> getAll() {
-        return ok (definition.getAll ());
-    }
 
     @GetMapping("/{name}/trainingPercentage")
     @ApiOperation(value = "获得某个模型的训练进度百分比")
@@ -143,16 +113,6 @@ public class ModelController {
             log.error ("dataset input err {}", dataset);
             return ofFailed (ErrCode.WRONG_DATASET_INPUT);
         }
-    }
-
-    @GetMapping("/{name}/status")
-    @ApiOperation(value = "获得模型状态")
-    @ApiImplicitParam(paramType = "path", name = "name", value = "模型运行id", required = true, dataTypeClass = String.class)
-    @Deprecated
-    public Response<?> status(@PathVariable @NotBlank String name) {
-        if (basicModel.contains (name, true))
-            return ok (basicModel.getStatus (name));
-        else return modelNotExists ();
     }
 
     /**
