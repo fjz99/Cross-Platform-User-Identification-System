@@ -115,7 +115,7 @@ public class TracedModelService {
     }
 
     @Cacheable(cacheNames = PREDICT_OUTPUT_CACHE_NAME,
-            key = "T(String).format('%s-%s-%s-%s',#vo.algoName,#a0.dataset,#p0.id,vo.input)")
+            key = "T(String).format('%s-%s-%s-%s',#a0.algoName,#a0.dataset,#p0.id,#a0.input)")
     public PythonScriptRunner.TracedScriptOutput predict(PredictVO vo) {
         String[] dataset = vo.getDataset ().toArray (new String[]{});
         int id = vo.getId ();

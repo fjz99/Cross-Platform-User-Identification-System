@@ -4,6 +4,7 @@ import edu.nwpu.cpuis.entity.AlgoEntity;
 import edu.nwpu.cpuis.entity.ErrCode;
 import edu.nwpu.cpuis.entity.Response;
 import edu.nwpu.cpuis.service.AlgoService;
+import edu.nwpu.cpuis.service.validator.AlgoValidator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -28,6 +29,8 @@ import static edu.nwpu.cpuis.entity.Response.ok;
 @Slf4j
 @Api(tags = "algo", description = "算法管理api")
 public class AlgoController {
+    @Resource
+    private AlgoValidator validator;
     @Resource
     private AlgoService service;
 
@@ -59,6 +62,7 @@ public class AlgoController {
                 .stage (stage)
                 .time (LocalDateTime.now ())
                 .build ();
+
         String path = service.getAlgoLocation (name);
 
         Response<?> response;
@@ -75,6 +79,9 @@ public class AlgoController {
         entity.setTrainSource (saveFile (trainSource, name));
         entity.setTestSource (saveFile (testSource, name));
         entity.setPredictSource (saveFile (predictSource, name));
+
+        validator.validate (entity);
+
         log.debug ("get algo entity {}", entity);
         service.saveToMongoDB (entity);
         return response;
