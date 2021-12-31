@@ -18,7 +18,7 @@ import java.util.*;
 @Service
 @Data
 @Slf4j
-public class BasicModel<A, B> {
+public class BasicModel {
     private static final String datasetKey = "dirs";
     private final ModelDefinition definition;
     @Value("${file.input-base-location}")

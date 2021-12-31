@@ -96,7 +96,8 @@ public final class PythonScriptRunner {
     }
 
     //!调用方给出inputDir！
-    public static TracedScriptOutput runTracedScript(String algoName, String sourceName, Map<String, Object> args, List<String> datasetNames, String phase, boolean sync) {
+    public static TracedScriptOutput runTracedScript(String algoName, String sourceName, Map<String, Object> args,
+                                                     List<String> datasetNames, String phase, boolean sync) {
         try {
             String[] dataset = datasetNames.toArray (new String[]{});
             checkAlgoAndDatasetInput (algoName, phase, dataset);
@@ -144,9 +145,8 @@ public final class PythonScriptRunner {
     }
 
     private static String buildCmd(Map<String, Object> args, String sourceName) throws IOException {
-        String path = sourceName;
-//        String path = context.getResources ("classpath:/**/" + sourceName)[0].getFile ().getPath ();
-        String cmd = String.format ("python %s", path);
+        //        String path = context.getResources ("classpath:/**/" + sourceName)[0].getFile ().getPath ();
+        String cmd = String.format ("python %s", sourceName);
         StringBuilder sb = new StringBuilder (cmd);
         //数组不能加空格。。，不支持数组，必须是List！
         args.forEach ((k, v) -> {
@@ -187,9 +187,10 @@ public final class PythonScriptRunner {
         } else if (stage.equals ("2")) {
             max = 1;
             min = 1;
-        } else throw new IllegalStateException ();
+        } else throw new IllegalArgumentException ();
         if (!(dataset.length >= min && dataset.length <= max)) {
-            throw new CpuisException (ErrCode.WRONG_DATASET_INPUT, String.format ("need size = [%d,%d] ,got %d", min, max, dataset.length));
+            throw new CpuisException (ErrCode.WRONG_DATASET_INPUT, String.format ("need size between [%d,%d] , got %d",
+                    min, max, dataset.length));
         }
         for (String s : dataset) {
             if (fileUploadService.getDatasetLocation (s) == null) {

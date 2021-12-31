@@ -1,8 +1,8 @@
 package edu.nwpu.cpuis.train;
 
-import edu.nwpu.cpuis.train.output.LocationPredictOutput;
 import edu.nwpu.cpuis.train.output.MatrixSimilarityOutput;
 import edu.nwpu.cpuis.train.output.NoOutputOutput;
+import edu.nwpu.cpuis.train.output.TODOOutput;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,10 +35,15 @@ public final class ProcessWrapperFactory {
                 break;
             }
             case "2": {
+//                if (phase.equals ("train")) {
+//                    outputType = NoOutputOutput.class;
+//                } else {
+//                    outputType = LocationPredictOutput.class;
+//                }
                 if (phase.equals ("train")) {
-                    outputType = NoOutputOutput.class;
+                    outputType = TODOOutput.class;
                 } else {
-                    outputType = LocationPredictOutput.class;
+                    outputType = NoOutputOutput.class;
                 }
                 break;
             }

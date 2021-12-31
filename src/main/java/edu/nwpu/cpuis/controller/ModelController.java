@@ -31,7 +31,6 @@ import static edu.nwpu.cpuis.entity.Response.*;
 @RequestMapping("/model")
 @Slf4j
 @Api(tags = "model", description = "模型api")
-@SuppressWarnings({"rawtypes", "unchecked"})
 public class ModelController {
     @Resource
     private BasicModel basicModel;
