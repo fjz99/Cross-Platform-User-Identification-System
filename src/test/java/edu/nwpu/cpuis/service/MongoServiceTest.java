@@ -51,13 +51,13 @@ class MongoServiceTest {
 
     @Test
     public void search2() {
-        System.out.println (service.searchRegex (MongoOutputEntity.class, name, "\\w+", 1, 20));
+        System.out.println (service.searchRegex ("userName", MongoOutputEntity.class, name, "\\w+", 1, 20));
         System.out.println (service.searchFullText (MongoOutputEntity.class, name, "zrz", 1, 20));
     }
 
     @Test
     public void search3() {
-        System.out.println (service.searchRegex (MongoOutputEntity.class, name, "\\w+", 1, 1));
+        System.out.println (service.searchRegex ("userName", MongoOutputEntity.class, name, "\\w+", 1, 1));
     }
 
 }

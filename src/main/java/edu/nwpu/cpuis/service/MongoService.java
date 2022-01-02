@@ -273,35 +273,35 @@ public class MongoService<T> {
         return byId;
     }
 
-    public List<T> searchRegex(Class<T> clazz, String collectionName, String regex, Integer currentPage, Integer pageSize) {
+    public List<T> searchRegex(String column,Class<T> clazz, String collectionName, String regex, Integer currentPage, Integer pageSize) {
         //设置分页参数
         Query query = new Query ();
         //设置分页信息
         query.limit (pageSize);
         query.skip (pageSize * (currentPage - 1));
-        query.addCriteria (Criteria.where ("userName").regex (regex));
+        query.addCriteria (Criteria.where (column).regex (regex));
         return mongoTemplate.find (query, clazz, collectionName);
     }
 
-    public long countRegex(Class<T> clazz, String collectionName, String regex) {
+    public long countRegex(String column,Class<T> clazz, String collectionName, String regex) {
         Query query = new Query ();
-        query.addCriteria (Criteria.where ("userName").regex (regex));
+        query.addCriteria (Criteria.where (column).regex (regex));
         return mongoTemplate.count (query, clazz, collectionName);
     }
 
-    public List<T> searchNormal(Class<T> clazz, String collectionName, String v, Integer currentPage, Integer pageSize) {
+    public List<T> searchNormal(String column,Class<T> clazz, String collectionName, String v, Integer currentPage, Integer pageSize) {
         //设置分页参数
         Query query = new Query ();
         //设置分页信息
         query.limit (pageSize);
         query.skip (pageSize * (currentPage - 1));
-        query.addCriteria (Criteria.where ("userName").is (v));
+        query.addCriteria (Criteria.where (column).is (v));
         return mongoTemplate.find (query, clazz, collectionName);
     }
 
-    public long countNormal(Class<T> clazz, String collectionName, String v) {
+    public long countNormal(String column,Class<T> clazz, String collectionName, String v) {
         Query query = new Query ();
-        query.addCriteria (Criteria.where ("userName").is (v));
+        query.addCriteria (Criteria.where (column).is (v));
         return mongoTemplate.count (query, clazz, collectionName);
     }
 

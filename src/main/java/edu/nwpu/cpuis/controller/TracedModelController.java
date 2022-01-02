@@ -1,14 +1,14 @@
 package edu.nwpu.cpuis.controller;
 
+import edu.nwpu.cpuis.entity.AlgoEntity;
 import edu.nwpu.cpuis.entity.ErrCode;
 import edu.nwpu.cpuis.entity.Response;
+import edu.nwpu.cpuis.entity.exception.CpuisException;
 import edu.nwpu.cpuis.entity.vo.ModelLocationVO;
 import edu.nwpu.cpuis.entity.vo.ModelSearchVO;
 import edu.nwpu.cpuis.entity.vo.OutputSearchVO;
 import edu.nwpu.cpuis.entity.vo.PredictVO;
-import edu.nwpu.cpuis.service.DatasetService;
-import edu.nwpu.cpuis.service.MatrixOutputModelService;
-import edu.nwpu.cpuis.service.TracedModelService;
+import edu.nwpu.cpuis.service.*;
 import edu.nwpu.cpuis.service.validator.OutputVoValidator;
 import edu.nwpu.cpuis.train.PythonScriptRunner;
 import io.swagger.annotations.Api;
@@ -42,6 +42,10 @@ public class TracedModelController {
     private OutputVoValidator validator;
     @Resource
     private TracedModelService service;
+    @Resource
+    private AlgoService algoService;
+    @Resource
+    private Stage2OutputModelService stage2OutputModelService;
 
 
 //    @InitBinder
@@ -64,11 +68,16 @@ public class TracedModelController {
         if (!service.contains (searchVO.getAlgoName (), searchVO.getDataset (), searchVO.getPhase (), searchVO.getId ())) {
             return modelNotExists ();
         }
+        AlgoEntity algoEntity = algoService.getAlgoEntity (searchVO.getAlgoName ());
         if (searchVO.getType ().equals ("statistics")) {
             //忽略trace fixme
             return ok (matrixOutputModelService.getStatistics (searchVO, false));
         } else {
-            return ok (matrixOutputModelService.getTracedOutput (searchVO));
+            if (algoEntity.getStage ().equals ("1")) {
+                return ok (matrixOutputModelService.getTracedOutput (searchVO));
+            } else if (algoEntity.getStage ().equals ("2")) {
+                return ok (stage2OutputModelService.getTracedOutput (searchVO));
+            } else throw new CpuisException (ErrCode.WRONG_STAGE_INPUT);
         }
     }
 

@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,8 @@ import java.util.Optional;
 @Slf4j
 public class MatrixOutputModelService extends AbstractModelService {
 
+    public static final String USER_NAME = "userName";
+
     public List<MongoOutputEntity> beforeSaveToMongo(List<MongoOutputEntity> list) {
         //预处理
         return null;
@@ -29,6 +32,13 @@ public class MatrixOutputModelService extends AbstractModelService {
         log.info ("search for key {}", key);
         final int pageSize = Optional.ofNullable (searchVO.getPageSize ()).orElse (20);
         final int pageNum = Optional.ofNullable (searchVO.getPageNum ()).orElse (1);
+
+        //检查是否存在数据 bug-fix
+        long l = mongoOutputService.countAll (key, MongoOutputEntity.class);
+        if (l == 0) {
+            return PageEntity.byTotalPages (new ArrayList<> (), 0, 1, pageSize);
+        }
+
         List<MongoOutputEntity> entities = null;
         long count = 0;
         if (searchVO.getSearchType () == null || searchVO.getSearchType ().equals ("")) {
@@ -41,13 +51,13 @@ public class MatrixOutputModelService extends AbstractModelService {
                 break;
             }
             case "regex": {
-                entities = mongoOutputService.searchRegex (MongoOutputEntity.class, key, searchVO.getSearchText (), pageNum, pageSize);
-                count = mongoOutputService.countRegex (MongoOutputEntity.class, key, searchVO.getSearchText ());
+                entities = mongoOutputService.searchRegex (USER_NAME,MongoOutputEntity.class, key, searchVO.getSearchText (), pageNum, pageSize);
+                count = mongoOutputService.countRegex (USER_NAME,MongoOutputEntity.class, key, searchVO.getSearchText ());
                 break;
             }
             case "normal": {
-                entities = mongoOutputService.searchNormal (MongoOutputEntity.class, key, searchVO.getSearchText (), pageNum, pageSize);
-                count = mongoOutputService.countNormal (MongoOutputEntity.class, key, searchVO.getSearchText ());
+                entities = mongoOutputService.searchNormal (USER_NAME,MongoOutputEntity.class, key, searchVO.getSearchText (), pageNum, pageSize);
+                count = mongoOutputService.countNormal (USER_NAME,MongoOutputEntity.class, key, searchVO.getSearchText ());
                 break;
             }
         }

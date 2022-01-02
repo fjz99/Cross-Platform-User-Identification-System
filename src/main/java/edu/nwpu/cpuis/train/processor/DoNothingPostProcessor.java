@@ -18,7 +18,7 @@ import static edu.nwpu.cpuis.train.PythonScriptRunner.modelInfoPrefix;
 public class DoNothingPostProcessor implements ModelPostProcessor {
     @Override
     public void process(TracedProcessWrapper processWrapper) {
-        log.info ("DoNothingPostProcessor 只保存modelInfo和statistics");
+        log.info ("DoNothingPostProcessor 只保存modelInfo");
 
         //下面保存ModelInfo等
         ModelInfo modelInfo = ModelInfo.builder ()
