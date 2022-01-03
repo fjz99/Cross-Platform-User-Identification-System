@@ -108,7 +108,7 @@ public class TracedModelController {
     }
 
 
-    @GetMapping("/trainingPercentage")
+    @RequestMapping(value = "/trainingPercentage", method = {RequestMethod.POST, RequestMethod.GET})
     @ApiOperation(value = "获得某个模型的训练进度百分比")
     @ApiImplicitParam(paramType = "body", name = "vo", value = "定位一个模型", required = true, dataTypeClass = ModelLocationVO.class)
     public Response<?> getTrainingPercentage(@RequestBody ModelLocationVO vo) {
