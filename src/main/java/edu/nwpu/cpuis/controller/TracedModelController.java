@@ -138,7 +138,7 @@ public class TracedModelController {
         return Response.ok (predict.getOutput ());
     }
 
-    @DeleteMapping("/delete")
+    @RequestMapping(value = "/delete", method = {RequestMethod.POST, RequestMethod.DELETE})
     @ApiOperation(value = "模型删除", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字")
     @ApiImplicitParam(paramType = "body", name = "vo", value = "定位一个模型", required = true, dataTypeClass = ModelLocationVO.class)
     public Response<?> delete(@RequestBody ModelLocationVO vo) {
