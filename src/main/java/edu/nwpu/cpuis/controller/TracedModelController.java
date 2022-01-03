@@ -53,7 +53,7 @@ public class TracedModelController {
 //        dataBinder.setValidator (validator);
 //    }
 
-    @GetMapping(value = "/get")
+    @RequestMapping(value = "/get", method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "分页查找", responseContainer = "List")
     public Response<?> getPage(@RequestBody ModelSearchVO searchVO) throws IOException {
         return ok (service.query (searchVO));
@@ -62,7 +62,7 @@ public class TracedModelController {
     /**
      * 算法名-数据集1-数据集2-train/predict,数据集1和2必须是升序排列
      */
-    @RequestMapping(value = "/output", consumes = MediaType.APPLICATION_JSON_VALUE, method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/output", method = {RequestMethod.GET, RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "获得输出", responseContainer = "List")
     public Response<?> output(@RequestBody @Validated OutputSearchVO searchVO) {
         if (!service.contains (searchVO.getAlgoName (), searchVO.getDataset (), searchVO.getPhase (), searchVO.getId ())) {
@@ -81,7 +81,7 @@ public class TracedModelController {
         }
     }
 
-    @GetMapping("/{name}/train")
+    @RequestMapping(value = "/{name}/train", method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "模型训练", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字\n" +
             "会返回这个模型的id")
     @ApiImplicitParams({
@@ -122,7 +122,7 @@ public class TracedModelController {
      * 目前输入暂定为String
      * id 指定模型id，id可以=-1，表示最新的模型
      */
-    @GetMapping("/predict")
+    @RequestMapping(value = "/predict", method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "模型预测", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "name", value = "算法名称", required = true, dataTypeClass = String.class),
