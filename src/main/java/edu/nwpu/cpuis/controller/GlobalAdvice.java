@@ -42,7 +42,7 @@ public class GlobalAdvice {
 
     @ExceptionHandler({ServletException.class, HttpMessageConversionException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Response<?> badRequest(ServletException e) {
+    public Response<?> badRequest(Exception e) {
         log.error ("badRequest", e);
         e.printStackTrace ();
         return Response.fail (HttpStatus.BAD_REQUEST.getReasonPhrase () + ":" + e.getMessage ());
