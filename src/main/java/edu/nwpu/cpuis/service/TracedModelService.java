@@ -12,6 +12,7 @@ import edu.nwpu.cpuis.train.TracedProcessWrapper;
 import edu.nwpu.cpuis.utils.ModelKeyGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -219,9 +220,9 @@ public class TracedModelService {
         ModelInfo modelInfo = service.selectById (vo.getId (), ModelInfo.class, key);
         if (modelInfo != null) {
             service.deleteByEqualGeneric (vo.getId (), ModelInfo.class, key, "id");
-            service.deleteCollection (modelInfo.getOutputCollectionName ());
-            service.deleteCollection (modelInfo.getReversedOutputCollectionName ());
-            service.deleteCollection (modelInfo.getStatisticsCollectionName ());
+            deleteCollection (modelInfo.getOutputCollectionName ());
+            deleteCollection (modelInfo.getReversedOutputCollectionName ());
+            deleteCollection (modelInfo.getStatisticsCollectionName ());
             try {
                 FileUtils.deleteDirectory (new File (modelInfo.getDataLocation ()));
             } catch (IOException e) {
@@ -232,6 +233,12 @@ public class TracedModelService {
             return true;
         } else {
             return false;
+        }
+    }
+
+    private void deleteCollection(String collection) {
+        if (!StringUtils.isEmpty (collection)) {
+            service.deleteCollection (collection);
         }
     }
 
