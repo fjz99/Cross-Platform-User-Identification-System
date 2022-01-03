@@ -4,6 +4,7 @@ import edu.nwpu.cpuis.entity.Response;
 import edu.nwpu.cpuis.entity.exception.CpuisException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,10 +20,16 @@ import java.util.Map;
 @RestControllerAdvice
 @Slf4j
 public class GlobalAdvice {
+    private static final Map<String, String> map = new HashMap<String, String> () {
+        {
+            put ("10.69.231.168", "付佳正");
+        }
+    };
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response<?> exception(Exception e) {
-        log.error ("global err " + e);
+        log.error ("global err ", e);
         e.printStackTrace ();
         return Response.serverErr ();
     }
@@ -33,16 +40,10 @@ public class GlobalAdvice {
         log.info ("收到请求 ip {}", map.getOrDefault (remoteAddr, remoteAddr));
     }
 
-    private static final Map<String, String> map = new HashMap<String, String> () {
-        {
-            put ("10.69.231.168", "付佳正");
-        }
-    };
-
-    @ExceptionHandler(ServletException.class)
+    @ExceptionHandler({ServletException.class, HttpMessageConversionException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response<?> badRequest(ServletException e) {
-        log.error ("global err " + e);
+        log.error ("badRequest", e);
         e.printStackTrace ();
         return Response.fail (HttpStatus.BAD_REQUEST.getReasonPhrase () + ":" + e.getMessage ());
     }
@@ -51,7 +52,7 @@ public class GlobalAdvice {
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response<?> bindException(MethodArgumentNotValidException e) {
-        log.error ("请求参数错误 " + e);
+        log.error ("请求参数错误 ", e);
         e.printStackTrace ();
         return Response.fail ("请求参数错误 :\n" + HttpStatus.BAD_REQUEST.getReasonPhrase () + ":" + e.getMessage ());
     }
@@ -60,7 +61,7 @@ public class GlobalAdvice {
     @ExceptionHandler(CpuisException.class)
     @ResponseStatus(HttpStatus.OK)
     public Response<?> cpuisException(CpuisException e) {
-        log.error ("自定义错误码错误：CpuisException " + e);
+        log.error ("自定义错误码错误：CpuisException ", e);
         e.printStackTrace ();
         if (e.getData () != null) {
             return Response.ofFailed (e.getData (), e.getReason ());
