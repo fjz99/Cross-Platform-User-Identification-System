@@ -1,9 +1,6 @@
 package edu.nwpu.cpuis.service;
 
-import edu.nwpu.cpuis.entity.AlgoEntity;
-import edu.nwpu.cpuis.entity.DatasetManageEntity;
-import edu.nwpu.cpuis.entity.ErrCode;
-import edu.nwpu.cpuis.entity.ModelInfo;
+import edu.nwpu.cpuis.entity.*;
 import edu.nwpu.cpuis.entity.exception.CpuisException;
 import edu.nwpu.cpuis.entity.vo.ModelLocationVO;
 import edu.nwpu.cpuis.entity.vo.ModelSearchVO;
@@ -55,7 +52,7 @@ public class TracedModelService {
 
     @Cacheable(cacheNames = tracedModelQueryCacheName,
             key = "T(String).format('%s-%s-%s-%s-%s',#searchVO.algoName,#a0.dataset,#p0.phase,#p0.pageNum,#p0.pageSize)")
-    public List<ModelVO> query(ModelSearchVO searchVO) {
+    public PageEntity<ModelVO> query(ModelSearchVO searchVO) {
         if (searchVO.getPageSize () == null) {
             searchVO.setPageSize (20);
         }
@@ -65,6 +62,8 @@ public class TracedModelService {
         String key = ModelKeyGenerator.generateModelInfoKey (searchVO.getDataset (), searchVO.getAlgoName (),
                 searchVO.getPhase (), null, modelInfoPrefix);
         List<ModelInfo> modelInfos = service.selectList (key, ModelInfo.class, searchVO.getPageNum (), searchVO.getPageSize ());
+        int allDataNum = (int) service.countAll (key, ModelInfo.class);
+
         List<ModelVO> VOS = new ArrayList<> ();
         for (ModelInfo modelInfo : modelInfos) {
             AlgoEntity algoInfo = algoService.getAlgoEntity (modelInfo.getAlgo ());
@@ -91,7 +90,7 @@ public class TracedModelService {
                     .build ();
             VOS.add (vo);
         }
-        return VOS;
+        return PageEntity.byAllDataNum (VOS, allDataNum, searchVO.getPageNum (), searchVO.getPageSize ());
     }
 
     /**
