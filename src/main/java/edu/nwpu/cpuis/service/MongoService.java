@@ -37,10 +37,6 @@ public class MongoService<T> {
      * 后续将限制一个集合中存入的对象类型，即一个集合只能存放一个类型的数据
      *
      * @param name 集合名称，相当于传统数据库的表名
-     * @return:void
-     * @since: v1.0
-     * @Author:wangcanfeng
-     * @Date: 2019/3/20 17:27
      */
     public void createCollection(String name) {
         mongoTemplate.createCollection (name);
@@ -104,10 +100,6 @@ public class MongoService<T> {
      *
      * @param collectionName 集合名称，相当于关系型数据库中的表名
      * @param fieldName      对象中的某个属性名
-     * @return:java.lang.String
-     * @since: v1.0
-     * @Author:wangcanfeng
-     * @Date: 2019/3/20 16:13
      */
     public String createIndex(String collectionName, String fieldName, boolean unique, boolean ascending) {
         //配置索引选项
@@ -132,13 +124,7 @@ public class MongoService<T> {
 
 
     /**
-     * 功能描述: 获取当前集合对应的所有索引的名称
-     *
-     * @param collectionName
-     * @return:java.util.List<java.lang.String>
-     * @since: v1.0
-     * @Author:wangcanfeng
-     * @Date: 2019/3/20 16:46
+     * 获取当前集合对应的所有索引的名称
      */
     public List<String> getAllIndexes(String collectionName) {
         ListIndexesIterable<Document> list = mongoTemplate.getCollection (collectionName).listIndexes ();
@@ -157,13 +143,6 @@ public class MongoService<T> {
 
     /**
      * 功能描述: 往对应的集合中插入一条数据
-     *
-     * @param info           存储对象
-     * @param collectionName 集合名称
-     * @return:void
-     * @since: v1.0
-     * @Author:wangcanfeng
-     * @Date: 2019/3/20 16:46
      */
     public void insert(T info, String collectionName) {
 //        log.debug ("mongo insert {}", info);
@@ -172,12 +151,6 @@ public class MongoService<T> {
 
     /**
      * 功能描述: 往对应的集合中批量插入数据，注意批量的数据中不要包含重复的id
-     *
-     * @param infos 对象列表
-     * @return:void
-     * @since: v1.0
-     * @Author:wangcanfeng
-     * @Date: 2019/3/20 16:47
      */
     public void insertMulti(List<T> infos, String collectionName) {
         mongoTemplate.insert (infos, collectionName);
@@ -189,10 +162,6 @@ public class MongoService<T> {
      * @param id             唯一键
      * @param collectionName 集合名称
      * @param info           待更新的内容
-     * @return:void
-     * @since: v1.0
-     * @Author:wangcanfeng
-     * @Date: 2019/3/20 18:42
      */
     public void updateById(String id, String collectionName, T info) {
         Query query = new Query (Criteria.where ("id").is (id));
@@ -214,10 +183,6 @@ public class MongoService<T> {
      * @param id             序列id
      * @param collectionName 集合名称
      * @param clazz          集合中对象的类型
-     * @return:void
-     * @since: v1.0
-     * @Author:wangcanfeng
-     * @Date: 2019/3/20 16:47
      */
     public void deleteById(String id, Class<T> clazz, String collectionName) {
         // 设置查询条件，当id=#{id}
@@ -254,10 +219,6 @@ public class MongoService<T> {
      * @param id             注解
      * @param clazz          类型
      * @param collectionName 集合名称
-     * @return:java.util.List<T>
-     * @since: v1.0
-     * @Author:wangcanfeng
-     * @Date: 2019/3/20 16:47
      */
     public T selectById(String id, Class<T> clazz, String collectionName) {
         // 查询对象的时候，不仅需要传入id这个唯一键，还需要传入对象的类型，以及集合的名称
@@ -327,10 +288,6 @@ public class MongoService<T> {
      *
      * @param collectName 集合名称
      * @param clazz       类型
-     * @return:java.util.List<T>
-     * @since: v1.0
-     * @Author:wangcanfeng
-     * @Date: 2019/3/21 10:38
      */
     public List<T> selectList(String collectName, Class<T> clazz) {
         return selectList (collectName, clazz, null, null);
@@ -343,10 +300,6 @@ public class MongoService<T> {
      * @param clazz       对象类型
      * @param currentPage 当前页码
      * @param pageSize    分页大小
-     * @return:java.util.List<T>
-     * @since: v1.0
-     * @Author:wangcanfeng
-     * @Date: 2019/3/21 10:38
      */
     public List<T> selectList(String collectName, Class<T> clazz, Integer currentPage, Integer pageSize) {
         //设置分页参数
@@ -368,10 +321,6 @@ public class MongoService<T> {
      * @param clazz       对象类型
      * @param currentPage 当前页码
      * @param pageSize    分页大小
-     * @return:java.util.List<T>
-     * @since: v1.0
-     * @Author:wangcanfeng
-     * @Date: 2019/3/21 10:48
      */
     public List<T> selectByCondition(String collectName, Map<String, String> conditions, Class<T> clazz, Integer currentPage, Integer pageSize) {
         if (ObjectUtils.isEmpty (conditions)) {

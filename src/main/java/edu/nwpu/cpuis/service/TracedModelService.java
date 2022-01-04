@@ -45,6 +45,7 @@ public class TracedModelService {
     @Resource
     private AlgoService algoService;
     @Resource
+    @SuppressWarnings ("rawtypes")
     private MongoService<Map> mapMongoService;
 
     public static String getDatasetKey() {
