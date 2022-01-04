@@ -2,13 +2,12 @@ package edu.nwpu.cpuis.train;
 
 import edu.nwpu.cpuis.train.output.MatrixSimilarityOutput;
 import edu.nwpu.cpuis.train.output.NoOutputOutput;
+import edu.nwpu.cpuis.train.output.Stage2Output;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * 根据stage、phase创建对应的wrapper
@@ -42,10 +41,9 @@ public final class ProcessWrapperFactory {
 //                    outputType = LocationPredictOutput.class;
 //                }
                 if (phase.equals ("train")) {
-                    outputType = List.class;
-//                    Stage2Output.class
-                } else {
                     outputType = NoOutputOutput.class;
+                } else {
+                    outputType = Stage2Output.class;
                 }
                 break;
             }

@@ -1,6 +1,5 @@
 package edu.nwpu.cpuis.train.processor;
 
-import edu.nwpu.cpuis.entity.ModelInfo;
 import edu.nwpu.cpuis.train.PythonScriptRunner;
 import edu.nwpu.cpuis.train.TracedProcessWrapper;
 import edu.nwpu.cpuis.train.output.StatisticsOutput;
@@ -14,9 +13,6 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
-
-import static edu.nwpu.cpuis.train.PythonScriptRunner.modelInfoMongoService;
-import static edu.nwpu.cpuis.train.PythonScriptRunner.modelInfoPrefix;
 
 /**
  * 类似于DoNothing的保底式的处理器，会保存统计信息
@@ -42,22 +38,22 @@ public class OnlySaveStatisticsPostProcessor implements ModelPostProcessor {
         PythonScriptRunner.mapMongoService.insert (statistics, key0);
 
         //下面保存ModelInfo等
-        ModelInfo modelInfo = ModelInfo.builder ()
-                .id (processWrapper.getThisId ())
-                .time (LocalDateTime.now ())
-                .dataLocation (processWrapper.getDirectoryPath ())
-                .statisticsCollectionName (key0)
-                .outputCollectionName ("")
-                .reversedOutputCollectionName ("")
-                .algo (processWrapper.getAlgoName ())
-                .dataset (processWrapper.getDataset ())
-                .build ();
-        String modelInfoKey = ModelKeyGenerator.generateModelInfoKey (processWrapper.getDataset (),
-                processWrapper.getAlgoName (), processWrapper.getPhase (), null, modelInfoPrefix);
-        if (!modelInfoMongoService.collectionExists (modelInfoKey)) {
-            modelInfoMongoService.createCollection (modelInfoKey);
-        }
-        modelInfoMongoService.insert (modelInfo, modelInfoKey);
+//        ModelInfo modelInfo = ModelInfo.builder ()
+//                .id (processWrapper.getThisId ())
+//                .time (LocalDateTime.now ())
+//                .dataLocation (processWrapper.getDirectoryPath ())
+//                .statisticsCollectionName (key0)
+//                .outputCollectionName ("")
+//                .reversedOutputCollectionName ("")
+//                .algo (processWrapper.getAlgoName ())
+//                .dataset (processWrapper.getDataset ())
+//                .build ();
+//        String modelInfoKey = ModelKeyGenerator.generateModelInfoKey (processWrapper.getDataset (),
+//                processWrapper.getAlgoName (), processWrapper.getPhase (), null, modelInfoPrefix);
+//        if (!modelInfoMongoService.collectionExists (modelInfoKey)) {
+//            modelInfoMongoService.createCollection (modelInfoKey);
+//        }
+//        modelInfoMongoService.insert (modelInfo, modelInfoKey);
     }
 
     @Override

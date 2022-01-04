@@ -3,6 +3,7 @@ package edu.nwpu.cpuis.train;
 import com.alibaba.fastjson.JSON;
 import edu.nwpu.cpuis.entity.ModelInfo;
 import edu.nwpu.cpuis.service.MongoService;
+import edu.nwpu.cpuis.train.output.NoOutputOutput;
 import edu.nwpu.cpuis.train.processor.ModelPostProcessor;
 import edu.nwpu.cpuis.utils.ModelKeyGenerator;
 import lombok.Getter;
@@ -69,6 +70,10 @@ public class TracedProcessWrapper extends AbstractProcessWrapper {
 
     protected boolean processOutput(String s) {
         try {
+            if (outputType == NoOutputOutput.class) {
+                log.info ("Skipped parsing {} ", NoOutputOutput.class.getCanonicalName ());
+                return true;
+            }
             outputData = JSON.parseObject (s, outputType);
             log.info ("parsed output to " + outputType.getName ());
             return true;

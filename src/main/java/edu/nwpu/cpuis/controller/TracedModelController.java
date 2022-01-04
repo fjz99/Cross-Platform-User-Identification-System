@@ -55,6 +55,7 @@ public class TracedModelController {
 
     @RequestMapping(value = "/get", method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "分页查找", responseContainer = "List")
+    @Deprecated
     public Response<?> getPage(@RequestBody ModelSearchVO searchVO) throws IOException {
         return ok (service.query (searchVO));
     }
@@ -65,6 +66,8 @@ public class TracedModelController {
     @RequestMapping(value = "/output", method = {RequestMethod.GET, RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "获得输出", responseContainer = "List")
     public Response<?> output(@RequestBody @Validated OutputSearchVO searchVO) {
+        searchVO.setId (0);
+
         if (!service.contains (searchVO.getAlgoName (), searchVO.getDataset (), searchVO.getPhase (), searchVO.getId ())) {
             return modelNotExists ();
         }
@@ -100,7 +103,7 @@ public class TracedModelController {
         int id = service.train (dataset, name, args);
         Map<String, Object> map = new HashMap<String, Object> () {
             {
-                put ("id", id);
+                put ("id", 0);
                 put ("msg", "训练开始");
             }
         };
@@ -112,6 +115,7 @@ public class TracedModelController {
     @ApiOperation(value = "获得某个模型的训练进度百分比")
     @ApiImplicitParam(paramType = "body", name = "vo", value = "定位一个模型", required = true, dataTypeClass = ModelLocationVO.class)
     public Response<?> getTrainingPercentage(@RequestBody ModelLocationVO vo) {
+        vo.setId (0);
         Double percentage = service.getPercentage (vo);
         if (percentage != null) {
             return ok (percentage);
@@ -130,6 +134,7 @@ public class TracedModelController {
     })
     public Response<?> predict(@RequestBody PredictVO vo) {
         //TODO
+        vo.setId (0);
         if (vo.getDataset () == null) {
             vo.setDataset (new ArrayList<> ());
         }
@@ -142,6 +147,7 @@ public class TracedModelController {
     @ApiOperation(value = "模型删除", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字")
     @ApiImplicitParam(paramType = "body", name = "vo", value = "定位一个模型", required = true, dataTypeClass = ModelLocationVO.class)
     public Response<?> delete(@RequestBody ModelLocationVO vo) {
+        vo.setId (0);
         if (service.delete (vo)) {
             return ok ();
         } else return modelNotExists ();
