@@ -142,7 +142,7 @@ public class TracedModelController {
         //TODO
         if ((vo.getInput () != null && file != null) ||
                 (vo.getInput () == null && file == null)) {
-            return Response.ofFailed (ErrCode.WRONG_INPUT);
+            return Response.ofFailed ("不能同时输入predict.input和file", ErrCode.WRONG_INPUT);
         }
 
         vo.getDataset ().sort (Comparator.naturalOrder ());

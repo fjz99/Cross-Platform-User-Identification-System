@@ -38,23 +38,23 @@ public class PredictionService {
 
         //验证数据集
         PythonScriptRunner.TracedScriptOutput output;
-        String property = System.getProperty ("temp.dir");
+        String property = System.getProperty ("java.io.tmpdir");
         if (file != null) {
             File target = new File (property, getTempFileName (vo, file));
             file.transferTo (target);
             if (!validateFile (target)) {
-                throw new CpuisException (ErrCode.WRONG_INPUT);
+                throw new CpuisException (ErrCode.WRONG_INPUT, "输入文件" + file.getName () + "验证失败");
             }
             Map<String, String> inputs = new HashMap<String, String> () {
                 {
-                    put ("inputDir", target.getAbsolutePath ());
+                    put ("file", adjust (target.getAbsolutePath ()));
                 }
             };
             output = service.predict (vo, inputs);
         } else {
             Map<String, String> inputs = new HashMap<String, String> () {
                 {
-                    put ("input", vo.getInput ());
+                    put ("input", adjust (vo.getInput ()));
                 }
             };
             output = service.predict (vo, inputs);
@@ -63,7 +63,11 @@ public class PredictionService {
     }
 
     private String getTempFileName(PredictVO vo, MultipartFile file) {
-        return vo.getAlgoName () + "-" + vo.getDataset () + "-" + file.getName ();
+        return vo.getAlgoName () + "-" + vo.getDataset () + "-" + file.getOriginalFilename ();
+    }
+
+    private String adjust(String s) {
+        return "\"" + s.trim () + "\"";
     }
 
 }

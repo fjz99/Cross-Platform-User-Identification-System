@@ -1,19 +1,19 @@
 package edu.nwpu.cpuis.train.output;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class Stage2Output {
-    String name;
-    List<String> content;
-    List<String> originalLabel;
-    List<String> predictedLabel;
+
+
+@Getter
+@Setter
+public class Stage2Output extends BaseOutput {
+    private List<Element> output;
+
+    @Data
+    private static class Element {
+        private String input;
+        private String predict;
+    }
 }

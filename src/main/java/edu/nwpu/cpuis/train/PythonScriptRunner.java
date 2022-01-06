@@ -85,16 +85,6 @@ public final class PythonScriptRunner {
         }
     }
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Builder
-    public static class TracedScriptOutput {
-        private int id;
-        private Object output;
-        private Class<?> outputType;
-    }
-
     //!调用方给出inputDir！
     public static TracedScriptOutput runTracedScript(String algoName, String sourceName, Map<String, Object> args,
                                                      List<String> datasetNames, String phase, boolean sync) {
@@ -106,16 +96,17 @@ public final class PythonScriptRunner {
                 modelInfoMongoService.createCollection (modelInfoKey);
             }
             List<ModelInfo> modelInfos = modelInfoMongoService.selectAll (modelInfoKey, ModelInfo.class);
-            int thisId = modelInfos
-                    .stream ()
-                    .map (ModelInfo::getId)
-                    .max (Comparator.naturalOrder ())
-                    .orElse (-1) + 1;
+//            int thisId = modelInfos
+//                    .stream ()
+//                    .map (ModelInfo::getId)
+//                    .max (Comparator.naturalOrder ())
+//                    .orElse (-1) + 1;
+            int thisId = 0;
             String key = ModelKeyGenerator.generateKeyWithIncId (dataset, algoName, phase, null, thisId);
             String path = getDirectoryPath (algoName, dataset, phase, thisId);
             checkDirectory (algoName, dataset, phase, thisId);
             //根据路径生成cmd
-            args.put ("outputDir", path);
+//            args.put ("outputDir", path);
             String cmd = buildCmd (args, sourceName);
             log.info ("run script cmd '{}'", cmd);
             Process exec = Runtime.getRuntime ().exec (cmd);
@@ -217,5 +208,15 @@ public final class PythonScriptRunner {
 
     public static TracedProcessWrapper getTracedProcess(String key) {
         return tracedProcesses.getOrDefault (key, null);
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class TracedScriptOutput {
+        private int id;
+        private Object output;
+        private Class<?> outputType;
     }
 }

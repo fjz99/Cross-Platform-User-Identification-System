@@ -114,8 +114,10 @@ public class TracedModelService {
         return PythonScriptRunner.runTracedScript (name, algoService.getAlgoEntity (name).getTrainSource (), map, datasets, TRAIN_PHASE, false).getId ();
     }
 
+    //FIXME 使用文件无法使用缓存
     @Cacheable(cacheNames = PREDICT_OUTPUT_CACHE_NAME,
-            key = "T(String).format('%s-%s-%s-%s',#a0.algoName,#a0.dataset,#p0.id,#a0.input)")
+            key = "T(String).format('%s-%s-%s-%s',#a0.algoName,#a0.dataset,#a0.input,#inputs)",
+            condition = "not #inputs.containsKey('file')")
     public PythonScriptRunner.TracedScriptOutput predict(PredictVO vo, Map<String, String> inputs) {
         String[] dataset = vo.getDataset ().toArray (new String[]{});
         String name = vo.getAlgoName ();

@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 public abstract class BaseOutput {
     protected String name;
-    protected Boolean success;
+    protected boolean success;
     protected long time;//s
 }
