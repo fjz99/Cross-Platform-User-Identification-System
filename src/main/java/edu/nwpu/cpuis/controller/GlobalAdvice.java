@@ -1,5 +1,6 @@
 package edu.nwpu.cpuis.controller;
 
+import edu.nwpu.cpuis.entity.ErrCode;
 import edu.nwpu.cpuis.entity.Response;
 import edu.nwpu.cpuis.entity.exception.CpuisException;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MultipartException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -40,12 +42,13 @@ public class GlobalAdvice {
         log.info ("收到请求 ip {}", map.getOrDefault (remoteAddr, remoteAddr));
     }
 
-    @ExceptionHandler({ServletException.class, HttpMessageConversionException.class})
+    @ExceptionHandler({ServletException.class, HttpMessageConversionException.class, MultipartException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response<?> badRequest(Exception e) {
         log.error ("badRequest", e);
         e.printStackTrace ();
-        return Response.fail (HttpStatus.BAD_REQUEST.getReasonPhrase () + ":" + e.getMessage ());
+        return Response.ofFailed (HttpStatus.BAD_REQUEST.getReasonPhrase () + ":" + e.getMessage (),
+                ErrCode.WRONG_INPUT);
     }
 
     //验证失败
@@ -54,7 +57,8 @@ public class GlobalAdvice {
     public Response<?> bindException(MethodArgumentNotValidException e) {
         log.error ("请求参数错误 ", e);
         e.printStackTrace ();
-        return Response.fail ("请求参数错误 :\n" + HttpStatus.BAD_REQUEST.getReasonPhrase () + ":" + e.getMessage ());
+        return Response.ofFailed ("请求参数错误 :\n" + HttpStatus.BAD_REQUEST.getReasonPhrase () + ":" + e.getMessage ()
+                , ErrCode.WRONG_INPUT);
     }
 
     //自定义错误码错误

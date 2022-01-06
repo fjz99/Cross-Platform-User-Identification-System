@@ -10,7 +10,6 @@ import edu.nwpu.cpuis.entity.vo.OutputSearchVO;
 import edu.nwpu.cpuis.entity.vo.PredictVO;
 import edu.nwpu.cpuis.service.*;
 import edu.nwpu.cpuis.service.validator.OutputVoValidator;
-import edu.nwpu.cpuis.train.PythonScriptRunner;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -19,12 +18,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.IOException;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static edu.nwpu.cpuis.entity.Response.*;
 
@@ -46,6 +49,8 @@ public class TracedModelController {
     private AlgoService algoService;
     @Resource
     private Stage2OutputModelService stage2OutputModelService;
+    @Resource
+    private PredictionService predictionService;
 
 
 //    @InitBinder
@@ -126,21 +131,23 @@ public class TracedModelController {
      * 目前输入暂定为String
      * id 指定模型id，id可以=-1，表示最新的模型
      */
-    @RequestMapping(value = "/predict", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/predict", method = RequestMethod.POST)
     @ApiOperation(value = "模型预测", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "name", value = "算法名称", required = true, dataTypeClass = String.class),
             @ApiImplicitParam(paramType = "query", name = "dataset", value = "数据集名称", required = true, dataTypeClass = List.class, allowMultiple = true),
     })
-    public Response<?> predict(@RequestBody PredictVO vo) {
+    public Response<?> predict(@RequestPart(name = "predict") PredictVO vo,
+                               @RequestPart(required = false) MultipartFile file) throws IOException {
         //TODO
-        vo.setId (0);
-        if (vo.getDataset () == null) {
-            vo.setDataset (new ArrayList<> ());
+        if ((vo.getInput () != null && file != null) ||
+                (vo.getInput () == null && file == null)) {
+            return Response.ofFailed (ErrCode.WRONG_INPUT);
         }
+
         vo.getDataset ().sort (Comparator.naturalOrder ());
-        PythonScriptRunner.TracedScriptOutput predict = service.predict (vo);
-        return Response.ok (predict.getOutput ());
+//        PythonScriptRunner.TracedScriptOutput predict = service.predict (vo);
+        return Response.ok (predictionService.predict (vo, file));
     }
 
     @RequestMapping(value = "/delete", method = {RequestMethod.POST, RequestMethod.DELETE})

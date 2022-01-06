@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import static edu.nwpu.cpuis.train.PythonScriptRunner.getDirectoryPath;
 import static edu.nwpu.cpuis.train.PythonScriptRunner.modelInfoPrefix;
 import static edu.nwpu.cpuis.utils.ModelKeyGenerator.generateKeyWithIncId;
 
@@ -45,7 +44,7 @@ public class TracedModelService {
     @Resource
     private AlgoService algoService;
     @Resource
-    @SuppressWarnings ("rawtypes")
+    @SuppressWarnings("rawtypes")
     private MongoService<Map> mapMongoService;
 
     public static String getDatasetKey() {
@@ -117,16 +116,10 @@ public class TracedModelService {
 
     @Cacheable(cacheNames = PREDICT_OUTPUT_CACHE_NAME,
             key = "T(String).format('%s-%s-%s-%s',#a0.algoName,#a0.dataset,#p0.id,#a0.input)")
-    public PythonScriptRunner.TracedScriptOutput predict(PredictVO vo) {
+    public PythonScriptRunner.TracedScriptOutput predict(PredictVO vo, Map<String, String> inputs) {
         String[] dataset = vo.getDataset ().toArray (new String[]{});
-        int id = vo.getId ();
         String name = vo.getAlgoName ();
-//        List<String> datasets = vo.getDataset ();
-
-        if (id == -1) {
-            id = getLatestId (name, dataset, TRAIN_PHASE);
-        }
-        if (!contains (name, dataset, TRAIN_PHASE, id)) {
+        if (!contains (name, dataset, TRAIN_PHASE, 0)) {
             throw new CpuisException (ErrCode.MODEL_NOT_EXISTS);
         }
         Map<String, Object> map = new HashMap<> ();
@@ -136,9 +129,11 @@ public class TracedModelService {
 //        }
 //        map.put (datasetKey, out);
 
-        String directoryPath = getDirectoryPath (name, dataset, TRAIN_PHASE, id);
-        map.put ("inputDir", directoryPath);//!!
-        map.put ("input", vo.getInput ());//!!
+//        String directoryPath = getDirectoryPath (name, dataset, TRAIN_PHASE, 0);
+//        map.put ("inputDir", directoryPath);//!!
+//        map.put ("input", vo.getInput ());//!!
+//        map.put ("input", input);
+        map.putAll (inputs);
         //fixme
         PythonScriptRunner.TracedScriptOutput output = PythonScriptRunner.runTracedScript (name,
                 algoService.getAlgoEntity (name).getPredictSource (), map, new ArrayList<> (), PREDICT_PHASE, true);

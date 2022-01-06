@@ -23,8 +23,10 @@ public enum ErrCode {
     ALGO_VALIDATION_FAILED (0x3001),
     ALGO_NOT_EXISTS (0x3002),
     //interact
+    WRONG_INPUT(0x4002),
     WRONG_DATASET_INPUT (0x4001),
     WRONG_STAGE_INPUT(0x4002);
+
 
     private final int code;
     private final String msg;
