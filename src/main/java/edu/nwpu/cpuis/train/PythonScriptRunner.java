@@ -43,6 +43,7 @@ public final class PythonScriptRunner {
     static AlgoService algoService;
     static ProcessWrapperFactory processWrapperFactory;
     static DatasetService fileUploadService;
+    private static String algoBase = "E:/algo/";
 
     private PythonScriptRunner(ThreadPoolTaskExecutor executor,
                                MongoService<MongoOutputEntity> mongoService,
@@ -107,9 +108,15 @@ public final class PythonScriptRunner {
             checkDirectory (algoName, dataset, phase, thisId);
             //根据路径生成cmd
 //            args.put ("outputDir", path);
+            AlgoEntity algoEntity = algoService.getAlgoEntity (algoName);
+
             String cmd = buildCmd (args, sourceName);
             log.info ("run script cmd '{}'", cmd);
-            Process exec = Runtime.getRuntime ().exec (cmd);
+            ProcessBuilder builder = new ProcessBuilder ();
+            builder.command (buildCmdSplit (args, sourceName));
+            builder.directory (new File (algoBase, algoName));
+            Process process = builder.start ();
+
             ProcessWrapperFactory.ProcessWrapperInput input = ProcessWrapperFactory
                     .ProcessWrapperInput
                     .builder ()
@@ -117,10 +124,9 @@ public final class PythonScriptRunner {
                     .dataset (dataset)
                     .directoryPath (path)
                     .phase (phase)
-                    .process (exec)
+                    .process (process)
                     .thisId (thisId)
                     .build ();
-            AlgoEntity algoEntity = algoService.getAlgoEntity (algoName);
             TracedProcessWrapper wrapper = processWrapperFactory.newProcessWrapper (algoEntity.getStage (), phase, input);
             tracedProcesses.put (key, wrapper);
             wrapper.start ();
@@ -133,6 +139,24 @@ public final class PythonScriptRunner {
             e.printStackTrace ();
             return null;
         }
+    }
+
+    private static String[] buildCmdSplit(Map<String, Object> args, String sourceName) {
+        List<String> list = new ArrayList<> ();
+        list.add ("python");
+        list.add (sourceName);
+        args.forEach ((k, v) -> {
+            StringBuilder sb = new StringBuilder ();
+            sb.append ("--").append (k).append ('=');
+            if (v instanceof List) {
+                sb.append ('[');
+                ((List<?>) v).forEach (x -> sb.append (x).append (','));
+                sb.deleteCharAt (sb.length () - 1);
+                sb.append (']');
+            } else sb.append (v);
+            list.add (sb.toString ());
+        });
+        return list.toArray (new String[0]);
     }
 
     private static String buildCmd(Map<String, Object> args, String sourceName) throws IOException {
