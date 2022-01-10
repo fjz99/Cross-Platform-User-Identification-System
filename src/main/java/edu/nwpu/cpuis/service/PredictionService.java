@@ -67,7 +67,7 @@ public class PredictionService {
     }
 
     private String adjust(String s) {
-        return "\"" + s.trim () + "\"";
+        return "" + s.trim () + "";
     }
 
 }
