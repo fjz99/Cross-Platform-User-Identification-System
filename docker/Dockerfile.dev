@@ -20,9 +20,9 @@ FROM java:latest
 
 EXPOSE 8899
 
-WORKDIR /tt
+WORKDIR /cpuis/workdir
 
-COPY /target/CPUIS-0.0.1-SNAPSHOT.jar /tt
+COPY /target/CPUIS-0.0.2.jar /cpuis/workdir
 #copy自动创建
 
-CMD java -jar CPUIS-0.0.1-SNAPSHOT.jar
+CMD java -jar CPUIS-0.0.2.jar
