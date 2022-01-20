@@ -13,6 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -43,7 +44,7 @@ public final class PythonScriptRunner {
     static AlgoService algoService;
     static ProcessWrapperFactory processWrapperFactory;
     static DatasetService fileUploadService;
-    private static String algoBase = "E:/algo/";
+    static String algoBase;
 
     private PythonScriptRunner(ThreadPoolTaskExecutor executor,
                                MongoService<MongoOutputEntity> mongoService,
@@ -53,7 +54,8 @@ public final class PythonScriptRunner {
                                MongoService<DatasetManageEntity> datasetManageEntityMongoService,
                                ProcessorFactory processorFactory,
                                AlgoService algoService,
-                               ProcessWrapperFactory processWrapperFactory, DatasetService fileUploadService) {
+                               ProcessWrapperFactory processWrapperFactory, DatasetService fileUploadService,
+                               @Value("${file.algo-base-location}") String algoBase) {
         PythonScriptRunner.mongoService = mongoService;
         PythonScriptRunner.executor = executor;
         PythonScriptRunner.mapMongoService = mapMongoService;
@@ -64,6 +66,7 @@ public final class PythonScriptRunner {
         PythonScriptRunner.algoService = algoService;
         PythonScriptRunner.processWrapperFactory = processWrapperFactory;
         PythonScriptRunner.fileUploadService = fileUploadService;
+        PythonScriptRunner.algoBase = algoBase;
     }
 
     /**
