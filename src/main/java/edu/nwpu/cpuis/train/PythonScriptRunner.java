@@ -136,7 +136,8 @@ public final class PythonScriptRunner {
                 return wrapper.waitForDone ();
             } else return output;//predict的话，这个id永远为0.。
         } catch (IOException e) {
-            e.printStackTrace ();
+            //不能e.printStackTrace ();因为这个只会输出到标准输出流，而不会记录在日志中
+            log.error ("", e);
             return null;
         }
     }

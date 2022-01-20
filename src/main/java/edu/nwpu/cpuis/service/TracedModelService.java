@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -118,7 +119,8 @@ public class TracedModelService {
     @Cacheable(cacheNames = PREDICT_OUTPUT_CACHE_NAME,
             key = "T(String).format('%s-%s-%s-%s',#a0.algoName,#a0.dataset,#a0.input,#inputs)",
             condition = "not #inputs.containsKey('file')")
-    public PythonScriptRunner.TracedScriptOutput predict(PredictVO vo, Map<String, String> inputs) {
+    public @NonNull
+    PythonScriptRunner.TracedScriptOutput predict(PredictVO vo, Map<String, String> inputs) {
         String[] dataset = vo.getDataset ().toArray (new String[]{});
         String name = vo.getAlgoName ();
         if (!contains (name, dataset, TRAIN_PHASE, 0)) {
