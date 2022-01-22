@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import edu.nwpu.cpuis.interceptor.PrometheusInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -11,26 +12,43 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Configuration
 public class MvcConfigurer implements WebMvcConfigurer {
+    @Resource
+    private PrometheusInterceptor prometheusInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        InterceptorRegistration registration = registry.addInterceptor (prometheusInterceptor);
+        registration.addPathPatterns ("/**", "/prometheus");
+//        registration.excludePathPatterns (//添加不拦截路径
+//                "/**/*.html",            //html静态资源
+//                "/**/*.js",              //js静态资源
+//                "/**/*.css",             //css静态资源
+//                "/**/*.ttf"
+//        );
+    }
 
     @Bean
-    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter(ObjectMapper objectMapper){
-        objectMapper.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object> () {
+    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter(ObjectMapper objectMapper) {
+        objectMapper.getSerializerProvider ().setNullValueSerializer (new JsonSerializer<Object> () {
             @Override
             public void serialize(Object param, JsonGenerator jsonGenerator,
                                   SerializerProvider paramSerializerProvider) throws IOException {
-                jsonGenerator.writeString("");
+                jsonGenerator.writeString ("");
             }
         });
 
-        MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
-        mappingJackson2HttpMessageConverter.setObjectMapper(objectMapper);
+        MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter ();
+        mappingJackson2HttpMessageConverter.setObjectMapper (objectMapper);
         return mappingJackson2HttpMessageConverter;
     }
 

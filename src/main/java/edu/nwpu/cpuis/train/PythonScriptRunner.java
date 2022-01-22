@@ -7,6 +7,8 @@ import edu.nwpu.cpuis.service.DatasetService;
 import edu.nwpu.cpuis.service.MongoService;
 import edu.nwpu.cpuis.train.processor.ProcessorFactory;
 import edu.nwpu.cpuis.utils.ModelKeyGenerator;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,6 +47,7 @@ public final class PythonScriptRunner {
     static ProcessWrapperFactory processWrapperFactory;
     static DatasetService fileUploadService;
     static String algoBase;
+    static MeterRegistry registry;
 
     private PythonScriptRunner(ThreadPoolTaskExecutor executor,
                                MongoService<MongoOutputEntity> mongoService,
@@ -55,7 +58,8 @@ public final class PythonScriptRunner {
                                ProcessorFactory processorFactory,
                                AlgoService algoService,
                                ProcessWrapperFactory processWrapperFactory, DatasetService fileUploadService,
-                               @Value("${file.algo-base-location}") String algoBase) {
+                               @Value("${file.algo-base-location}") String algoBase,
+                               MeterRegistry registry) {
         PythonScriptRunner.mongoService = mongoService;
         PythonScriptRunner.executor = executor;
         PythonScriptRunner.mapMongoService = mapMongoService;
@@ -67,12 +71,18 @@ public final class PythonScriptRunner {
         PythonScriptRunner.processWrapperFactory = processWrapperFactory;
         PythonScriptRunner.fileUploadService = fileUploadService;
         PythonScriptRunner.algoBase = algoBase;
+        PythonScriptRunner.registry = registry;
     }
 
     /**
      * @param args 存在dirs=[E:/hou,xx]，是数据集的位置
      */
     public static SimpleProcessWrapper runScript(String algoName, String sourceName, Map<String, Object> args, List<String> datasetNames) {
+        Timer timer = registry.timer ("script.time", "algo", algoName, "phase", "train");
+        return timer.record (() -> doRunScript (algoName, sourceName, args, datasetNames));
+    }
+
+    private static SimpleProcessWrapper doRunScript(String algoName, String sourceName, Map<String, Object> args, List<String> datasetNames) {
         try {
             String cmd = buildCmd (args, sourceName);
             log.info ("run script cmd '{}'", cmd);
