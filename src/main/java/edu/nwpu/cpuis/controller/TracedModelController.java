@@ -140,9 +140,11 @@ public class TracedModelController {
     public Response<?> predict(@RequestPart(name = "predict") PredictVO vo,
                                @RequestPart(required = false) MultipartFile file) throws IOException {
         //TODO
-        if ((vo.getInput () != null && file != null) ||
-                (vo.getInput () == null && file == null)) {
+        if (vo.getInput () != null && file != null) {
             return Response.ofFailed ("不能同时输入predict.input和file", ErrCode.WRONG_INPUT);
+        }
+        if (vo.getInput () == null && file == null) {
+            return Response.ofFailed ("不能predict.input和file同时为空", ErrCode.WRONG_INPUT);
         }
 
         vo.getDataset ().sort (Comparator.naturalOrder ());
