@@ -25,7 +25,9 @@ public enum ErrCode {
     //interact
     WRONG_INPUT(0x4002),
     WRONG_DATASET_INPUT (0x4001),
-    WRONG_STAGE_INPUT(0x4002);
+    WRONG_STAGE_INPUT(0x4002),
+    //train
+    TRAINING_ERROR(0x5000);
 
 
     private final int code;

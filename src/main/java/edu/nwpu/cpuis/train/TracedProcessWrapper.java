@@ -1,7 +1,9 @@
 package edu.nwpu.cpuis.train;
 
 import com.alibaba.fastjson.JSON;
+import edu.nwpu.cpuis.entity.ErrCode;
 import edu.nwpu.cpuis.entity.ModelInfo;
+import edu.nwpu.cpuis.entity.exception.CpuisException;
 import edu.nwpu.cpuis.service.MongoService;
 import edu.nwpu.cpuis.train.output.NoOutputOutput;
 import edu.nwpu.cpuis.train.processor.ModelPostProcessor;
@@ -50,7 +52,9 @@ public class TracedProcessWrapper extends AbstractProcessWrapper {
     }
 
     public double getPercentage() {
-        return percentage;
+        if (state != State.ERROR_STOPPED) {
+            return percentage;
+        } else throw new CpuisException (ErrCode.TRAINING_ERROR, reason);
     }
 
     @Override
@@ -78,8 +82,9 @@ public class TracedProcessWrapper extends AbstractProcessWrapper {
             log.info ("parsed output to " + outputType.getName ());
             return true;
         } catch (Exception e) {
-            e.printStackTrace ();
-            log.error ("output parse err " + e.getMessage ());
+            state = State.ERROR_STOPPED;
+            reason = "解析python脚本输出失败: " + e.getMessage ();
+            log.error (reason, e);
             return false;
         }
     }

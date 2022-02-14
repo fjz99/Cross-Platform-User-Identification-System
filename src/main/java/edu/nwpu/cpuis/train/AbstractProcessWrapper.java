@@ -28,6 +28,7 @@ public abstract class AbstractProcessWrapper {
     protected final BufferedReader errStreamReader;
 
     protected volatile State state;
+    protected volatile String reason;
     protected volatile double percentage = 0;
     protected volatile boolean parseOutput = false;
 
@@ -138,8 +139,7 @@ public abstract class AbstractProcessWrapper {
             output = JSON.parseObject (s, Output.class);
             return true;
         } catch (Exception e) {
-            e.printStackTrace ();
-            log.error ("output parse err " + e.getMessage ());
+            log.error ("output parse err " + e.getMessage (), e);
             return false;
         }
     }
@@ -166,8 +166,9 @@ public abstract class AbstractProcessWrapper {
                     log.info ("{} successfully stopped", key);
                 } else {
                     int exitValue = process.exitValue ();
-                    log.error ("{} err shutdown stream with exit value {}", key, exitValue);
                     state = State.ERROR_STOPPED;
+                    reason = String.format ("{} err shutdown stream with exit value {}", key, exitValue);
+                    log.error (reason);
                 }
                 break;
             }
