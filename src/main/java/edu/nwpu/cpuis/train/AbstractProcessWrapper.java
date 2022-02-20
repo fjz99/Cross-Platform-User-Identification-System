@@ -186,7 +186,7 @@ public abstract class AbstractProcessWrapper {
         } catch (IOException e) {
             e.printStackTrace ();
         } finally {
-            log.debug ("finish model:{}", sb);
+            log.debug ("finish model:{},state={}", sb, state);
             finishModel ();
         }
     }
@@ -222,6 +222,7 @@ public abstract class AbstractProcessWrapper {
     protected void killDaemon() {
         daemonStopFlag = true;
         daemon.cancel (true);
+        log.debug ("daemon killed");
     }
 
     protected abstract void cleanupLastOutput();
@@ -326,11 +327,12 @@ public abstract class AbstractProcessWrapper {
         @Override
         public void run() {
             try {
+                log.debug ("{} daemon started", modelTrainingInfo.getId ());
                 while (!daemonStopFlag) {
                     updateModelTrainingInfo ();
                     Thread.sleep (THREAD_CHECK_INTERVAL);
                 }
-                log.info ("{} Daemon stop", modelTrainingInfo.getId ());
+                log.debug ("{} Daemon stopped", modelTrainingInfo.getId ());
             } catch (InterruptedException e) {
                 if (!daemonStopFlag) {
                     log.error ("", e);
