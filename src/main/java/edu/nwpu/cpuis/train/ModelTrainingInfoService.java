@@ -14,6 +14,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Component
@@ -56,6 +58,21 @@ public class ModelTrainingInfoService {
     public ModelTrainingInfo getInfo(ModelLocationVO vo) {
         String key = ModelKeyGenerator.generateKey (vo.getDataset (), vo.getAlgoName (), vo.getPhase (), null);
         return thisService.getInfo (key);
+    }
+
+    public List<ModelTrainingInfo> getModels(String stage) {
+        List<ModelTrainingInfo> list = service.selectAll (modelTrainingInfoMongoName, ModelTrainingInfo.class);
+        List<ModelTrainingInfo> res = new ArrayList<> ();
+        for (ModelTrainingInfo info : list) {
+            if (info.getAlgo ().getStage ().equals (stage)) {
+                res.add (info);
+            }
+        }
+        return res;
+    }
+
+    public List<ModelTrainingInfo> getModels() {
+        return service.selectAll (modelTrainingInfoMongoName, ModelTrainingInfo.class);
     }
 
     //允许put null
