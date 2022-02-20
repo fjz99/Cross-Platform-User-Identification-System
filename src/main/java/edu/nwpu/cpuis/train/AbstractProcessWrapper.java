@@ -154,7 +154,7 @@ public abstract class AbstractProcessWrapper {
             log.debug ("readFromScript stopped state={}", state);
         });
 
-         PythonScriptRunner.executor.submit (this::readFromErrStream);
+        PythonScriptRunner.executor.submit (this::readFromErrStream);
     }
 
     protected void beforeStart() {
@@ -194,6 +194,14 @@ public abstract class AbstractProcessWrapper {
             }
         } catch (IOException e) {
             e.printStackTrace ();
+        } finally {
+            try {
+                Thread.sleep (1000);
+            } catch (InterruptedException ignored) {
+
+            }
+            log.debug ("finish model:state={}", state);
+            finishModel ();
         }
     }
 
@@ -261,7 +269,7 @@ public abstract class AbstractProcessWrapper {
         Arrays.sort (dataset);
         key = getKey ();
         String s;
-        while (state == State.TRAINING) {
+        while (state == State.TRAINING || state == State.PREDICTING) {
             //没有数据读会阻塞，如果返回null，就是进程结束了
             if ((s = inputStreamReader.readLine ()) == null) {
                 int exitValue = async ();//???fixme 莫名会阻塞。。
