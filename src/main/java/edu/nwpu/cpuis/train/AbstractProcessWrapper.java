@@ -213,7 +213,7 @@ public abstract class AbstractProcessWrapper {
     }
 
     protected void setAllState(State newState, String msg) {
-        log.debug (" {} set state {} -> {}", id, state, newState);
+//        log.debug (" {} set state {} -> {}", id, state, newState);
         state = newState;
         modelTrainingInfo.setMessage (msg);
         modelTrainingInfo.setState (newState);
@@ -266,11 +266,8 @@ public abstract class AbstractProcessWrapper {
         String s;
         while (state == State.TRAINING) {
             //没有数据读会阻塞，如果返回null，就是进程结束了
-//            log.info ("prepare to getLine");
             if ((s = inputStreamReader.readLine ()) == null) {
-//                log.info ("null!!");
-                int exitValue = async ();
-//                int exitValue = 0;
+                int exitValue = async ();//???fixme 莫名会阻塞。。
                 if (exitValue != 0) {
                     reason = String.format ("%s python进程返回值为 %s != 0", key, exitValue);
                     failed (reason);
@@ -315,7 +312,6 @@ public abstract class AbstractProcessWrapper {
                     log.error ("{} err input: {}", key, s);
                 }
             }
-            log.debug ("next loop");
         }
     }
 
