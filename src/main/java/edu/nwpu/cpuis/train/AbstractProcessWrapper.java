@@ -153,7 +153,7 @@ public abstract class AbstractProcessWrapper {
         startTime = System.currentTimeMillis ();
         modelTrainingInfo.setState (state);
         modelTrainingInfoService.setCache (modelTrainingInfo);
-        daemon = PythonScriptRunner.executor.submit (new Daemon ());
+//        daemon = PythonScriptRunner.executor.submit (new Daemon ());
     }
 
     private void setModelTrainingInfo() {
@@ -186,7 +186,7 @@ public abstract class AbstractProcessWrapper {
         } catch (IOException e) {
             e.printStackTrace ();
         } finally {
-            log.debug ("finish model:{},state={}", sb, state);
+//            log.debug ("finish model:{},state={}", sb, state);
 //            finishModel ();
         }
     }
@@ -278,6 +278,7 @@ public abstract class AbstractProcessWrapper {
                 }
                 break;
             }
+            log.debug ("getLine {}", s);
 
             if (parseOutput) {
                 //处理JSON
