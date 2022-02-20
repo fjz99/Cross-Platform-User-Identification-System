@@ -81,13 +81,13 @@ public abstract class AbstractProcessWrapper {
         cleanupLastOutput ();
     }
 
-    private String asyncReadLine(BufferedReader reader) {
+    private int async() {
         try {
-            return PythonScriptRunner.executor.submit (reader::readLine)
+            return PythonScriptRunner.executor.submit (process::exitValue)
                     .get (readLineTimeout, TimeUnit.MILLISECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             e.printStackTrace ();
-            return null;
+            return 0;
         }
     }
 
@@ -267,10 +267,10 @@ public abstract class AbstractProcessWrapper {
         while (state == State.TRAINING) {
             //没有数据读会阻塞，如果返回null，就是进程结束了
 //            log.info ("prepare to getLine");
-            if ((s = asyncReadLine (inputStreamReader)) == null) {
+            if ((s = inputStreamReader.readLine ()) == null) {
 //                log.info ("null!!");
-//                int exitValue = process.exitValue ();
-                int exitValue = 0;
+                int exitValue = async ();
+//                int exitValue = 0;
                 log.info ("DDDDDDDDDD");
                 if (exitValue != 0) {
                     log.info ("VVVVVVVVVVVVVVVV");
