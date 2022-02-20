@@ -269,7 +269,8 @@ public abstract class AbstractProcessWrapper {
 //            log.info ("prepare to getLine");
             if ((s = asyncReadLine (inputStreamReader)) == null) {
 //                log.info ("null!!");
-                int exitValue = process.exitValue ();
+//                int exitValue = process.exitValue ();
+                int exitValue = 0;
                 log.info ("DDDDDDDDDD");
                 if (exitValue != 0) {
                     log.info ("VVVVVVVVVVVVVVVV");
