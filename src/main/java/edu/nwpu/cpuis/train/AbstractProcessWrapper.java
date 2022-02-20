@@ -233,7 +233,7 @@ public abstract class AbstractProcessWrapper {
         try {
             output = JSON.parseObject (s, Output.class);
             return true;
-        } catch (Exception e) {
+        } catch (Throwable e) {
             failed ("python脚本输出格式错误: " + e.getMessage ());
             log.error ("output parse err " + e.getMessage (), e);
             return false;
@@ -259,34 +259,39 @@ public abstract class AbstractProcessWrapper {
                     log.error (reason);
                 } else {
                     String output = sb.toString ().trim ();
-                    if (parseOutput && output.length () > 0 && processOutput (output)) {
-                        success ("模型正常终止");
-                        afterScriptDone ();
-                        log.info ("{} successfully stopped", key);
+                    if (parseOutput) {
+                        if (output.length () == 0) {
+                            failed ("python脚本输出为空");
+                            log.error ("{} python脚本输出为空", key);
+                        } else if (processOutput (output)) {
+                            success ("模型正常终止");
+                            afterScriptDone ();
+                            log.info ("{} successfully stopped", key);
+                        }
                     }
+                    break;
                 }
-                break;
-            }
-            if (parseOutput) {
-                //处理JSON
-                sb.append (s.trim ());
-            } else if (NumberUtils.isCreatable (s)) {
-                percentage = Double.parseDouble (s);
-                updateModelTrainingInfo ();
-                log.debug ("{} percentage changed: {}", key, percentage);
-            } else {
-                //不是小数，规定结束符为DONE_LITERAL
-                if (StringUtils.equals (s, DONE_LITERAL)) {
-                    parseOutput = true;
-                    if (percentage != 100) {
-                        log.warn ("{} err max percentage is: {}", key, percentage);
-                        percentage = 100;
-                    } else {
-                        log.debug ("{} changed to get output", key);
-                    }
+                if (parseOutput) {
+                    //处理JSON
+                    sb.append (s.trim ());
+                } else if (NumberUtils.isCreatable (s)) {
+                    percentage = Double.parseDouble (s);
+                    updateModelTrainingInfo ();
+                    log.debug ("{} percentage changed: {}", key, percentage);
                 } else {
-                    failed ("未知错误: " + s);
-                    log.error ("{} err input: {}", key, s);
+                    //不是小数，规定结束符为DONE_LITERAL
+                    if (StringUtils.equals (s, DONE_LITERAL)) {
+                        parseOutput = true;
+                        if (percentage != 100) {
+                            log.warn ("{} err max percentage is: {}", key, percentage);
+                            percentage = 100;
+                        } else {
+                            log.debug ("{} changed to get output", key);
+                        }
+                    } else {
+                        failed ("未知错误: " + s);
+                        log.error ("{} err input: {}", key, s);
+                    }
                 }
             }
         }
@@ -304,6 +309,7 @@ public abstract class AbstractProcessWrapper {
     }
 
     protected void updateModelTrainingInfo() {
+        modelTrainingInfo.setState (state);
         modelTrainingInfo.setTrainingTime (prettyTime (System.currentTimeMillis () - startTime));
         modelTrainingInfo.setPercentage (percentage);
         modelTrainingInfoService.setCache (modelTrainingInfo);
