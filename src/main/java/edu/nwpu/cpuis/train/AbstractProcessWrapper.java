@@ -154,7 +154,7 @@ public abstract class AbstractProcessWrapper {
             log.debug ("readFromScript stopped state={}", state);
         });
 
-        // PythonScriptRunner.executor.submit (this::readFromErrStream);
+         PythonScriptRunner.executor.submit (this::readFromErrStream);
     }
 
     protected void beforeStart() {
@@ -162,7 +162,7 @@ public abstract class AbstractProcessWrapper {
         startTime = System.currentTimeMillis ();
         modelTrainingInfo.setState (state);
         modelTrainingInfoService.setCache (modelTrainingInfo);
-//        daemon = PythonScriptRunner.executor.submit (new Daemon ());
+        daemon = PythonScriptRunner.executor.submit (new Daemon ());
     }
 
     private void setModelTrainingInfo() {
@@ -195,8 +195,8 @@ public abstract class AbstractProcessWrapper {
         } catch (IOException e) {
             e.printStackTrace ();
         } finally {
-//            log.debug ("finish model:{},state={}", sb, state);
-//            finishModel ();
+            log.debug ("finish model:{},state={}", sb, state);
+            finishModel ();
         }
     }
 
@@ -271,17 +271,13 @@ public abstract class AbstractProcessWrapper {
 //                log.info ("null!!");
                 int exitValue = async ();
 //                int exitValue = 0;
-                log.info ("DDDDDDDDDD");
                 if (exitValue != 0) {
-                    log.info ("VVVVVVVVVVVVVVVV");
                     reason = String.format ("%s python进程返回值为 %s != 0", key, exitValue);
                     failed (reason);
                     log.error (reason);
                 } else {
                     String output = sb.toString ().trim ();
-                    log.debug ("NOOOOOOOOOOOOOOO {}", output);
                     if (parseOutput) {
-                        log.info ("bbbbbbbbbbbbbbbbb");
                         if (output.length () == 0) {
                             failed ("python脚本输出为空");
                             log.error ("{} python脚本输出为空", key);
