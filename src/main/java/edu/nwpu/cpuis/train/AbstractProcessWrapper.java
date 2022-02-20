@@ -201,6 +201,7 @@ public abstract class AbstractProcessWrapper {
     }
 
     protected void setAllState(State newState, String msg) {
+        log.debug (" {} set state {} -> {}", id, state, newState);
         state = newState;
         modelTrainingInfo.setMessage (msg);
         modelTrainingInfo.setState (newState);
@@ -211,6 +212,7 @@ public abstract class AbstractProcessWrapper {
         //表示结束，所以插入数据库
         modelTrainingInfo.setTrainingTime (prettyTime (System.currentTimeMillis () - startTime));
         modelTrainingInfoService.setCacheAndMongo (modelTrainingInfo);
+        modelTrainingInfo.setState (state);
         killDaemon ();
     }
 
