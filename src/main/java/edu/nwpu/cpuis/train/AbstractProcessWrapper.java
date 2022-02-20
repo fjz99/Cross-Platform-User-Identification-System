@@ -237,9 +237,7 @@ public abstract class AbstractProcessWrapper {
 
     protected boolean processOutput(String s) {
         try {
-            log.info ("JSONJSONJSONJSONJSON");
             output = JSON.parseObject (s, Output.class);
-            log.info ("dsadsa {}",output);
             return true;
         } catch (Throwable e) {
             failed ("python脚本输出格式错误: " + e.getMessage ());
@@ -259,16 +257,13 @@ public abstract class AbstractProcessWrapper {
         String s;
         while (state == State.TRAINING) {
             //没有数据读会阻塞，如果返回null，就是进程结束了
-            log.info ("prepare to getLine");
             if ((s = inputStreamReader.readLine ()) == null) {
-                log.info ("null!!");
                 int exitValue = process.exitValue ();
                 if (exitValue != 0) {
                     reason = String.format ("%s python进程返回值为 %s != 0", key, exitValue);
                     failed (reason);
                     log.error (reason);
                 } else {
-                    log.info ("aaaaaaaaaaaaaa");
                     String output = sb.toString ().trim ();
                     if (parseOutput) {
                         log.info ("bbbbbbbbbbbbbbbbb");
