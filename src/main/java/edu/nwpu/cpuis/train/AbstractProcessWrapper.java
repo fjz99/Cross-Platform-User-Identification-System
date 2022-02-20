@@ -267,7 +267,7 @@ public abstract class AbstractProcessWrapper {
                     log.error (reason);
                 } else {
                     String output = sb.toString ().trim ();
-                    log.debug ("NOOOOOOOOOOOOOOO {}",output);
+                    log.debug ("NOOOOOOOOOOOOOOO {}", output);
                     if (parseOutput) {
                         log.info ("bbbbbbbbbbbbbbbbb");
                         if (output.length () == 0) {
@@ -287,7 +287,7 @@ public abstract class AbstractProcessWrapper {
             if (parseOutput) {
                 //处理JSON
                 sb.append (s.trim ());
-                log.debug ("append");
+                log.debug ("append {}", sb);
             } else if (NumberUtils.isCreatable (s)) {
                 percentage = Double.parseDouble (s);
                 updateModelTrainingInfo ();
@@ -307,6 +307,7 @@ public abstract class AbstractProcessWrapper {
                     log.error ("{} err input: {}", key, s);
                 }
             }
+            log.debug ("next loop");
         }
     }
 
