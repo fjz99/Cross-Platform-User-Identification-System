@@ -16,8 +16,7 @@ import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 //hash-fb-fs-train-output
@@ -38,6 +37,7 @@ public abstract class AbstractProcessWrapper {
 
     public static final String MONGO_NAME = PythonScriptRunner.modelTrainingInfoMongoName;
     public static final int THREAD_CHECK_INTERVAL = 500;
+    public static final int readLineTimeout = 2000;
     protected static final String DONE_LITERAL = "done";
     protected static final long waitProcessTerminationTimeout = 1000;//ms
     protected static MongoService<ModelTrainingInfo> mongoService = PythonScriptRunner.modelTrainingInfoMongoService;
@@ -81,6 +81,15 @@ public abstract class AbstractProcessWrapper {
         cleanupLastOutput ();
     }
 
+    private String asyncReadLine(BufferedReader reader) {
+        try {
+            return PythonScriptRunner.executor.submit (reader::readLine)
+                    .get (readLineTimeout, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            e.printStackTrace ();
+            return null;
+        }
+    }
 
     public ModelTrainingInfo getModelTrainingInfo() {
         return modelTrainingInfo;
@@ -258,7 +267,7 @@ public abstract class AbstractProcessWrapper {
         while (state == State.TRAINING) {
             //没有数据读会阻塞，如果返回null，就是进程结束了
 //            log.info ("prepare to getLine");
-            if ((s = inputStreamReader.readLine ()) == null) {
+            if ((s = asyncReadLine (inputStreamReader)) == null) {
 //                log.info ("null!!");
                 int exitValue = process.exitValue ();
                 log.info ("DDDDDDDDDD");
