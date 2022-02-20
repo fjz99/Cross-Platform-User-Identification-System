@@ -261,7 +261,9 @@ public abstract class AbstractProcessWrapper {
             if ((s = inputStreamReader.readLine ()) == null) {
 //                log.info ("null!!");
                 int exitValue = process.exitValue ();
+                log.info ("DDDDDDDDDD");
                 if (exitValue != 0) {
+                    log.info ("VVVVVVVVVVVVVVVV");
                     reason = String.format ("%s python进程返回值为 %s != 0", key, exitValue);
                     failed (reason);
                     log.error (reason);
