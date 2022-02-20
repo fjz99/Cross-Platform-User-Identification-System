@@ -145,7 +145,7 @@ public abstract class AbstractProcessWrapper {
             log.debug ("readFromScript stopped state={}", state);
         });
 
-        PythonScriptRunner.executor.submit (this::readFromErrStream);
+        // PythonScriptRunner.executor.submit (this::readFromErrStream);
     }
 
     protected void beforeStart() {
