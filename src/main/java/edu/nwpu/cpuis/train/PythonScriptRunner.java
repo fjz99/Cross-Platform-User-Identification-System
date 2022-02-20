@@ -51,6 +51,7 @@ public final class PythonScriptRunner {
     static MeterRegistry registry;
     static String modelTrainingInfoMongoName;
     static ModelTrainingInfoService modelTrainingInfoService;
+    static DatasetService datasetService;
 
     private PythonScriptRunner(ThreadPoolTaskExecutor executor,
                                MongoService<MongoOutputEntity> mongoService,
@@ -65,7 +66,8 @@ public final class PythonScriptRunner {
                                @Value("${modelTrainingInfoMongoName}") String modelTrainingInfoMongoName,
                                MeterRegistry registry,
                                MongoService<ModelTrainingInfo> modelTrainingInfoMongoService,
-                               ModelTrainingInfoService modelTrainingInfoService) {
+                               ModelTrainingInfoService modelTrainingInfoService,
+                               DatasetService datasetService) {
         PythonScriptRunner.mongoService = mongoService;
         PythonScriptRunner.executor = executor;
         PythonScriptRunner.mapMongoService = mapMongoService;
@@ -81,6 +83,7 @@ public final class PythonScriptRunner {
         PythonScriptRunner.modelTrainingInfoMongoName = modelTrainingInfoMongoName;
         PythonScriptRunner.modelTrainingInfoMongoService = modelTrainingInfoMongoService;
         PythonScriptRunner.modelTrainingInfoService = modelTrainingInfoService;
+        PythonScriptRunner.datasetService = datasetService;
     }
 
     /**

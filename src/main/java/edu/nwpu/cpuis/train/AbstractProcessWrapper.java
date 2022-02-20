@@ -69,8 +69,9 @@ public abstract class AbstractProcessWrapper {
         this.algoEntity = PythonScriptRunner.algoService.getAlgoEntity (algoName);
         this.dataset = dataset;
         this.id = ModelKeyGenerator.generateKey (dataset, algoName, phase, null);
-        this.datasetEntityList = Arrays.stream (dataset).map (x -> PythonScriptRunner.datasetManageEntityMongoService
-                .selectById (id, DatasetManageEntity.class, MONGO_NAME)).collect (Collectors.toList ());
+        this.datasetEntityList = Arrays.stream (dataset).map (
+                name -> PythonScriptRunner.datasetService.getEntity (name)
+        ).collect (Collectors.toList ());
         this.process = process;
         this.phase = phase;
         this.inputStreamReader = new BufferedReader (new InputStreamReader (process.getInputStream ()));
@@ -183,34 +184,37 @@ public abstract class AbstractProcessWrapper {
         } catch (IOException e) {
             e.printStackTrace ();
         } finally {
-            killDaemon ();
+            finishModel ();
         }
     }
 
     protected void success(String msg) {
-        setAllState (State.SUCCESSFULLY_STOPPED, msg, false);
+        setAllState (State.SUCCESSFULLY_STOPPED, msg);
     }
 
     protected void failed(String msg) {
-        setAllState (State.ERROR_STOPPED, msg, false);
+        setAllState (State.ERROR_STOPPED, msg);
     }
 
     protected void interrupt(String msg) {
-        setAllState (State.INTERRUPTED, msg, false);
+        setAllState (State.INTERRUPTED, msg);
     }
 
-    protected void setAllState(State newState, String msg, boolean kill) {
+    protected void setAllState(State newState, String msg) {
         state = newState;
         modelTrainingInfo.setMessage (msg);
         modelTrainingInfo.setState (newState);
-        modelTrainingInfoService.setCache (modelTrainingInfo);
-        if (kill)
-            killDaemon ();
+        updateModelTrainingInfo ();
+    }
+
+    protected void finishModel() {
+        //表示结束，所以插入数据库
+        modelTrainingInfo.setTrainingTime (prettyTime (System.currentTimeMillis () - startTime));
+        modelTrainingInfoService.setCacheAndMongo (modelTrainingInfo);
+        killDaemon ();
     }
 
     protected void killDaemon() {
-        //表示结束，所以插入数据库
-        modelTrainingInfoService.setCacheAndMongo (modelTrainingInfo);
         daemonStopFlag = true;
         daemon.cancel (true);
     }
@@ -268,8 +272,7 @@ public abstract class AbstractProcessWrapper {
                 sb.append (s.trim ());
             } else if (NumberUtils.isCreatable (s)) {
                 percentage = Double.parseDouble (s);
-                modelTrainingInfo.setPercentage (percentage);
-                modelTrainingInfoService.setCache (modelTrainingInfo);
+                updateModelTrainingInfo ();
                 log.debug ("{} percentage changed: {}", key, percentage);
             } else {
                 //不是小数，规定结束符为DONE_LITERAL
@@ -300,13 +303,18 @@ public abstract class AbstractProcessWrapper {
         return String.format ("%.2f h", p);
     }
 
+    protected void updateModelTrainingInfo() {
+        modelTrainingInfo.setTrainingTime (prettyTime (System.currentTimeMillis () - startTime));
+        modelTrainingInfo.setPercentage (percentage);
+        modelTrainingInfoService.setCache (modelTrainingInfo);
+    }
+
     private class Daemon extends Thread {
         @Override
         public void run() {
             try {
                 while (!daemonStopFlag) {
-                    modelTrainingInfo.setTrainingTime (prettyTime (System.currentTimeMillis () - startTime));
-                    modelTrainingInfo.setPercentage (percentage);
+                    updateModelTrainingInfo ();
                     Thread.sleep (THREAD_CHECK_INTERVAL);
                 }
                 log.info ("{} Daemon stop", modelTrainingInfo.getId ());
