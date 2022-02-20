@@ -187,7 +187,7 @@ public abstract class AbstractProcessWrapper {
             e.printStackTrace ();
         } finally {
             log.debug ("finish model:{},state={}", sb, state);
-            finishModel ();
+//            finishModel ();
         }
     }
 
@@ -337,6 +337,8 @@ public abstract class AbstractProcessWrapper {
                 if (!daemonStopFlag) {
                     log.error ("", e);
                     failed ("?????");
+                } else {
+                    log.debug ("{} Daemon stopped", modelTrainingInfo.getId ());
                 }
             }
         }
