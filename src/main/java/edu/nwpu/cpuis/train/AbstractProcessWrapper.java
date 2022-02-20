@@ -194,9 +194,6 @@ public abstract class AbstractProcessWrapper {
             }
         } catch (IOException e) {
             e.printStackTrace ();
-        } finally {
-            log.debug ("finish model:{},state={}", sb, state);
-            finishModel ();
         }
     }
 
