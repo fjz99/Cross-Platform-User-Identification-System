@@ -269,33 +269,35 @@ public abstract class AbstractProcessWrapper {
                             log.info ("{} successfully stopped", key);
                         }
                     }
-                    break;
                 }
-                if (parseOutput) {
-                    //处理JSON
-                    sb.append (s.trim ());
-                } else if (NumberUtils.isCreatable (s)) {
-                    percentage = Double.parseDouble (s);
-                    updateModelTrainingInfo ();
-                    log.debug ("{} percentage changed: {}", key, percentage);
-                } else {
-                    //不是小数，规定结束符为DONE_LITERAL
-                    if (StringUtils.equals (s, DONE_LITERAL)) {
-                        parseOutput = true;
-                        if (percentage != 100) {
-                            log.warn ("{} err max percentage is: {}", key, percentage);
-                            percentage = 100;
-                        } else {
-                            log.debug ("{} changed to get output", key);
-                        }
+                break;
+            }
+
+            if (parseOutput) {
+                //处理JSON
+                sb.append (s.trim ());
+            } else if (NumberUtils.isCreatable (s)) {
+                percentage = Double.parseDouble (s);
+                updateModelTrainingInfo ();
+                log.debug ("{} percentage changed: {}", key, percentage);
+            } else {
+                //不是小数，规定结束符为DONE_LITERAL
+                if (StringUtils.equals (s, DONE_LITERAL)) {
+                    parseOutput = true;
+                    if (percentage != 100) {
+                        log.warn ("{} err max percentage is: {}", key, percentage);
+                        percentage = 100;
                     } else {
-                        failed ("未知错误: " + s);
-                        log.error ("{} err input: {}", key, s);
+                        log.debug ("{} changed to get output", key);
                     }
+                } else {
+                    failed ("未知错误: " + s);
+                    log.error ("{} err input: {}", key, s);
                 }
             }
         }
     }
+
 
     protected String prettyTime(long time) {
         if (time < 1000) return time + " ms";
