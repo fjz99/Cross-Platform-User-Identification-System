@@ -126,6 +126,7 @@ public abstract class AbstractProcessWrapper {
         }
         cleanupLastOutput ();//
         interrupt ("成功终止训练");
+        finishModel ();
         log.info ("{} is canceled successfully.", key);
     }
 
@@ -141,6 +142,7 @@ public abstract class AbstractProcessWrapper {
                 removeFromMap ();
                 log.error ("{} start failed :{}", key, e.getMessage ());
             }
+            log.debug ("readFromScript stopped state={}", state);
         });
 
         PythonScriptRunner.executor.submit (this::readFromErrStream);
@@ -184,6 +186,7 @@ public abstract class AbstractProcessWrapper {
         } catch (IOException e) {
             e.printStackTrace ();
         } finally {
+            log.debug ("finish model:{}", sb);
             finishModel ();
         }
     }
