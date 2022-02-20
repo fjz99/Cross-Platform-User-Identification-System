@@ -99,7 +99,7 @@ public class ModelController {
             log.error ("dataset input err {}", dataset);
             return ofFailed (ErrCode.WRONG_DATASET_INPUT);
         }
-        if (basicModel.contains (ModelKeyGenerator.generateKey (dataset.toArray (new String[]{}), name, "getDaemon", null), true)) {
+        if (basicModel.contains (ModelKeyGenerator.generateKey (dataset.toArray (new String[]{}), name, "train", null), true)) {
             log.error ("模型正在训练中");
             return ofFailed (ErrCode.MODEL_IN_TRAINING);
         }

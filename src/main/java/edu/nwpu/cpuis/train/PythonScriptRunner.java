@@ -42,12 +42,15 @@ public final class PythonScriptRunner {
     public static ThreadPoolTaskExecutor executor;
     public static MongoService<AlgoEntity> algoEntityMongoService;
     public static MongoService<DatasetManageEntity> datasetManageEntityMongoService;
+    public static MongoService<ModelTrainingInfo> modelTrainingInfoMongoService;
     static ProcessorFactory processorFactory;
     static AlgoService algoService;
     static ProcessWrapperFactory processWrapperFactory;
     static DatasetService fileUploadService;
     static String algoBase;
     static MeterRegistry registry;
+    static String modelTrainingInfoMongoName;
+    static ModelTrainingInfoService modelTrainingInfoService;
 
     private PythonScriptRunner(ThreadPoolTaskExecutor executor,
                                MongoService<MongoOutputEntity> mongoService,
@@ -59,7 +62,10 @@ public final class PythonScriptRunner {
                                AlgoService algoService,
                                ProcessWrapperFactory processWrapperFactory, DatasetService fileUploadService,
                                @Value("${file.algo-base-location}") String algoBase,
-                               MeterRegistry registry) {
+                               @Value("${modelTrainingInfoMongoName}") String modelTrainingInfoMongoName,
+                               MeterRegistry registry,
+                               MongoService<ModelTrainingInfo> modelTrainingInfoMongoService,
+                               ModelTrainingInfoService modelTrainingInfoService) {
         PythonScriptRunner.mongoService = mongoService;
         PythonScriptRunner.executor = executor;
         PythonScriptRunner.mapMongoService = mapMongoService;
@@ -72,6 +78,9 @@ public final class PythonScriptRunner {
         PythonScriptRunner.fileUploadService = fileUploadService;
         PythonScriptRunner.algoBase = algoBase;
         PythonScriptRunner.registry = registry;
+        PythonScriptRunner.modelTrainingInfoMongoName = modelTrainingInfoMongoName;
+        PythonScriptRunner.modelTrainingInfoMongoService = modelTrainingInfoMongoService;
+        PythonScriptRunner.modelTrainingInfoService = modelTrainingInfoService;
     }
 
     /**

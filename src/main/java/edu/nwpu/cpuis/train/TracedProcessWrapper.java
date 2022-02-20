@@ -82,7 +82,7 @@ public class TracedProcessWrapper extends AbstractProcessWrapper {
             log.info ("parsed output to " + outputType.getName ());
             return true;
         } catch (Exception e) {
-            state = State.ERROR_STOPPED;
+            failed ("解析python脚本输出失败: " + e.getMessage ());
             reason = "解析python脚本输出失败: " + e.getMessage ();
             log.error (reason, e);
             return false;

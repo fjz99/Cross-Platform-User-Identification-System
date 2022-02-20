@@ -7,5 +7,6 @@ public enum State {
     ERROR_STOPPED,//任何异常
     SUCCESSFULLY_STOPPED,
     PREDICTING,
-    INTERRUPTED //被终止
+    INTERRUPTED, //被终止
+    PENDING//等待执行
 }

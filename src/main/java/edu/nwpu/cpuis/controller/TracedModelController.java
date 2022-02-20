@@ -2,6 +2,7 @@ package edu.nwpu.cpuis.controller;
 
 import edu.nwpu.cpuis.entity.AlgoEntity;
 import edu.nwpu.cpuis.entity.ErrCode;
+import edu.nwpu.cpuis.entity.ModelTrainingInfo;
 import edu.nwpu.cpuis.entity.Response;
 import edu.nwpu.cpuis.entity.exception.CpuisException;
 import edu.nwpu.cpuis.entity.vo.ModelLocationVO;
@@ -10,6 +11,7 @@ import edu.nwpu.cpuis.entity.vo.OutputSearchVO;
 import edu.nwpu.cpuis.entity.vo.PredictVO;
 import edu.nwpu.cpuis.service.*;
 import edu.nwpu.cpuis.service.validator.OutputVoValidator;
+import edu.nwpu.cpuis.train.ModelTrainingInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -51,6 +53,8 @@ public class TracedModelController {
     private Stage2OutputModelService stage2OutputModelService;
     @Resource
     private PredictionService predictionService;
+    @Resource
+    private ModelTrainingInfoService modelTrainingInfoService;
 
 
 //    @InitBinder
@@ -119,6 +123,7 @@ public class TracedModelController {
     @RequestMapping(value = "/trainingPercentage", method = {RequestMethod.POST, RequestMethod.GET})
     @ApiOperation(value = "获得某个模型的训练进度百分比")
     @ApiImplicitParam(paramType = "body", name = "vo", value = "定位一个模型", required = true, dataTypeClass = ModelLocationVO.class)
+    @Deprecated
     public Response<?> getTrainingPercentage(@RequestBody ModelLocationVO vo) {
         vo.setId (0);
         Double percentage = service.getPercentage (vo);
@@ -126,6 +131,36 @@ public class TracedModelController {
             return ok (percentage);
         } else return modelNotExists ();
     }
+
+    @RequestMapping(value = "/state", method = {RequestMethod.POST, RequestMethod.GET})
+    @ApiOperation(value = "获得某个模型的状态")
+    @ApiImplicitParam(paramType = "body", name = "vo", value = "定位一个模型", required = true, dataTypeClass = ModelLocationVO.class)
+    public Response<?> getModelSate(@RequestBody ModelLocationVO vo) {
+        vo.setId (0);
+        ModelTrainingInfo info = modelTrainingInfoService.getInfo (vo);
+        if (info == null) {
+            return modelNotExists ();
+        } else {
+            return ok (info);
+        }
+    }
+
+
+    @RequestMapping(value = "/delete", method = {RequestMethod.POST, RequestMethod.GET})
+    @ApiOperation(value = "模型删除", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字")
+    @ApiImplicitParam(paramType = "body", name = "vo", value = "定位一个模型", required = true, dataTypeClass = ModelLocationVO.class)
+    public Response<?> deleteModel(@RequestBody ModelLocationVO vo) {
+        vo.setId (0);
+        ModelTrainingInfo info = modelTrainingInfoService.getInfo (vo);
+        if (info == null) {
+            return modelNotExists ();
+        } else {
+            modelTrainingInfoService.deleteInfo (vo);
+            service.delete (vo);
+            return ok ();
+        }
+    }
+
 
     /**
      * 目前输入暂定为String
@@ -152,13 +187,4 @@ public class TracedModelController {
         return Response.ok (predictionService.predict (vo, file));
     }
 
-    @RequestMapping(value = "/delete", method = {RequestMethod.POST, RequestMethod.DELETE})
-    @ApiOperation(value = "模型删除", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字")
-    @ApiImplicitParam(paramType = "body", name = "vo", value = "定位一个模型", required = true, dataTypeClass = ModelLocationVO.class)
-    public Response<?> delete(@RequestBody ModelLocationVO vo) {
-        vo.setId (0);
-        if (service.delete (vo)) {
-            return ok ();
-        } else return modelNotExists ();
-    }
 }

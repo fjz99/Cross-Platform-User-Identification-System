@@ -1,6 +1,8 @@
 package edu.nwpu.cpuis.utils;
 
 
+import java.util.Arrays;
+
 public final class ModelKeyGenerator {
 
     private ModelKeyGenerator() {
@@ -8,14 +10,16 @@ public final class ModelKeyGenerator {
     }
 
     /**
-     * @param phase 即predict、getDaemon、test等
-     * @param type  即统计信息还是输出
+     * @param dataset 会自动排序
+     * @param phase   即predict、getDaemon、test等
+     * @param type    即统计信息还是输出
      */
     public static String generateKey(String[] dataset, String algoName, String phase, String type) {
         StringBuilder stringBuilder = new StringBuilder ();
         if (algoName != null)
             stringBuilder.append (algoName).append ('-');
         if (dataset != null) {
+            Arrays.sort (dataset);
             for (String s : dataset) {
                 stringBuilder.append (s).append ('-');
             }
@@ -44,12 +48,6 @@ public final class ModelKeyGenerator {
 
     /**
      * 特殊的方法，隔离不同trainWrapper的statistics collection
-     *
-     * @param dataset
-     * @param algoName
-     * @param phase
-     * @param type
-     * @return
      */
     public static String generateKey0(String[] dataset, String algoName, String phase, String type) {
         return generateKey (dataset, algoName, phase, type) + "TRACED_WRAPPER";
