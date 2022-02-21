@@ -50,7 +50,7 @@ public class ModelStateServer {
         String id = info.getId ();
         List<Session> sessions = id2client.get (id);
         if (sessions == null) {
-            log.warn ("没有client在监听 {}", id);
+            log.warn ("没有client在监听 {},当前有监听的有 {}", id, id2client.keySet ());
             return;
         }
         for (Session client : sessions) {

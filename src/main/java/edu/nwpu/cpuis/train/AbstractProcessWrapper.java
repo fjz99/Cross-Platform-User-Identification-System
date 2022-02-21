@@ -292,7 +292,7 @@ public abstract class AbstractProcessWrapper {
                 }
                 break;
             }
-            log.debug ("getLine {}", s);
+//            log.debug ("getLine {}", s);
 
             if (parseOutput) {
                 //处理JSON
