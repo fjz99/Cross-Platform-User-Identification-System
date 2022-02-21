@@ -7,7 +7,6 @@ import edu.nwpu.cpuis.service.DatasetService;
 import edu.nwpu.cpuis.service.MongoService;
 import edu.nwpu.cpuis.train.processor.ProcessorFactory;
 import edu.nwpu.cpuis.utils.ModelKeyGenerator;
-import edu.nwpu.cpuis.websocket.ModelStateServer;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
 import lombok.AllArgsConstructor;
@@ -53,7 +52,6 @@ public final class PythonScriptRunner {
     static String modelTrainingInfoMongoName;
     static ModelTrainingInfoService modelTrainingInfoService;
     static DatasetService datasetService;
-    static ModelStateServer modelStateServer;
 
     private PythonScriptRunner(ThreadPoolTaskExecutor executor,
                                MongoService<MongoOutputEntity> mongoService,
@@ -69,8 +67,7 @@ public final class PythonScriptRunner {
                                MeterRegistry registry,
                                MongoService<ModelTrainingInfo> modelTrainingInfoMongoService,
                                ModelTrainingInfoService modelTrainingInfoService,
-                               DatasetService datasetService,
-                               ModelStateServer modelStateServer) {
+                               DatasetService datasetService) {
         PythonScriptRunner.mongoService = mongoService;
         PythonScriptRunner.executor = executor;
         PythonScriptRunner.mapMongoService = mapMongoService;
@@ -87,7 +84,6 @@ public final class PythonScriptRunner {
         PythonScriptRunner.modelTrainingInfoMongoService = modelTrainingInfoMongoService;
         PythonScriptRunner.modelTrainingInfoService = modelTrainingInfoService;
         PythonScriptRunner.datasetService = datasetService;
-        PythonScriptRunner.modelStateServer = modelStateServer;
     }
 
     /**

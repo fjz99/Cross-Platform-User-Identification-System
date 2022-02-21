@@ -4,6 +4,7 @@ import edu.nwpu.cpuis.entity.ModelTrainingInfo;
 import edu.nwpu.cpuis.entity.vo.ModelLocationVO;
 import edu.nwpu.cpuis.service.MongoService;
 import edu.nwpu.cpuis.utils.ModelKeyGenerator;
+import edu.nwpu.cpuis.websocket.ModelStateServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Component
+@Component("modelTrainingInfoService")
 @Slf4j
 public class ModelTrainingInfoService {
     public static final String MODEL_INFO_CACHE_NAME = "MODEL_INFO_CACHE_NAME";
@@ -39,7 +40,7 @@ public class ModelTrainingInfoService {
     public ModelTrainingInfo setCache(ModelTrainingInfo info) {
 //        manager.getCache (MODEL_INFO_CACHE_NAME).put (key, info);
         try {
-            PythonScriptRunner.modelStateServer.changeState (info);
+            ModelStateServer.changeState (info);
         } catch (IOException e) {
             e.printStackTrace ();
         }
