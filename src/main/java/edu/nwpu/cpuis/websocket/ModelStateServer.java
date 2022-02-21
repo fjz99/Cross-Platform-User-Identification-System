@@ -2,10 +2,12 @@ package edu.nwpu.cpuis.websocket;
 
 import com.alibaba.fastjson.JSON;
 import edu.nwpu.cpuis.entity.ModelTrainingInfo;
+import edu.nwpu.cpuis.train.ModelTrainingInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -24,6 +26,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ModelStateServer {
     //注意static,原因未知，可能是多个实例吧。。
     private static final Map<String, List<Session>> id2client = new ConcurrentHashMap<> ();
+    @Resource
+    private ModelTrainingInfoService service;
 
     //建立连接成功调用
     @OnOpen
@@ -33,6 +37,22 @@ public class ModelStateServer {
             id2client.put (id, new ArrayList<> ());
         }
         id2client.get (id).add (session);
+
+        try {
+            sendInitialState (session, id);
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+    }
+
+    private void sendInitialState(Session session, String id) throws IOException {
+        //发送初始状态
+        ModelTrainingInfo info = service.getInfo (id);
+        if (info == null) {
+            info = ModelTrainingInfo.builder ()
+                    .id (id).message ("模型不存在").build ();
+        }
+        session.getBasicRemote ().sendText (JSON.toJSONString (info));
     }
 
     @OnClose
@@ -48,6 +68,15 @@ public class ModelStateServer {
     }
 
     public void changeState(@NonNull ModelTrainingInfo info) throws IOException {
+        //发送给all
+        List<Session> all = id2client.get ("all");
+        if (all != null) {
+            for (Session client : all) {
+                client.getBasicRemote ().sendText (JSON.toJSONString (info));
+            }
+        }
+
+        //..
         String id = info.getId ();
         List<Session> sessions = id2client.get (id);
         if (sessions == null) {
