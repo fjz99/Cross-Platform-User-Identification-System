@@ -3,6 +3,7 @@ package edu.nwpu.cpuis.websocket;
 import com.alibaba.fastjson.JSON;
 import edu.nwpu.cpuis.entity.ModelTrainingInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.OnClose;
@@ -45,7 +46,7 @@ public class ModelStateServer {
         log.error ("{} client send msg {}", session.getId (), message);
     }
 
-    public void changeState(ModelTrainingInfo info) throws IOException {
+    public void changeState(@NonNull ModelTrainingInfo info) throws IOException {
         String id = info.getId ();
         for (Session client : id2client.get (id)) {
             client.getBasicRemote ().sendText (JSON.toJSONString (info));

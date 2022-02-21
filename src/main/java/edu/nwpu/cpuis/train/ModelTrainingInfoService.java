@@ -35,11 +35,13 @@ public class ModelTrainingInfoService {
     @Value("${modelTrainingInfoMongoName}")
     private String modelTrainingInfoMongoName;
 
-    @CachePut(cacheNames = MODEL_INFO_CACHE_NAME, key = "#info.id")
+    @CachePut(cacheNames = MODEL_INFO_CACHE_NAME, key = "#info.id", condition = "#info != null")
     public ModelTrainingInfo setCache(ModelTrainingInfo info) {
 //        manager.getCache (MODEL_INFO_CACHE_NAME).put (key, info);
         try {
-            PythonScriptRunner.modelStateServer.changeState (info);
+            if (info != null) {
+                PythonScriptRunner.modelStateServer.changeState (info);
+            }
         } catch (IOException e) {
             e.printStackTrace ();
         }
