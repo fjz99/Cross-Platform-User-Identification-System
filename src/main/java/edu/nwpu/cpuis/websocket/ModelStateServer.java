@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 @Slf4j
 public class ModelStateServer {
-    //注意static
+    //注意static,原因未知，可能是多个实例吧。。
     private static final Map<String, List<Session>> id2client = new ConcurrentHashMap<> ();
 
     //建立连接成功调用
@@ -33,7 +33,6 @@ public class ModelStateServer {
             id2client.put (id, new ArrayList<> ());
         }
         id2client.get (id).add (session);
-        System.out.println ("fuck ! " + id2client.keySet ());
     }
 
     @OnClose

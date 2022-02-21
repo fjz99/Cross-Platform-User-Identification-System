@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 public abstract class AbstractProcessWrapper {
 
     public static final String MONGO_NAME = PythonScriptRunner.modelTrainingInfoMongoName;
-    public static final int THREAD_CHECK_INTERVAL = 500;
+    public static final int THREAD_CHECK_INTERVAL = 1000;
     public static final int readLineTimeout = 2000;
     protected static final String DONE_LITERAL = "done";
     protected static final long waitProcessTerminationTimeout = 1000;//ms
