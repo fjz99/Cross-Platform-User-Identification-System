@@ -48,7 +48,12 @@ public class ModelStateServer {
 
     public void changeState(@NonNull ModelTrainingInfo info) throws IOException {
         String id = info.getId ();
-        for (Session client : id2client.get (id)) {
+        List<Session> sessions = id2client.get (id);
+        if (sessions == null) {
+            log.warn ("没有client在监听 {}", id);
+            return;
+        }
+        for (Session client : sessions) {
             client.getBasicRemote ().sendText (JSON.toJSONString (info));
         }
     }

@@ -39,9 +39,7 @@ public class ModelTrainingInfoService {
     public ModelTrainingInfo setCache(ModelTrainingInfo info) {
 //        manager.getCache (MODEL_INFO_CACHE_NAME).put (key, info);
         try {
-            if (info != null) {
-                PythonScriptRunner.modelStateServer.changeState (info);
-            }
+            PythonScriptRunner.modelStateServer.changeState (info);
         } catch (IOException e) {
             e.printStackTrace ();
         }
