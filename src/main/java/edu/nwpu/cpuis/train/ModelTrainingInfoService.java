@@ -14,6 +14,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,11 @@ public class ModelTrainingInfoService {
     @CachePut(cacheNames = MODEL_INFO_CACHE_NAME, key = "#info.id")
     public ModelTrainingInfo setCache(ModelTrainingInfo info) {
 //        manager.getCache (MODEL_INFO_CACHE_NAME).put (key, info);
+        try {
+            PythonScriptRunner.modelStateServer.changeState (info);
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
         return info;
     }
 
