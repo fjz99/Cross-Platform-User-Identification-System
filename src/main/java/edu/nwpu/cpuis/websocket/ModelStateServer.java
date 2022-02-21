@@ -30,7 +30,10 @@ public class ModelStateServer {
     public void onOpen(Session session, @PathParam(value = "id") String id) {
         log.info ("{} client 开始监听 model {}", session.getId (), id);
         client2id.put (session.getId (), id);
-        id2client.computeIfAbsent (id, x -> new ArrayList<> ()).add (session);
+        if (!id2client.containsKey (id)) {
+            id2client.put (id, new ArrayList<> ());
+        }
+        id2client.get (id).add (session);
     }
 
     @OnClose
