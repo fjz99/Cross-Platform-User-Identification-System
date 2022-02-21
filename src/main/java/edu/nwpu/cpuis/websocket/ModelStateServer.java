@@ -22,24 +22,23 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 @Slf4j
 public class ModelStateServer {
-    private final Map<String, String> client2id = new ConcurrentHashMap<> ();
-    private final Map<String, List<Session>> id2client = new ConcurrentHashMap<> ();
+    //注意static
+    private static final Map<String, List<Session>> id2client = new ConcurrentHashMap<> ();
 
     //建立连接成功调用
     @OnOpen
     public void onOpen(Session session, @PathParam(value = "id") String id) {
         log.info ("{} client 开始监听 model {}", session.getId (), id);
-        client2id.put (session.getId (), id);
         if (!id2client.containsKey (id)) {
             id2client.put (id, new ArrayList<> ());
         }
         id2client.get (id).add (session);
+        System.out.println ("fuck ! " + id2client.keySet ());
     }
 
     @OnClose
     public void onClose(Session session, @PathParam(value = "id") String id) {
         log.info ("{} client 停止监听 model {}", session.getId (), id);
-        client2id.remove (session.getId ());
         id2client.get (id).remove (session);
     }
 
