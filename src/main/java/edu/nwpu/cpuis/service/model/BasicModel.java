@@ -20,17 +20,12 @@ import java.util.*;
 @Slf4j
 public class BasicModel {
     private static final String datasetKey = "dirs";
-    private final ModelDefinition definition;
     @Value("${file.input-base-location}")
     private String datasetPath;
     @Resource
     private DatasetService datasetService;
     @Resource
     private AlgoService algoService;
-
-    public BasicModel(ModelDefinition definition) {
-        this.definition = definition;
-    }
 
     public static String getDatasetKey() {
         return datasetKey;
@@ -74,7 +69,6 @@ public class BasicModel {
         AbstractProcessWrapper process = PythonScriptRunner.getTrainProcess (name);
         Assert.isTrue (datasets.size () == 2, "目前只支持2个数据集输入");
         if (process == null) {
-            final ModelDefinition.SingleModel singleModel = definition.getDefinition ().get (name);
             Map<String, Object> map = new HashMap<> ();
             List<String> out = new ArrayList<> (datasets.size ());
             for (String s : datasets) {
