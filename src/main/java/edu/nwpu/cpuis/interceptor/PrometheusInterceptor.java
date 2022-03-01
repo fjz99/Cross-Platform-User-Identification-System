@@ -9,9 +9,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @date 2022/1/21 18:59
- */
+
 @Component
 public class PrometheusInterceptor implements HandlerInterceptor {
     @Autowired
