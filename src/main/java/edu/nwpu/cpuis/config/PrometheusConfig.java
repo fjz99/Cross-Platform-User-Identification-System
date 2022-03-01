@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 配置micrometer
- *
- * @date 2022/1/22 10:49
  */
 @Configuration("myPrometheusConfig")
 public class PrometheusConfig {
