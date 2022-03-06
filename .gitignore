@@ -33,6 +33,6 @@ build/
 .vscode/
 
 /src/docs
-my.*
+*.log
 *.gz
 .vs/*
