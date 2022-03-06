@@ -19,24 +19,24 @@
     </properties>
     <packaging>jar</packaging>
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>io.micrometer</groupId>-->
-<!--            <artifactId>micrometer-spring-legacy</artifactId>-->
-<!--            <version>1.1.5</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.micrometer</groupId>-->
+        <!--            <artifactId>micrometer-spring-legacy</artifactId>-->
+        <!--            <version>1.1.5</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
         <!--监控-->
-<!--        <dependency>-->
-<!--            <groupId>io.prometheus</groupId>-->
-<!--            <artifactId>simpleclient_spring_boot</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>io.prometheus</groupId>-->
-<!--            <artifactId>simpleclient_hotspot</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.prometheus</groupId>-->
+        <!--            <artifactId>simpleclient_spring_boot</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.prometheus</groupId>-->
+        <!--            <artifactId>simpleclient_hotspot</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
@@ -164,7 +164,7 @@
 
     <build>
         <!--        修改默认的jar文件名-->
-        <!--        <finalName>CPUIS</finalName>-->
+        <finalName>CPUIS</finalName>
         <plugins>
             <!--            跳过单测执行，但是编译-->
             <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
