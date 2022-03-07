@@ -1,16 +1,16 @@
 package site.cpuis.service;
 
-import site.cpuis.entity.MongoOutputEntity;
-import site.cpuis.entity.PageEntity;
-import site.cpuis.entity.vo.OutputSearchVO;
-import site.cpuis.utils.ModelKeyGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import site.cpuis.entity.MongoOutputEntity;
+import site.cpuis.entity.PageEntity;
+import site.cpuis.entity.vo.OutputSearchVO;
+import site.cpuis.utils.CsvExportUtil;
+import site.cpuis.utils.ModelKeyGenerator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 
 /**
@@ -25,6 +25,23 @@ public class MatrixOutputModelService extends AbstractModelService {
     public List<MongoOutputEntity> beforeSaveToMongo(List<MongoOutputEntity> list) {
         //预处理
         return null;
+    }
+
+    public void transferFile(String key, HttpServletResponse response) {
+        try {
+            List<MongoOutputEntity> entities = mongoOutputService.selectAll (key, MongoOutputEntity.class);
+            String resKey = "id1,id2";
+            String titles = "id1,id2";  // 设置表头
+            List<Map<String, Object>> maps = new ArrayList<> ();
+            for (MongoOutputEntity entity : entities) {
+                HashMap<String, Object> e = new HashMap<> ();
+                maps.add (e);
+            }
+            CsvExportUtil.responseSetProperties ("output_", response);
+            CsvExportUtil.doExport (maps, titles, resKey, response.getOutputStream ());
+        } catch (Exception e) {
+            e.printStackTrace ();
+        }
     }
 
     private @NonNull
@@ -51,13 +68,13 @@ public class MatrixOutputModelService extends AbstractModelService {
                 break;
             }
             case "regex": {
-                entities = mongoOutputService.searchRegex (USER_NAME,MongoOutputEntity.class, key, searchVO.getSearchText (), pageNum, pageSize);
-                count = mongoOutputService.countRegex (USER_NAME,MongoOutputEntity.class, key, searchVO.getSearchText ());
+                entities = mongoOutputService.searchRegex (USER_NAME, MongoOutputEntity.class, key, searchVO.getSearchText (), pageNum, pageSize);
+                count = mongoOutputService.countRegex (USER_NAME, MongoOutputEntity.class, key, searchVO.getSearchText ());
                 break;
             }
             case "normal": {
-                entities = mongoOutputService.searchNormal (USER_NAME,MongoOutputEntity.class, key, searchVO.getSearchText (), pageNum, pageSize);
-                count = mongoOutputService.countNormal (USER_NAME,MongoOutputEntity.class, key, searchVO.getSearchText ());
+                entities = mongoOutputService.searchNormal (USER_NAME, MongoOutputEntity.class, key, searchVO.getSearchText (), pageNum, pageSize);
+                count = mongoOutputService.countNormal (USER_NAME, MongoOutputEntity.class, key, searchVO.getSearchText ());
                 break;
             }
         }

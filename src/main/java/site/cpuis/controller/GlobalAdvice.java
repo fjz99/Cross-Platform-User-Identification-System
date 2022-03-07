@@ -22,11 +22,6 @@ import java.util.Map;
 @RestControllerAdvice
 @Slf4j
 public class GlobalAdvice {
-    private static final Map<String, String> map = new HashMap<String, String> () {
-        {
-            put ("10.69.231.168", "付佳正");
-        }
-    };
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -34,12 +29,6 @@ public class GlobalAdvice {
         log.error ("global err ", e);
         e.printStackTrace ();
         return Response.serverErr ();
-    }
-
-    @InitBinder
-    public void init(HttpServletRequest request) {
-        String remoteAddr = request.getRemoteAddr ();
-        log.info ("收到请求 ip {}", map.getOrDefault (remoteAddr, remoteAddr));
     }
 
     @ExceptionHandler({ServletException.class, HttpMessageConversionException.class, MultipartException.class})

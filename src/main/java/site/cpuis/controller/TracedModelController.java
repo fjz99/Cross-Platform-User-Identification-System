@@ -33,7 +33,7 @@ import java.util.Map;
 
 import static site.cpuis.entity.Response.*;
 
-
+//TODO 文件下载功能
 @RestController
 @RequestMapping("/model/traced/")
 @Slf4j
@@ -55,12 +55,6 @@ public class TracedModelController {
     private PredictionService predictionService;
     @Resource
     private ModelTrainingInfoService modelTrainingInfoService;
-
-
-//    @InitBinder
-//    public void init(WebDataBinder dataBinder) {
-//        dataBinder.setValidator (validator);
-//    }
 
     @RequestMapping(value = "/get", method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "分页查找", responseContainer = "List")
