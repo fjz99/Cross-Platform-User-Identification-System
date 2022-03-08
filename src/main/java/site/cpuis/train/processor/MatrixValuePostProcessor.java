@@ -19,7 +19,7 @@ import java.util.*;
  * 处理矩阵形式的输出
  * 矩阵为m x m的每个元素是一个二元组(userName,value)
  * <p>
- * 这个是为了兼容算法1
+ * 这个是为了兼容算法1,3
  */
 @Slf4j
 @Component(ProcessorNames.matrixValuePostProcessor)

@@ -28,13 +28,11 @@ import java.util.*;
 @SuppressWarnings("rawtypes")
 public final class PythonScriptRunner {
     public static final String OUTPUT_TYPE = "output";
-    public static final String METADATA_TYPE = "metadata";
     public static final String modelInfoPrefix = "model-traced";
     public static final String directoryLocationBase = "E:/tracedModelOutput/";
     //key
     static final Map<String, SimpleProcessWrapper> processes = new HashMap<> ();
     static final Map<String, TracedProcessWrapper> tracedProcesses = new HashMap<> ();
-    private static final String TRAIN_TYPE_NAME = "train";
     private static final String PREDICT_TYPE_NAME = "predict";
     public static DataBaseService<MongoOutputEntity> mongoService;
     public static DataBaseService<Map> mapMongoService;

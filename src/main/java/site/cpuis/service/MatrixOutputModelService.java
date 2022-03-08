@@ -44,17 +44,26 @@ public class MatrixOutputModelService extends AbstractModelService {
         }
     }
 
+    /**
+     * Set pageNum = pageSize = -1 to get all data.
+     */
     private @NonNull
     PageEntity<MongoOutputEntity> getOutput0(@NonNull OutputSearchVO searchVO, String key) {
         log.info ("search for key {}", key);
-        final int pageSize = Optional.ofNullable (searchVO.getPageSize ()).orElse (20);
-        final int pageNum = Optional.ofNullable (searchVO.getPageNum ()).orElse (1);
+
+        int pageSize = Optional.ofNullable (searchVO.getPageSize ()).orElse (20);
+        int pageNum = Optional.ofNullable (searchVO.getPageNum ()).orElse (1);
 
         //检查是否存在数据 bug-fix
         long l = mongoOutputService.countAll (key, MongoOutputEntity.class);
         if (l == 0) {
-            return PageEntity.byTotalPages (new ArrayList<> (), 0, 1, pageSize);
+            return PageEntity.byTotalPages (new ArrayList<> (), 0, 1, searchVO.getPageSize ());
         }
+        if (pageSize == -1) {
+            pageNum = 1;
+            pageSize = (int) l;
+        }
+
 
         List<MongoOutputEntity> entities = null;
         long count = 0;
@@ -62,6 +71,11 @@ public class MatrixOutputModelService extends AbstractModelService {
             searchVO.setSearchType ("fulltext");
         }
         switch (searchVO.getSearchType ()) {
+            case "all": {
+                entities = mongoOutputService.selectAll (key, MongoOutputEntity.class);
+                count = l;
+                break;
+            }
             case "fulltext": {
                 entities = mongoOutputService.searchFullText (MongoOutputEntity.class, key, searchVO.getSearchText (), pageNum, pageSize);
                 count = mongoOutputService.countFullText (MongoOutputEntity.class, key, searchVO.getSearchText ());

@@ -48,6 +48,8 @@ public final class ProcessWrapperFactory {
                 break;
             }
             case "3":
+                outputType = MatrixSimilarityOutput.class;
+                break;
             default:
                 throw new IllegalArgumentException ("stage" + stage);
         }

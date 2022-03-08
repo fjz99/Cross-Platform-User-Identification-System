@@ -40,9 +40,6 @@ public class SimpleProcessWrapper extends AbstractProcessWrapper {
 
     @Override
     protected void cleanupLastOutput() {
-        //删除上次的输出
-//            key = ModelKeyGenerator.generateKey (dataset, algoName, phase, METADATA_TYPE);
-//            mongoService.deleteCollection (key);
 
         key = ModelKeyGenerator.generateKey (dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE);
         PythonScriptRunner.mongoService.deleteCollection (key);
@@ -56,7 +53,6 @@ public class SimpleProcessWrapper extends AbstractProcessWrapper {
         PythonScriptRunner.mongoService.createIndex (key, "userName", false, true);
         PythonScriptRunner.mongoService.createTextIndex (key, "userName", false);
 
-//            mongoService.deleteCollection (getReversedKey (METADATA_TYPE));
         log.info ("cleanup output done");
     }
 

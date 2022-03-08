@@ -9,10 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import site.cpuis.entity.AlgoEntity;
-import site.cpuis.entity.ErrCode;
-import site.cpuis.entity.ModelTrainingInfo;
-import site.cpuis.entity.Response;
+import site.cpuis.entity.*;
 import site.cpuis.entity.exception.CpuisException;
 import site.cpuis.entity.vo.ModelLocationVO;
 import site.cpuis.entity.vo.ModelSearchVO;
@@ -23,6 +20,7 @@ import site.cpuis.service.validator.OutputVoValidator;
 import site.cpuis.train.ModelTrainingInfoService;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.IOException;
@@ -99,7 +97,7 @@ public class TracedModelController {
         dataset.sort (Comparator.naturalOrder ());
         //只能串行化训练,fixme queue?
         if (service.isTraining (name, dataset.toArray (new String[]{}), "train", true, -1)) {
-            log.error ("模型正在训练中");
+            log.error ("model already in training");
             return ofFailed (ErrCode.MODEL_IN_TRAINING);
         }
         Map<String, String> args = new HashMap<> ();
@@ -107,7 +105,7 @@ public class TracedModelController {
         Map<String, Object> map = new HashMap<String, Object> () {
             {
                 put ("id", 0);
-                put ("msg", "训练开始");
+                put ("msg", "training started");
             }
         };
         return ok (map);
@@ -169,10 +167,6 @@ public class TracedModelController {
      */
     @RequestMapping(value = "/predict", method = RequestMethod.POST)
     @ApiOperation(value = "模型预测", notes = "注意数据集名称参数dataset，只能选定2个数据集，而且这两个数据集的名字必须是上传的名字")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "path", name = "name", value = "算法名称", required = true, dataTypeClass = String.class),
-            @ApiImplicitParam(paramType = "query", name = "dataset", value = "数据集名称", required = true, dataTypeClass = List.class, allowMultiple = true),
-    })
     public Response<?> predict(@RequestPart(name = "predict") PredictVO vo,
                                @RequestPart(required = false) MultipartFile file) throws IOException {
         //TODO
@@ -186,6 +180,25 @@ public class TracedModelController {
         vo.getDataset ().sort (Comparator.naturalOrder ());
 //        PythonScriptRunner.TracedScriptOutput predict = service.predict (vo);
         return Response.ok (predictionService.predict (vo, file));
+    }
+
+    /**
+     * Download outputs as csv.
+     * Set search = "all" to get all data.
+     */
+    @RequestMapping(value = "/download", method = RequestMethod.POST)
+    public void download(@RequestPart(name = "predict") PredictVO vo,
+                         HttpServletResponse response) throws IOException {
+        AlgoEntity entity = algoService.getAlgoEntity (vo.getAlgoName ());
+        if (entity == null || !entity.getStage ().equals ("3")) {
+            response.sendError (HttpServletResponse.SC_BAD_REQUEST);
+        }
+//        if (!entity.getStage ().equals ("3")) {
+//            return ofFailed ("Algorithm's stage not equals to 3.", ErrCode.GENERIC_ERR);
+//        }
+
+        vo.getDataset ().sort (Comparator.naturalOrder ());
+        predictionService.download (vo, response);
     }
 
 }

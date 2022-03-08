@@ -14,6 +14,8 @@ import java.util.List;
 public class PredictVO {
     private List<String> dataset;//dataset应当支持不输入
     private String algoName;//算法名
-//    private Integer id;//model id
+    //    private Integer id;//model id
     private String input;//fixme
+
+    private OutputSearchVO search;
 }
