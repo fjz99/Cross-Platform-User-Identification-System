@@ -41,7 +41,7 @@ public class PredictionService {
 
     public Object predict(PredictVO vo, MultipartFile file) throws IOException {
         if (vo.getSearch () != null) {
-            return search (vo.getSearch ());
+            return search (vo);
         }
 
         if (vo.getDataset () == null || vo.getDataset ().size () != 1) {
@@ -74,7 +74,11 @@ public class PredictionService {
         return output.getOutput ();
     }
 
-    private Object search(OutputSearchVO search) {
+    private Object search(PredictVO vo) {
+        OutputSearchVO search = vo.getSearch ();
+        search.setPhase ("train");
+        search.setAlgoName (vo.getAlgoName ());
+        search.setDataset (vo.getDataset ().toArray (new String[0]));
         return outputModelService.getOutput (search);
     }
 
