@@ -8,12 +8,18 @@ import java.util.Map;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class MatrixSimilarityOutput extends StatisticsOutput {
-    private Map<String, List<Element>> output;
+public class Stage3Output extends BaseOutput {
+    private Map<Pair, List<Element>> output;
+
+    @Data
+    public static class Pair {
+        private int id;
+        private String name;
+    }
 
     @Data
     public static class Element {
-        private String name;
+        private Pair user;
         private double similarity;
     }
 }

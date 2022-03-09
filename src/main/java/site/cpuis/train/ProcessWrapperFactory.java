@@ -1,13 +1,14 @@
 package site.cpuis.train;
 
-import site.cpuis.train.output.MatrixSimilarityOutput;
-import site.cpuis.train.output.NoOutputOutput;
-import site.cpuis.train.output.Stage2Output;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+import site.cpuis.train.output.MatrixSimilarityOutput;
+import site.cpuis.train.output.NoOutputOutput;
+import site.cpuis.train.output.Stage2Output;
+import site.cpuis.train.output.Stage3Output;
 
 /**
  * 根据stage、phase创建对应的wrapper
@@ -48,7 +49,7 @@ public final class ProcessWrapperFactory {
                 break;
             }
             case "3":
-                outputType = MatrixSimilarityOutput.class;
+                outputType = Stage3Output.class;
                 break;
             default:
                 throw new IllegalArgumentException ("stage" + stage);
