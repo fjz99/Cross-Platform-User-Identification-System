@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Component(ProcessorNames.doNothingPostProcessor)
 @Slf4j
 @Order
-public class DoNothingPostProcessor implements ModelPostProcessor {
+public class SaveModelInfoProcessor implements ModelPostProcessor {
     @Override
     public void process(TracedProcessWrapper processWrapper) {
         log.info ("DoNothingPostProcessor DoNothing");

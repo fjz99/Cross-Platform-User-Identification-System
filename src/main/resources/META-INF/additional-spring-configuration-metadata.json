@@ -1,0 +1,59 @@
+{
+  "properties": [
+    {
+      "name": "datasetPrefix",
+      "type": "java.lang.String",
+      "description": "Description for datasetPrefix."
+    },
+    {
+      "name": "datasetReplace",
+      "type": "java.lang.String",
+      "description": "Description for datasetReplace."
+    },
+    {
+      "name": "file.tempdir",
+      "type": "java.lang.String",
+      "description": "Description for file.tempdir."
+    },
+    {
+      "name": "file.input-base-location",
+      "type": "java.lang.String",
+      "description": "Description for file.input-base-location."
+    },
+    {
+      "name": "file.algo-base-location",
+      "type": "java.lang.String",
+      "description": "Description for file.algo-base-location."
+    },
+    {
+      "name": "algo-mongo-collection-name",
+      "type": "java.lang.String",
+      "description": "Description for algo-mongo-collection-name."
+    },
+    {
+      "name": "dataset-mongo-collection-name",
+      "type": "java.lang.String",
+      "description": "Description for dataset-mongo-collection-name."
+    },
+    {
+      "name": "model-traced-collection-base",
+      "type": "java.lang.String",
+      "description": "Description for model-traced-collection-base."
+    },
+    {
+      "name": "modelTrainingInfoMongoName",
+      "type": "java.lang.String",
+      "description": "Description for modelTrainingInfoMongoName."
+    },
+    {
+      "name": "dataset-nginx-dir",
+      "type": "java.lang.String",
+      "description": "Description for dataset-nginx-dir."
+    },
+    {
+      "name": "dataset-download-base-uri",
+      "type": "java.lang.String",
+      "description": "Description for dataset-download-base-uri."
+    }
+  ]
+}
