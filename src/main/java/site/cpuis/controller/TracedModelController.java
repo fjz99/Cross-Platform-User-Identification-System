@@ -24,10 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static site.cpuis.entity.Response.*;
 
@@ -181,6 +178,18 @@ public class TracedModelController {
 //        PythonScriptRunner.TracedScriptOutput predict = service.predict (vo);
         return Response.ok (predictionService.predict (vo, file));
     }
+
+    /**
+     * 目前输入暂定为String
+     * id 指定模型id，id可以=-1，表示最新的模型
+     */
+    @RequestMapping(value = "/getSimilarity", method = RequestMethod.POST)
+    public Response<?> getSimilarity(@RequestPart(name = "predict") OutputSearchVO vo) throws IOException {
+        Arrays.sort (vo.getDataset ());
+//        PythonScriptRunner.TracedScriptOutput predict = service.predict (vo);
+        return Response.ok (predictionService.search (vo));
+    }
+
 
     /**
      * Download outputs as csv.

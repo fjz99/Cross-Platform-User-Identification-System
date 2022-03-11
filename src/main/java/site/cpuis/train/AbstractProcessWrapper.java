@@ -256,6 +256,7 @@ public abstract class AbstractProcessWrapper {
         try {
             output = JSON.parseObject (s, Output.class);
             setAllState (State.SUCCESSFULLY_STOPPED, "done.");
+            modelTrainingInfoService.setCacheAndMongo (modelTrainingInfo);
             return true;
         } catch (Throwable e) {
             failed ("python脚本输出格式错误: " + e.getMessage ());

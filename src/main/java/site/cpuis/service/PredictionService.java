@@ -3,6 +3,7 @@ package site.cpuis.service;
 import lombok.extern.slf4j.Slf4j;
 import site.cpuis.entity.*;
 import site.cpuis.entity.exception.CpuisException;
+import site.cpuis.entity.vo.ModelSearchVO;
 import site.cpuis.entity.vo.OutputSearchVO;
 import site.cpuis.entity.vo.PredictVO;
 import site.cpuis.train.PythonScriptRunner;
@@ -40,9 +41,6 @@ public class PredictionService {
 
 
     public Object predict(PredictVO vo, MultipartFile file) throws IOException {
-        if (vo.getSearch () != null) {
-            return search (vo);
-        }
 
         if (vo.getDataset () == null || vo.getDataset ().size () != 1) {
             return Response.ofFailed (ErrCode.WRONG_DATASET_INPUT);
@@ -74,11 +72,11 @@ public class PredictionService {
         return output.getOutput ();
     }
 
-    private Object search(PredictVO vo) {
-        OutputSearchVO search = vo.getSearch ();
-        search.setPhase ("train");
-        search.setAlgoName (vo.getAlgoName ());
-        search.setDataset (vo.getDataset ().toArray (new String[0]));
+    public Object search(OutputSearchVO search) {
+//        OutputSearchVO search = vo.getSearch ();
+//        search.setPhase ("train");
+//        search.setAlgoName (vo.getAlgoName ());
+//        search.setDataset (vo.getDataset ().toArray (new String[0]));
         return outputModelService.getOutput (search);
     }
 

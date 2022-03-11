@@ -17,5 +17,5 @@ public class PredictVO {
     //    private Integer id;//model id
     private String input;//fixme
 
-    private OutputSearchVO search;
+//    private OutputSearchVO search;
 }
