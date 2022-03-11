@@ -9,17 +9,12 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class Stage3Output extends BaseOutput {
-    private Map<Pair, List<Element>> output;
-
-    @Data
-    public static class Pair {
-        private int id;
-        private String name;
-    }
+    private Map<String, List<Element>> output;
 
     @Data
     public static class Element {
-        private Pair user;
+//        private int id;
+        private String userName;
         private double similarity;
     }
 }

@@ -221,12 +221,13 @@ public final class PythonScriptRunner {
         int max, min;
         String stage = algoEntity.getStage ();
         if (stage.equals ("1")) {
-            max = 2;
-            min = 2;
+            max = min = 2;
         } else if (stage.equals ("2")) {
             max = 1;
             min = 1;
-        } else throw new IllegalArgumentException ();
+        } else if (stage.equals ("3")) {
+            max = min = 2;
+        } else throw new IllegalArgumentException ("stage " + stage + " not allowed");
         if (!(dataset.length >= min && dataset.length <= max)) {
             throw new CpuisException (ErrCode.WRONG_DATASET_INPUT, String.format ("need size between [%d,%d] , got %d",
                     min, max, dataset.length));
