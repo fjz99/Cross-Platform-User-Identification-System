@@ -202,7 +202,7 @@ public class TracedModelController {
      * Set search = "all" to get all data.
      */
     @RequestMapping(value = "/download", method = RequestMethod.POST)
-    public void download(@RequestPart(name = "predict") PredictVO vo,
+    public void download(@RequestBody ModelLocationVO vo,
                          HttpServletResponse response) throws IOException {
         AlgoEntity entity = algoService.getAlgoEntity (vo.getAlgoName ());
         if (entity == null || !entity.getStage ().equals ("3")) {
@@ -212,7 +212,7 @@ public class TracedModelController {
 //            return ofFailed ("Algorithm's stage not equals to 3.", ErrCode.GENERIC_ERR);
 //        }
 
-        vo.getDataset ().sort (Comparator.naturalOrder ());
+        Arrays.sort (vo.getDataset ());
         predictionService.download (vo, response);
     }
 

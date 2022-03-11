@@ -1,15 +1,17 @@
 package site.cpuis.service;
 
 import lombok.extern.slf4j.Slf4j;
-import site.cpuis.entity.*;
-import site.cpuis.entity.exception.CpuisException;
-import site.cpuis.entity.vo.ModelSearchVO;
-import site.cpuis.entity.vo.OutputSearchVO;
-import site.cpuis.entity.vo.PredictVO;
-import site.cpuis.train.PythonScriptRunner;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import site.cpuis.entity.ErrCode;
+import site.cpuis.entity.MongoOutputEntity;
+import site.cpuis.entity.Response;
+import site.cpuis.entity.exception.CpuisException;
+import site.cpuis.entity.vo.ModelLocationVO;
+import site.cpuis.entity.vo.OutputSearchVO;
+import site.cpuis.entity.vo.PredictVO;
+import site.cpuis.train.PythonScriptRunner;
 import site.cpuis.utils.CsvExportUtil;
 import site.cpuis.utils.ModelKeyGenerator;
 
@@ -18,7 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -88,14 +93,14 @@ public class PredictionService {
         return "" + s.trim () + "";
     }
 
-    public void download(PredictVO vo, HttpServletResponse response) {
+    public void download(ModelLocationVO vo, HttpServletResponse response) {
         try {
             String titles = String.join (",", vo.getDataset ());  // 设置表头
             String keys = "a,b";  // 设置每列字段
             List<Map<String, Object>> data = new ArrayList<> ();
             Map<String, Object> map = new HashMap<> ();
 
-            final String key = ModelKeyGenerator.generateKey (vo.getDataset ().toArray (new String[0]),
+            final String key = ModelKeyGenerator.generateKey (vo.getDataset (),
                     vo.getAlgoName (), "train", "output", true);
             List<MongoOutputEntity> entities = mongoOutputService.selectAll (key, MongoOutputEntity.class);
             for (MongoOutputEntity entity : entities) {
