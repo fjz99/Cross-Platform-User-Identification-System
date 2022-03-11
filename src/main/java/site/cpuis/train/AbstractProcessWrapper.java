@@ -302,7 +302,7 @@ public abstract class AbstractProcessWrapper {
             if (parseOutput) {
                 //处理JSON
                 sb.append (s.trim ());
-                log.debug ("append {}", sb);
+//                log.debug ("append {}", sb);
             } else if (NumberUtils.isCreatable (s)) {
                 percentage = Double.parseDouble (s);
                 log.debug ("{} percentage changed: {}", key, percentage);
@@ -343,11 +343,11 @@ public abstract class AbstractProcessWrapper {
             return;
         }
 
-        log.info ("model {} state changed to {}", key, state);
         modelTrainingInfo.setState (state);
         modelTrainingInfo.setTrainingTime (prettyTime (System.currentTimeMillis () - startTime));
         modelTrainingInfo.setPercentage (percentage);
         modelTrainingInfoService.setCache (modelTrainingInfo);
+        log.info ("model {} state changed to {}", key, modelTrainingInfo);
     }
 
     private class Daemon extends Thread {

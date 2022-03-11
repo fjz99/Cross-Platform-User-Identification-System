@@ -46,7 +46,7 @@ public class TracedProcessWrapper extends AbstractProcessWrapper {
     }
 
     public Object getOutputData() {
-        if (state == State.SUCCESSFULLY_STOPPED)
+        if (state == State.SUCCESSFULLY_STOPPED || state == State.PROCESSING_OUTPUT)
             return outputData;
         else return null;
     }
