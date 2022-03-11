@@ -8,5 +8,6 @@ public enum State {
     SUCCESSFULLY_STOPPED,
     PREDICTING,
     INTERRUPTED, //被终止
-    PENDING//等待执行
+    PENDING,//等待执行
+    PROCESSING_OUTPUT;
 }

@@ -53,7 +53,7 @@ public class ModelTrainingInfoService {
     }
 
     public void deleteInfo(ModelLocationVO vo) {
-        String key = ModelKeyGenerator.generateKey (vo.getDataset (), vo.getAlgoName (), vo.getPhase (), null);
+        String key = ModelKeyGenerator.generateKey (vo.getDataset (), vo.getAlgoName (), vo.getPhase (), null, true);
         thisService.deleteInfo (key);//因为自己被proxy了
     }
 
@@ -63,7 +63,7 @@ public class ModelTrainingInfoService {
     }
 
     public ModelTrainingInfo getInfo(ModelLocationVO vo) {
-        String key = ModelKeyGenerator.generateKey (vo.getDataset (), vo.getAlgoName (), vo.getPhase (), null);
+        String key = ModelKeyGenerator.generateKey (vo.getDataset (), vo.getAlgoName (), vo.getPhase (), null, true);
         return thisService.getInfo (key);
     }
 

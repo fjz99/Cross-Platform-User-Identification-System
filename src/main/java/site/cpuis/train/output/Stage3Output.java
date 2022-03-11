@@ -14,7 +14,7 @@ public class Stage3Output extends BaseOutput {
     @Data
     public static class Element {
 //        private int id;
-        private String userName;
+        private String user;
         private double similarity;
     }
 }

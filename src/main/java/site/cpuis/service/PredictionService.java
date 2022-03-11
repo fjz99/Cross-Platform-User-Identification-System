@@ -98,7 +98,7 @@ public class PredictionService {
             Map<String, Object> map = new HashMap<> ();
 
             final String key = ModelKeyGenerator.generateKey (vo.getDataset ().toArray (new String[0]),
-                    vo.getAlgoName (), "train", "output");
+                    vo.getAlgoName (), "train", "output", true);
             List<MongoOutputEntity> entities = mongoOutputService.selectAll (key, MongoOutputEntity.class);
             for (MongoOutputEntity entity : entities) {
                 map.put ("a", entity.getUserName ());

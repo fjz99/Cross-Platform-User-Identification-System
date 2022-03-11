@@ -71,7 +71,7 @@ public abstract class AbstractProcessWrapper {
         this.algoName = algoName;
         this.algoEntity = PythonScriptRunner.algoService.getAlgoEntity (algoName);
         this.dataset = dataset;
-        this.id = ModelKeyGenerator.generateKey (dataset, algoName, phase, null);
+        this.id = ModelKeyGenerator.generateKey (dataset, algoName, phase, null, true);
         this.datasetEntityList = Arrays.stream (dataset).map (
                 name -> PythonScriptRunner.datasetService.getEntity (name)
         ).collect (Collectors.toList ());
@@ -209,7 +209,7 @@ public abstract class AbstractProcessWrapper {
     }
 
     protected void success(String msg) {
-        setAllState (State.SUCCESSFULLY_STOPPED, msg);
+        setAllState (State.PROCESSING_OUTPUT, msg);
     }
 
     protected void failed(String msg) {
@@ -255,6 +255,7 @@ public abstract class AbstractProcessWrapper {
     protected boolean processOutput(String s) {
         try {
             output = JSON.parseObject (s, Output.class);
+            setAllState (State.SUCCESSFULLY_STOPPED, "done.");
             return true;
         } catch (Throwable e) {
             failed ("python脚本输出格式错误: " + e.getMessage ());
@@ -287,7 +288,7 @@ public abstract class AbstractProcessWrapper {
                             failed ("python脚本输出为空");
                             log.error ("{} python脚本输出为空", key);
                         } else if (processOutput (output)) {
-                            success ("模型正常终止");
+                            success ("Parsing output.");
                             afterScriptDone ();
                             log.info ("{} successfully stopped", key);
                         }
@@ -336,6 +337,11 @@ public abstract class AbstractProcessWrapper {
     }
 
     protected void updateModelTrainingInfo() {
+        if (modelTrainingInfo.getState () == state
+                && modelTrainingInfo.getPercentage () == percentage) {
+            return;
+        }
+
         modelTrainingInfo.setState (state);
         modelTrainingInfo.setTrainingTime (prettyTime (System.currentTimeMillis () - startTime));
         modelTrainingInfo.setPercentage (percentage);

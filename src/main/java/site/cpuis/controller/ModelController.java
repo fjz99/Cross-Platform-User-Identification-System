@@ -20,7 +20,6 @@ import site.cpuis.train.State;
 import site.cpuis.utils.ModelKeyGenerator;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import java.util.HashMap;
 import java.util.List;
@@ -100,7 +99,7 @@ public class ModelController {
             log.error ("dataset input err {}", dataset);
             return ofFailed (ErrCode.WRONG_DATASET_INPUT);
         }
-        if (basicModel.contains (ModelKeyGenerator.generateKey (dataset.toArray (new String[]{}), name, "train", null), true)) {
+        if (basicModel.contains (ModelKeyGenerator.generateKey (dataset.toArray (new String[]{}), name, "train", null, true), true)) {
             log.error ("模型正在训练中");
             return ofFailed (ErrCode.MODEL_IN_TRAINING);
         }

@@ -79,7 +79,7 @@ public class Stage2OutputModelService {
     public @NonNull
     PageEntity<Stage2Output> getTracedOutput(@NonNull OutputSearchVO searchVO) {
         final String key = ModelKeyGenerator.generateKeyWithIncId (searchVO.getDataset (),
-                searchVO.getAlgoName (), searchVO.getPhase (), "output", searchVO.getId ());
+                searchVO.getAlgoName (), searchVO.getPhase (), "output", searchVO.getId (), true);
         return getOutput0 (searchVO, key);
     }
 }

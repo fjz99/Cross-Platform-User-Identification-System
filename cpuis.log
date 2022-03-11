@@ -1,197 +1,477 @@
-2022-03-06 15:28:49.060  INFO 3488 --- [restartedMain] CpuisApplication               : Starting CpuisApplication using Java 1.8.0_201 on PC with PID 3488 (E:\CPUIS\target\classes started by dell in E:\CPUIS)
-2022-03-06 15:28:49.062  INFO 3488 --- [restartedMain] CpuisApplication               : The following profiles are active: data
-2022-03-06 15:28:49.095  INFO 3488 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\dell\.m2\repository\com\github\junrar\junrar\3.0.0\junrar-3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-logging-1.2.jar,file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-vfs2-2.2.jar
-2022-03-06 15:28:49.096  INFO 3488 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2022-03-06 15:28:49.875  INFO 3488 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
-2022-03-06 15:28:49.889  INFO 3488 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 0 MongoDB repository interfaces.
-2022-03-06 15:28:50.310  INFO 3488 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8899 (http)
-2022-03-06 15:28:50.317  INFO 3488 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-03-06 15:28:50.317  INFO 3488 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
-2022-03-06 15:28:50.318  INFO 3488 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.21] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.30]
-2022-03-06 15:28:50.318  INFO 3488 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
-2022-03-06 15:28:50.319  INFO 3488 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [false].
-2022-03-06 15:28:50.319  INFO 3488 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
-2022-03-06 15:28:50.321  INFO 3488 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
-2022-03-06 15:28:50.387  INFO 3488 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-03-06 15:28:50.387  INFO 3488 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1291 ms
-2022-03-06 15:28:50.539 DEBUG 3488 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
-2022-03-06 15:28:50.539 DEBUG 3488 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
-2022-03-06 15:28:50.552 DEBUG 3488 --- [restartedMain] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
-2022-03-06 15:28:50.627  INFO 3488 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
-2022-03-06 15:28:50.713  WARN 3488 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
-2022-03-06 15:28:50.741  WARN 3488 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
-2022-03-06 15:28:50.748  INFO 3488 --- [cluster-ClusterId{value='622462b2b808ab7d2d80d27e', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:788}] to 101.201.210.248:27017
-2022-03-06 15:28:50.749  INFO 3488 --- [cluster-ClusterId{value='622462b2b808ab7d2d80d27e', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=40782600}
-2022-03-06 15:28:50.749  INFO 3488 --- [cluster-rtt-ClusterId{value='622462b2b808ab7d2d80d27e', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:789}] to 101.201.210.248:27017
-2022-03-06 15:28:51.068 DEBUG 3488 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 28 mappings in 'requestMappingHandlerMapping'
-2022-03-06 15:28:51.149  INFO 3488 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
-2022-03-06 15:28:51.234  INFO 3488 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
-2022-03-06 15:28:51.322  INFO 3488 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-03-06 15:28:51.328 DEBUG 3488 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 1 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2022-03-06 15:28:51.362 DEBUG 3488 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2022-03-06 15:28:51.370 DEBUG 3488 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2022-03-06 15:28:51.465 DEBUG 3488 --- [restartedMain] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class ModelStateServer
-2022-03-06 15:28:51.489  INFO 3488 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8899 (http) with context path ''
-2022-03-06 15:28:51.490  INFO 3488 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
-2022-03-06 15:28:51.501  INFO 3488 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
-2022-03-06 15:28:51.522  INFO 3488 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
-2022-03-06 15:28:51.543  INFO 3488 --- [restartedMain] CpuisApplication               : Started CpuisApplication in 2.866 seconds (JVM running for 3.999)
-2022-03-06 15:28:52.184  INFO 3488 --- [restartedMain] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:790}] to 101.201.210.248:27017
-2022-03-06 15:28:52.247  INFO 3488 --- [restartedMain] ApplicationInitializer   : 应用程序启动完成
-2022-03-06 15:28:52.686  INFO 3488 --- [RMI TCP Connection(1)-192.168.163.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-03-06 15:28:52.686  INFO 3488 --- [RMI TCP Connection(1)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-03-06 15:28:52.686 DEBUG 3488 --- [RMI TCP Connection(1)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
-2022-03-06 15:28:52.686 DEBUG 3488 --- [RMI TCP Connection(1)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
-2022-03-06 15:28:52.687 DEBUG 3488 --- [RMI TCP Connection(1)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
-2022-03-06 15:28:52.688 DEBUG 3488 --- [RMI TCP Connection(1)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@2570491c
-2022-03-06 15:28:52.688 DEBUG 3488 --- [RMI TCP Connection(1)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@2d3cf1ae
-2022-03-06 15:28:52.688 DEBUG 3488 --- [RMI TCP Connection(1)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
-2022-03-06 15:28:52.689  INFO 3488 --- [RMI TCP Connection(1)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
-2022-03-06 19:00:18.592  INFO 9628 --- [restartedMain] site.cpuis.CpuisApplication              : Starting CpuisApplication using Java 1.8.0_201 on PC with PID 9628 (E:\CPUIS\target\classes started by dell in E:\CPUIS)
-2022-03-06 19:00:18.594  INFO 9628 --- [restartedMain] site.cpuis.CpuisApplication              : The following profiles are active: data
-2022-03-06 19:00:18.637  INFO 9628 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\dell\.m2\repository\com\github\junrar\junrar\3.0.0\junrar-3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-logging-1.2.jar,file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-vfs2-2.2.jar
-2022-03-06 19:00:18.638  INFO 9628 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2022-03-06 19:00:19.462  INFO 9628 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
-2022-03-06 19:00:19.478  INFO 9628 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 0 MongoDB repository interfaces.
-2022-03-06 19:00:19.939  INFO 9628 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8899 (http)
-2022-03-06 19:00:19.947  INFO 9628 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-03-06 19:00:19.947  INFO 9628 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
-2022-03-06 19:00:19.949  INFO 9628 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.21] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.30]
-2022-03-06 19:00:19.950  INFO 9628 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
-2022-03-06 19:00:19.950  INFO 9628 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [false].
-2022-03-06 19:00:19.950  INFO 9628 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
-2022-03-06 19:00:19.954  INFO 9628 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
-2022-03-06 19:00:20.027  INFO 9628 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-03-06 19:00:20.027  INFO 9628 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1389 ms
-2022-03-06 19:00:20.184 DEBUG 9628 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
-2022-03-06 19:00:20.185 DEBUG 9628 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
-2022-03-06 19:00:20.200 DEBUG 9628 --- [restartedMain] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
-2022-03-06 19:00:20.287  INFO 9628 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
-2022-03-06 19:00:20.382  WARN 9628 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
-2022-03-06 19:00:20.412  INFO 9628 --- [cluster-rtt-ClusterId{value='622494445bee6770bbd15e9c', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:792}] to 101.201.210.248:27017
-2022-03-06 19:00:20.412  INFO 9628 --- [cluster-ClusterId{value='622494445bee6770bbd15e9c', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:791}] to 101.201.210.248:27017
-2022-03-06 19:00:20.412  INFO 9628 --- [cluster-ClusterId{value='622494445bee6770bbd15e9c', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=43825800}
-2022-03-06 19:00:20.415  WARN 9628 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
-2022-03-06 19:00:20.758 DEBUG 9628 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 28 mappings in 'requestMappingHandlerMapping'
-2022-03-06 19:00:20.842  INFO 9628 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
-2022-03-06 19:00:20.929  INFO 9628 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
-2022-03-06 19:00:21.008  INFO 9628 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-03-06 19:00:21.017 DEBUG 9628 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 1 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2022-03-06 19:00:21.058 DEBUG 9628 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2022-03-06 19:00:21.080 DEBUG 9628 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2022-03-06 19:00:21.178 DEBUG 9628 --- [restartedMain] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
-2022-03-06 19:00:21.204  INFO 9628 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8899 (http) with context path ''
-2022-03-06 19:00:21.205  INFO 9628 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
-2022-03-06 19:00:21.216  INFO 9628 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
-2022-03-06 19:00:21.240  INFO 9628 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
-2022-03-06 19:00:21.261  INFO 9628 --- [restartedMain] site.cpuis.CpuisApplication              : Started CpuisApplication in 3.126 seconds (JVM running for 4.6)
-2022-03-06 19:00:21.933  INFO 9628 --- [restartedMain] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:793}] to 101.201.210.248:27017
-2022-03-06 19:00:22.001  INFO 9628 --- [restartedMain] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
-2022-03-06 19:00:22.782  INFO 9628 --- [RMI TCP Connection(2)-192.168.163.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-03-06 19:00:22.782  INFO 9628 --- [RMI TCP Connection(2)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-03-06 19:00:22.782 DEBUG 9628 --- [RMI TCP Connection(2)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
-2022-03-06 19:00:22.782 DEBUG 9628 --- [RMI TCP Connection(2)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
-2022-03-06 19:00:22.782 DEBUG 9628 --- [RMI TCP Connection(2)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
-2022-03-06 19:00:22.783 DEBUG 9628 --- [RMI TCP Connection(2)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@31d2b877
-2022-03-06 19:00:22.784 DEBUG 9628 --- [RMI TCP Connection(2)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@1b7766bd
-2022-03-06 19:00:22.784 DEBUG 9628 --- [RMI TCP Connection(2)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
-2022-03-06 19:00:22.784  INFO 9628 --- [RMI TCP Connection(2)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
-2022-03-06 19:04:38.215  INFO 5472 --- [restartedMain] site.cpuis.CpuisApplication              : Starting CpuisApplication using Java 1.8.0_201 on PC with PID 5472 (E:\CPUIS\target\classes started by dell in E:\CPUIS)
-2022-03-06 19:04:38.217  INFO 5472 --- [restartedMain] site.cpuis.CpuisApplication              : The following profiles are active: data
-2022-03-06 19:04:38.262  INFO 5472 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\dell\.m2\repository\com\github\junrar\junrar\3.0.0\junrar-3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-logging-1.2.jar,file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-vfs2-2.2.jar
-2022-03-06 19:04:38.263  INFO 5472 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2022-03-06 19:04:39.109  INFO 5472 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
-2022-03-06 19:04:39.123  INFO 5472 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 0 MongoDB repository interfaces.
-2022-03-06 19:04:39.540  INFO 5472 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8899 (http)
-2022-03-06 19:04:39.546  INFO 5472 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-03-06 19:04:39.546  INFO 5472 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
-2022-03-06 19:04:39.547  INFO 5472 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.21] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.30]
-2022-03-06 19:04:39.548  INFO 5472 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
-2022-03-06 19:04:39.548  INFO 5472 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [false].
-2022-03-06 19:04:39.548  INFO 5472 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
-2022-03-06 19:04:39.550  INFO 5472 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
-2022-03-06 19:04:39.616  INFO 5472 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-03-06 19:04:39.617  INFO 5472 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1354 ms
-2022-03-06 19:04:39.785 DEBUG 5472 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
-2022-03-06 19:04:39.785 DEBUG 5472 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
-2022-03-06 19:04:39.801 DEBUG 5472 --- [restartedMain] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
-2022-03-06 19:04:39.880  INFO 5472 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
-2022-03-06 19:04:39.967  WARN 5472 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
-2022-03-06 19:04:39.993  WARN 5472 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
-2022-03-06 19:04:39.999  INFO 5472 --- [cluster-rtt-ClusterId{value='62249547faf16361e32288eb', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:795}] to 101.201.210.248:27017
-2022-03-06 19:04:39.999  INFO 5472 --- [cluster-ClusterId{value='62249547faf16361e32288eb', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:794}] to 101.201.210.248:27017
-2022-03-06 19:04:40.000  INFO 5472 --- [cluster-ClusterId{value='62249547faf16361e32288eb', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=39729300}
-2022-03-06 19:04:40.331 DEBUG 5472 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 28 mappings in 'requestMappingHandlerMapping'
-2022-03-06 19:04:40.419  INFO 5472 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
-2022-03-06 19:04:40.506  INFO 5472 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
-2022-03-06 19:04:40.609  INFO 5472 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-03-06 19:04:40.618 DEBUG 5472 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 1 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2022-03-06 19:04:40.660 DEBUG 5472 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2022-03-06 19:04:40.668 DEBUG 5472 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2022-03-06 19:04:40.777 DEBUG 5472 --- [restartedMain] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
-2022-03-06 19:04:40.807  INFO 5472 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8899 (http) with context path ''
-2022-03-06 19:04:40.808  INFO 5472 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
-2022-03-06 19:04:40.821  INFO 5472 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
-2022-03-06 19:04:40.847  INFO 5472 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
-2022-03-06 19:04:40.870  INFO 5472 --- [restartedMain] site.cpuis.CpuisApplication              : Started CpuisApplication in 3.057 seconds (JVM running for 4.303)
-2022-03-06 19:04:41.568  INFO 5472 --- [restartedMain] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:796}] to 101.201.210.248:27017
-2022-03-06 19:04:41.632  INFO 5472 --- [restartedMain] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
-2022-03-06 19:04:42.513  INFO 5472 --- [RMI TCP Connection(3)-192.168.163.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-03-06 19:04:42.513  INFO 5472 --- [RMI TCP Connection(3)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-03-06 19:04:42.513 DEBUG 5472 --- [RMI TCP Connection(3)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
-2022-03-06 19:04:42.514 DEBUG 5472 --- [RMI TCP Connection(3)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
-2022-03-06 19:04:42.514 DEBUG 5472 --- [RMI TCP Connection(3)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
-2022-03-06 19:04:42.515 DEBUG 5472 --- [RMI TCP Connection(3)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@18d79322
-2022-03-06 19:04:42.515 DEBUG 5472 --- [RMI TCP Connection(3)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@371f6466
-2022-03-06 19:04:42.515 DEBUG 5472 --- [RMI TCP Connection(3)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
-2022-03-06 19:04:42.516  INFO 5472 --- [RMI TCP Connection(3)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
-2022-03-06 19:06:36.114  INFO 5472 --- [SpringApplicationShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:3, serverValue:796}] to 101.201.210.248:27017 because the pool has been closed.
-2022-03-06 19:06:42.098  INFO 17060 --- [restartedMain] site.cpuis.CpuisApplication              : Starting CpuisApplication using Java 1.8.0_201 on PC with PID 17060 (E:\CPUIS\target\classes started by dell in E:\CPUIS)
-2022-03-06 19:06:42.101  INFO 17060 --- [restartedMain] site.cpuis.CpuisApplication              : The following profiles are active: data
-2022-03-06 19:06:42.143  INFO 17060 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\dell\.m2\repository\com\github\junrar\junrar\3.0.0\junrar-3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-logging-1.2.jar,file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-vfs2-2.2.jar
-2022-03-06 19:06:42.143  INFO 17060 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2022-03-06 19:06:42.956  INFO 17060 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
-2022-03-06 19:06:42.969  INFO 17060 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 0 MongoDB repository interfaces.
-2022-03-06 19:06:43.391  INFO 17060 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8899 (http)
-2022-03-06 19:06:43.397  INFO 17060 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-03-06 19:06:43.398  INFO 17060 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
-2022-03-06 19:06:43.399  INFO 17060 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.21] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.30]
-2022-03-06 19:06:43.399  INFO 17060 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
-2022-03-06 19:06:43.399  INFO 17060 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [false].
-2022-03-06 19:06:43.399  INFO 17060 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
-2022-03-06 19:06:43.402  INFO 17060 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
-2022-03-06 19:06:43.513  INFO 17060 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-03-06 19:06:43.514  INFO 17060 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1371 ms
-2022-03-06 19:06:43.710 DEBUG 17060 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
-2022-03-06 19:06:43.710 DEBUG 17060 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
-2022-03-06 19:06:43.725 DEBUG 17060 --- [restartedMain] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
-2022-03-06 19:06:43.805  INFO 17060 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
-2022-03-06 19:06:43.901  WARN 17060 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
-2022-03-06 19:06:43.926  INFO 17060 --- [cluster-ClusterId{value='622495c32dad331929b61151', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:797}] to 101.201.210.248:27017
-2022-03-06 19:06:43.927  INFO 17060 --- [cluster-rtt-ClusterId{value='622495c32dad331929b61151', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:798}] to 101.201.210.248:27017
-2022-03-06 19:06:43.927  INFO 17060 --- [cluster-ClusterId{value='622495c32dad331929b61151', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=43609100}
-2022-03-06 19:06:43.941  WARN 17060 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
-2022-03-06 19:06:44.292 DEBUG 17060 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 28 mappings in 'requestMappingHandlerMapping'
-2022-03-06 19:06:44.372  INFO 17060 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
-2022-03-06 19:06:44.455  INFO 17060 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
-2022-03-06 19:06:44.538  INFO 17060 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-03-06 19:06:44.544 DEBUG 17060 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 1 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2022-03-06 19:06:44.581 DEBUG 17060 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2022-03-06 19:06:44.589 DEBUG 17060 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2022-03-06 19:06:44.683 DEBUG 17060 --- [restartedMain] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
-2022-03-06 19:06:44.708  INFO 17060 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8899 (http) with context path ''
-2022-03-06 19:06:44.709  INFO 17060 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
-2022-03-06 19:06:44.721  INFO 17060 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
-2022-03-06 19:06:44.743  INFO 17060 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
-2022-03-06 19:06:44.772  INFO 17060 --- [restartedMain] site.cpuis.CpuisApplication              : Started CpuisApplication in 3.109 seconds (JVM running for 4.151)
-2022-03-06 19:06:45.430  INFO 17060 --- [restartedMain] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:799}] to 101.201.210.248:27017
-2022-03-06 19:06:45.493  INFO 17060 --- [restartedMain] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
-2022-03-06 19:06:46.404  INFO 17060 --- [RMI TCP Connection(4)-192.168.163.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-03-06 19:06:46.404  INFO 17060 --- [RMI TCP Connection(4)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-03-06 19:06:46.404 DEBUG 17060 --- [RMI TCP Connection(4)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
-2022-03-06 19:06:46.404 DEBUG 17060 --- [RMI TCP Connection(4)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
-2022-03-06 19:06:46.405 DEBUG 17060 --- [RMI TCP Connection(4)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
-2022-03-06 19:06:46.406 DEBUG 17060 --- [RMI TCP Connection(4)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@1045b564
-2022-03-06 19:06:46.406 DEBUG 17060 --- [RMI TCP Connection(4)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@55ed39c4
-2022-03-06 19:06:46.406 DEBUG 17060 --- [RMI TCP Connection(4)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
-2022-03-06 19:06:46.406  INFO 17060 --- [RMI TCP Connection(4)-192.168.163.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-03-11 15:36:11.262  INFO 2440 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_302 on DESKTOP-RECLP0A with PID 2440 (started by LENOVO in D:\JavaProject\cpuis)
+2022-03-11 15:36:11.302  INFO 2440 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 15:36:12.911  INFO 2440 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 15:36:12.954  INFO 2440 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 35 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 15:36:14.232  INFO 2440 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 15:36:14.246  INFO 2440 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 15:36:14.246  INFO 2440 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 15:36:14.514  INFO 2440 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 15:36:14.514  INFO 2440 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3180 ms
+2022-03-11 15:36:14.997 DEBUG 2440 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 15:36:14.999 DEBUG 2440 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 15:36:15.120 DEBUG 2440 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 15:36:15.554  INFO 2440 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 15:36:15.755  INFO 2440 --- [cluster-ClusterId{value='622afbef154aae57a3dd60bc', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1044}] to 101.201.210.248:27017
+2022-03-11 15:36:15.756  INFO 2440 --- [cluster-ClusterId{value='622afbef154aae57a3dd60bc', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=53738900}
+2022-03-11 15:36:15.756  INFO 2440 --- [cluster-rtt-ClusterId{value='622afbef154aae57a3dd60bc', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1043}] to 101.201.210.248:27017
+2022-03-11 15:36:15.907  WARN 2440 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:36:16.260  WARN 2440 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:36:18.338 DEBUG 2440 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 30 mappings in 'requestMappingHandlerMapping'
+2022-03-11 15:36:18.938  INFO 2440 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 15:36:19.919  INFO 2440 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 15:36:20.276 DEBUG 2440 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 15:36:20.436 DEBUG 2440 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 15:36:20.455 DEBUG 2440 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 15:36:20.993 DEBUG 2440 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 15:36:21.034  INFO 2440 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55148 (http) with context path ''
+2022-03-11 15:36:21.035  INFO 2440 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 15:36:21.068  INFO 2440 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 15:36:21.116  INFO 2440 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 15:36:21.149  INFO 2440 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 10.32 seconds (JVM running for 12.135)
+2022-03-11 15:36:21.652  INFO 2440 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1045}] to 101.201.210.248:27017
+2022-03-11 15:36:21.751  INFO 2440 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 15:36:22.173  INFO 2440 --- [SpringApplicationShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:3, serverValue:1045}] to 101.201.210.248:27017 because the pool has been closed.
+2022-03-11 15:36:56.909  INFO 7660 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_302 on DESKTOP-RECLP0A with PID 7660 (started by LENOVO in D:\JavaProject\cpuis)
+2022-03-11 15:36:56.910  INFO 7660 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 15:36:58.087  INFO 7660 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 15:36:58.111  INFO 7660 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 15:36:59.112  INFO 7660 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 15:36:59.126  INFO 7660 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 15:36:59.127  INFO 7660 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 15:36:59.271  INFO 7660 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 15:36:59.271  INFO 7660 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2306 ms
+2022-03-11 15:36:59.649 DEBUG 7660 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 15:36:59.649 DEBUG 7660 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 15:36:59.687 DEBUG 7660 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 15:36:59.897  INFO 7660 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 15:37:00.063  INFO 7660 --- [cluster-ClusterId{value='622afc1b71098d28440f1df5', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1046}] to 101.201.210.248:27017
+2022-03-11 15:37:00.063  INFO 7660 --- [cluster-rtt-ClusterId{value='622afc1b71098d28440f1df5', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1047}] to 101.201.210.248:27017
+2022-03-11 15:37:00.064  INFO 7660 --- [cluster-ClusterId{value='622afc1b71098d28440f1df5', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=51487600}
+2022-03-11 15:37:00.073  WARN 7660 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:37:00.141  WARN 7660 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:37:00.978 DEBUG 7660 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 30 mappings in 'requestMappingHandlerMapping'
+2022-03-11 15:37:01.128  INFO 7660 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 15:37:01.453  INFO 7660 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 15:37:01.655 DEBUG 7660 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 15:37:01.780 DEBUG 7660 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 15:37:01.800 DEBUG 7660 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 15:37:02.285 DEBUG 7660 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 15:37:02.323  INFO 7660 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55200 (http) with context path ''
+2022-03-11 15:37:02.324  INFO 7660 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 15:37:02.352  INFO 7660 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 15:37:02.397  INFO 7660 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 15:37:02.429  INFO 7660 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 5.918 seconds (JVM running for 7.999)
+2022-03-11 15:37:02.883  INFO 7660 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1048}] to 101.201.210.248:27017
+2022-03-11 15:37:02.969  INFO 7660 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 15:37:03.301  INFO 7660 --- [SpringApplicationShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:3, serverValue:1048}] to 101.201.210.248:27017 because the pool has been closed.
+2022-03-11 15:45:20.967  INFO 18036 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_302 on DESKTOP-RECLP0A with PID 18036 (started by LENOVO in D:\JavaProject\cpuis)
+2022-03-11 15:45:20.968  INFO 18036 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 15:45:22.153  INFO 18036 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 15:45:22.175  INFO 18036 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 15:45:23.151  INFO 18036 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 15:45:23.164  INFO 18036 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 15:45:23.165  INFO 18036 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 15:45:23.304  INFO 18036 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 15:45:23.304  INFO 18036 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2282 ms
+2022-03-11 15:45:23.691 DEBUG 18036 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 15:45:23.691 DEBUG 18036 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 15:45:23.739 DEBUG 18036 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 15:45:23.917  INFO 18036 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 15:45:24.088  INFO 18036 --- [cluster-rtt-ClusterId{value='622afe13d1afcb2e47c7e651', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1049}] to 101.201.210.248:27017
+2022-03-11 15:45:24.088  INFO 18036 --- [cluster-ClusterId{value='622afe13d1afcb2e47c7e651', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1050}] to 101.201.210.248:27017
+2022-03-11 15:45:24.089  INFO 18036 --- [cluster-ClusterId{value='622afe13d1afcb2e47c7e651', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=51495900}
+2022-03-11 15:45:24.102  WARN 18036 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:45:24.168  WARN 18036 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:45:25.006 DEBUG 18036 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 30 mappings in 'requestMappingHandlerMapping'
+2022-03-11 15:45:25.150  INFO 18036 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 15:45:25.474  INFO 18036 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 15:45:25.679 DEBUG 18036 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 15:45:25.810 DEBUG 18036 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 15:45:25.833 DEBUG 18036 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 15:45:26.313 DEBUG 18036 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 15:45:26.352  INFO 18036 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55313 (http) with context path ''
+2022-03-11 15:45:26.353  INFO 18036 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 15:45:26.383  INFO 18036 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 15:45:26.426  INFO 18036 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 15:45:26.458  INFO 18036 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 5.855 seconds (JVM running for 7.207)
+2022-03-11 15:45:26.949  INFO 18036 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1051}] to 101.201.210.248:27017
+2022-03-11 15:45:27.037  INFO 18036 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 15:46:25.847  INFO 18036 --- [SpringApplicationShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:3, serverValue:1051}] to 101.201.210.248:27017 because the pool has been closed.
+2022-03-11 15:49:00.939  INFO 17072 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_302 on DESKTOP-RECLP0A with PID 17072 (started by LENOVO in D:\JavaProject\cpuis)
+2022-03-11 15:49:00.942  INFO 17072 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 15:49:02.227  INFO 17072 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 15:49:02.253  INFO 17072 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 20 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 15:49:03.337  INFO 17072 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 15:49:03.349  INFO 17072 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 15:49:03.350  INFO 17072 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 15:49:03.504  INFO 17072 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 15:49:03.504  INFO 17072 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2502 ms
+2022-03-11 15:49:03.909 DEBUG 17072 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 15:49:03.909 DEBUG 17072 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 15:49:03.945 DEBUG 17072 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 15:49:04.177  INFO 17072 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 15:49:04.370  INFO 17072 --- [cluster-ClusterId{value='622afef0d3e2420398d06a9c', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1053}] to 101.201.210.248:27017
+2022-03-11 15:49:04.369  INFO 17072 --- [cluster-rtt-ClusterId{value='622afef0d3e2420398d06a9c', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1052}] to 101.201.210.248:27017
+2022-03-11 15:49:04.370  INFO 17072 --- [cluster-ClusterId{value='622afef0d3e2420398d06a9c', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=67127100}
+2022-03-11 15:49:04.395  WARN 17072 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:49:04.471  WARN 17072 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:49:05.339 DEBUG 17072 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 30 mappings in 'requestMappingHandlerMapping'
+2022-03-11 15:49:05.486  INFO 17072 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 15:49:05.822  INFO 17072 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 15:49:06.023 DEBUG 17072 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 15:49:06.164 DEBUG 17072 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 15:49:06.184 DEBUG 17072 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 15:49:06.673 DEBUG 17072 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 15:49:06.710  INFO 17072 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55346 (http) with context path ''
+2022-03-11 15:49:06.711  INFO 17072 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 15:49:06.737  INFO 17072 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 15:49:06.782  INFO 17072 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 15:49:06.811  INFO 17072 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 6.796 seconds (JVM running for 8.461)
+2022-03-11 15:49:07.288  INFO 17072 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1054}] to 101.201.210.248:27017
+2022-03-11 15:49:07.375  INFO 17072 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 15:50:07.936  INFO 12108 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_302 on DESKTOP-RECLP0A with PID 12108 (started by LENOVO in D:\JavaProject\cpuis)
+2022-03-11 15:50:07.938  INFO 12108 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 15:50:09.128  INFO 12108 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 15:50:09.151  INFO 12108 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 15:50:10.159  INFO 12108 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 15:50:10.172  INFO 12108 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 15:50:10.173  INFO 12108 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 15:50:10.330  INFO 12108 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 15:50:10.330  INFO 12108 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2337 ms
+2022-03-11 15:50:10.730 DEBUG 12108 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 15:50:10.731 DEBUG 12108 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 15:50:10.767 DEBUG 12108 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 15:50:10.939  INFO 12108 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 15:50:11.114  INFO 12108 --- [cluster-rtt-ClusterId{value='622aff325438333c7038e7ef', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1055}] to 101.201.210.248:27017
+2022-03-11 15:50:11.115  INFO 12108 --- [cluster-ClusterId{value='622aff325438333c7038e7ef', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1056}] to 101.201.210.248:27017
+2022-03-11 15:50:11.115  INFO 12108 --- [cluster-ClusterId{value='622aff325438333c7038e7ef', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=54551500}
+2022-03-11 15:50:11.131  WARN 12108 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:50:11.192  WARN 12108 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:50:12.053 DEBUG 12108 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 30 mappings in 'requestMappingHandlerMapping'
+2022-03-11 15:50:12.199  INFO 12108 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 15:50:12.527  INFO 12108 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 15:50:12.746 DEBUG 12108 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 15:50:12.901 DEBUG 12108 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 15:50:12.921 DEBUG 12108 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 15:50:13.384 DEBUG 12108 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 15:50:13.424  INFO 12108 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55373 (http) with context path ''
+2022-03-11 15:50:13.425  INFO 12108 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 15:50:13.455  INFO 12108 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 15:50:13.502  INFO 12108 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 15:50:13.532  INFO 12108 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 5.967 seconds (JVM running for 7.392)
+2022-03-11 15:50:14.005  INFO 12108 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1057}] to 101.201.210.248:27017
+2022-03-11 15:50:14.091  INFO 12108 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 15:52:08.356  WARN 12108 --- [main] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 输出的mongo collection已存在
+2022-03-11 15:53:05.093  INFO 9044 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_302 on DESKTOP-RECLP0A with PID 9044 (started by LENOVO in D:\JavaProject\cpuis)
+2022-03-11 15:53:05.094  INFO 9044 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 15:53:06.238  INFO 9044 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 15:53:06.258  INFO 9044 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 15:53:07.075  INFO 9044 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 15:53:07.087  INFO 9044 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 15:53:07.087  INFO 9044 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 15:53:07.225  INFO 9044 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 15:53:07.226  INFO 9044 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2088 ms
+2022-03-11 15:53:07.520 DEBUG 9044 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 15:53:07.520 DEBUG 9044 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 15:53:07.550 DEBUG 9044 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 15:53:07.703  INFO 9044 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 15:53:07.849  WARN 9044 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:53:07.855  INFO 9044 --- [cluster-ClusterId{value='622affe36d436e180cd4233d', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1058}] to 101.201.210.248:27017
+2022-03-11 15:53:07.855  INFO 9044 --- [cluster-ClusterId{value='622affe36d436e180cd4233d', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=45539800}
+2022-03-11 15:53:07.856  INFO 9044 --- [cluster-rtt-ClusterId{value='622affe36d436e180cd4233d', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1059}] to 101.201.210.248:27017
+2022-03-11 15:53:07.898  WARN 9044 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:53:08.618 DEBUG 9044 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 30 mappings in 'requestMappingHandlerMapping'
+2022-03-11 15:53:08.755  INFO 9044 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 15:53:09.018  INFO 9044 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 15:53:09.187 DEBUG 9044 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 15:53:09.280 DEBUG 9044 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 15:53:09.296 DEBUG 9044 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 15:53:09.669 DEBUG 9044 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 15:53:09.706  INFO 9044 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55409 (http) with context path ''
+2022-03-11 15:53:09.708  INFO 9044 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 15:53:09.734  INFO 9044 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 15:53:09.797  INFO 9044 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 15:53:09.827  INFO 9044 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 5.027 seconds (JVM running for 6.212)
+2022-03-11 15:53:10.172  INFO 9044 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1060}] to 101.201.210.248:27017
+2022-03-11 15:53:10.248  INFO 9044 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 15:53:11.199  WARN 9044 --- [main] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 输出的mongo collection已存在
+2022-03-11 15:54:14.799  INFO 9044 --- [main] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 saved output to mongodb
+2022-03-11 15:54:14.861  WARN 9044 --- [task-1] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 输出的mongo collection已存在
+2022-03-11 15:54:15.040  INFO 9044 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:4, serverValue:1061}] to 101.201.210.248:27017
+2022-03-11 15:54:15.168  INFO 9044 --- [task-1] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:3, serverValue:1060}] to 101.201.210.248:27017 because there was a socket exception raised by this connection.
+2022-03-11 15:54:15.194  INFO 9044 --- [SpringApplicationShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:4, serverValue:1061}] to 101.201.210.248:27017 because the pool has been closed.
+2022-03-11 15:55:59.544  INFO 9888 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_302 on DESKTOP-RECLP0A with PID 9888 (started by LENOVO in D:\JavaProject\cpuis)
+2022-03-11 15:55:59.545  INFO 9888 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 15:56:00.831  INFO 9888 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 15:56:00.851  INFO 9888 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 15:56:01.796  INFO 9888 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 15:56:01.810  INFO 9888 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 15:56:01.810  INFO 9888 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 15:56:01.951  INFO 9888 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 15:56:01.952  INFO 9888 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2362 ms
+2022-03-11 15:56:02.295 DEBUG 9888 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 15:56:02.296 DEBUG 9888 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 15:56:02.334 DEBUG 9888 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 15:56:02.556  INFO 9888 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 15:56:02.729  INFO 9888 --- [cluster-rtt-ClusterId{value='622b00923066a31ecd14cf5a', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1065}] to 101.201.210.248:27017
+2022-03-11 15:56:02.730  INFO 9888 --- [cluster-ClusterId{value='622b00923066a31ecd14cf5a', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1064}] to 101.201.210.248:27017
+2022-03-11 15:56:02.731  INFO 9888 --- [cluster-ClusterId{value='622b00923066a31ecd14cf5a', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=54865100}
+2022-03-11 15:56:02.738  WARN 9888 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:56:02.804  WARN 9888 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:56:03.605 DEBUG 9888 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 30 mappings in 'requestMappingHandlerMapping'
+2022-03-11 15:56:03.743  INFO 9888 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 15:56:04.020  INFO 9888 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 15:56:04.207 DEBUG 9888 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 15:56:04.306 DEBUG 9888 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 15:56:04.323 DEBUG 9888 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 15:56:04.856 DEBUG 9888 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 15:56:04.893  INFO 9888 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55488 (http) with context path ''
+2022-03-11 15:56:04.894  INFO 9888 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 15:56:04.930  INFO 9888 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 15:56:04.979  INFO 9888 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 15:56:05.015  INFO 9888 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 5.828 seconds (JVM running for 7.268)
+2022-03-11 15:56:05.372  INFO 9888 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1066}] to 101.201.210.248:27017
+2022-03-11 15:56:05.461  INFO 9888 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 15:56:06.438  WARN 9888 --- [main] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 输出的mongo collection已存在
+2022-03-11 15:57:49.386  INFO 11028 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_302 on DESKTOP-RECLP0A with PID 11028 (started by LENOVO in D:\JavaProject\cpuis)
+2022-03-11 15:57:49.387  INFO 11028 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 15:57:50.583  INFO 11028 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 15:57:50.607  INFO 11028 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 15:57:51.626  INFO 11028 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 15:57:51.641  INFO 11028 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 15:57:51.642  INFO 11028 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 15:57:51.814  INFO 11028 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 15:57:51.814  INFO 11028 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2376 ms
+2022-03-11 15:57:52.230 DEBUG 11028 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 15:57:52.231 DEBUG 11028 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 15:57:52.267 DEBUG 11028 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 15:57:52.441  INFO 11028 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 15:57:52.613  INFO 11028 --- [cluster-ClusterId{value='622b01002f5c3343f99e5710', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1069}] to 101.201.210.248:27017
+2022-03-11 15:57:52.613  INFO 11028 --- [cluster-rtt-ClusterId{value='622b01002f5c3343f99e5710', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1070}] to 101.201.210.248:27017
+2022-03-11 15:57:52.613  INFO 11028 --- [cluster-ClusterId{value='622b01002f5c3343f99e5710', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=52506600}
+2022-03-11 15:57:52.635  WARN 11028 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:57:52.693  WARN 11028 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:57:53.541 DEBUG 11028 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 30 mappings in 'requestMappingHandlerMapping'
+2022-03-11 15:57:53.685  INFO 11028 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 15:57:54.006  INFO 11028 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 15:57:54.219 DEBUG 11028 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 15:57:54.358 DEBUG 11028 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 15:57:54.394 DEBUG 11028 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 15:57:54.849 DEBUG 11028 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 15:57:54.891  INFO 11028 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55520 (http) with context path ''
+2022-03-11 15:57:54.892  INFO 11028 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 15:57:54.922  INFO 11028 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 15:57:54.969  INFO 11028 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 15:57:55.000  INFO 11028 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 5.979 seconds (JVM running for 7.37)
+2022-03-11 15:57:55.476  INFO 11028 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1071}] to 101.201.210.248:27017
+2022-03-11 15:57:55.558  INFO 11028 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 15:58:10.592  WARN 11028 --- [main] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 输出的mongo collection已存在
+2022-03-11 15:58:40.409  INFO 8540 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_302 on DESKTOP-RECLP0A with PID 8540 (started by LENOVO in D:\JavaProject\cpuis)
+2022-03-11 15:58:40.410  INFO 8540 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 15:58:41.657  INFO 8540 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 15:58:41.680  INFO 8540 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 15:58:42.701  INFO 8540 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 15:58:42.715  INFO 8540 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 15:58:42.716  INFO 8540 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 15:58:42.858  INFO 8540 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 15:58:42.859  INFO 8540 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2391 ms
+2022-03-11 15:58:43.249 DEBUG 8540 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 15:58:43.249 DEBUG 8540 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 15:58:43.286 DEBUG 8540 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 15:58:43.517  INFO 8540 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 15:58:43.694  INFO 8540 --- [cluster-ClusterId{value='622b01331caf28737e82e16a', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1072}] to 101.201.210.248:27017
+2022-03-11 15:58:43.695  INFO 8540 --- [cluster-ClusterId{value='622b01331caf28737e82e16a', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=53074000}
+2022-03-11 15:58:43.695  INFO 8540 --- [cluster-rtt-ClusterId{value='622b01331caf28737e82e16a', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1073}] to 101.201.210.248:27017
+2022-03-11 15:58:43.711  WARN 8540 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:58:43.777  WARN 8540 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 15:58:44.700 DEBUG 8540 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 30 mappings in 'requestMappingHandlerMapping'
+2022-03-11 15:58:44.844  INFO 8540 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 15:58:45.171  INFO 8540 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 15:58:45.377 DEBUG 8540 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 15:58:45.506 DEBUG 8540 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 15:58:45.530 DEBUG 8540 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 15:58:46.029 DEBUG 8540 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 15:58:46.069  INFO 8540 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55546 (http) with context path ''
+2022-03-11 15:58:46.071  INFO 8540 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 15:58:46.097  INFO 8540 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 15:58:46.141  INFO 8540 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 15:58:46.171  INFO 8540 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 6.14 seconds (JVM running for 7.931)
+2022-03-11 15:58:46.660  INFO 8540 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1074}] to 101.201.210.248:27017
+2022-03-11 15:58:46.749  INFO 8540 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 16:00:37.984  WARN 8540 --- [main] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 输出的mongo collection已存在
+2022-03-11 16:00:43.244  INFO 2924 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_302 on DESKTOP-RECLP0A with PID 2924 (started by LENOVO in D:\JavaProject\cpuis)
+2022-03-11 16:00:43.246  INFO 2924 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 16:00:44.459  INFO 2924 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 16:00:44.483  INFO 2924 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 16:00:45.471  INFO 2924 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 16:00:45.483  INFO 2924 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 16:00:45.484  INFO 2924 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 16:00:45.634  INFO 2924 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 16:00:45.634  INFO 2924 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2334 ms
+2022-03-11 16:00:46.032 DEBUG 2924 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 16:00:46.033 DEBUG 2924 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 16:00:46.072 DEBUG 2924 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 16:00:46.253  INFO 2924 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 16:00:46.423  INFO 2924 --- [cluster-rtt-ClusterId{value='622b01ae631a6d18bc2fdbd6', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1076}] to 101.201.210.248:27017
+2022-03-11 16:00:46.424  INFO 2924 --- [cluster-ClusterId{value='622b01ae631a6d18bc2fdbd6', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1075}] to 101.201.210.248:27017
+2022-03-11 16:00:46.424  INFO 2924 --- [cluster-ClusterId{value='622b01ae631a6d18bc2fdbd6', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=51379800}
+2022-03-11 16:00:46.435  WARN 2924 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 16:00:46.496  WARN 2924 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 16:00:47.346 DEBUG 2924 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 30 mappings in 'requestMappingHandlerMapping'
+2022-03-11 16:00:47.489  INFO 2924 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 16:00:47.814  INFO 2924 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 16:00:48.021 DEBUG 2924 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 16:00:48.175 DEBUG 2924 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 16:00:48.195 DEBUG 2924 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 16:00:48.659 DEBUG 2924 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 16:00:48.700  INFO 2924 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55567 (http) with context path ''
+2022-03-11 16:00:48.701  INFO 2924 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 16:00:48.735  INFO 2924 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 16:00:48.784  INFO 2924 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 16:00:48.819  INFO 2924 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 5.948 seconds (JVM running for 7.374)
+2022-03-11 16:00:49.302  INFO 2924 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1077}] to 101.201.210.248:27017
+2022-03-11 16:00:49.388  INFO 2924 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 16:00:54.879  WARN 2924 --- [main] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 输出的mongo collection已存在
+2022-03-11 16:01:47.297  WARN 2924 --- [task-1] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 输出的mongo collection已存在
+2022-03-11 16:01:47.337  INFO 2924 --- [task-1] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:3, serverValue:1077}] to 101.201.210.248:27017 because there was a socket exception raised by this connection.
+2022-03-11 16:01:52.459  INFO 11096 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_302 on DESKTOP-RECLP0A with PID 11096 (started by LENOVO in D:\JavaProject\cpuis)
+2022-03-11 16:01:52.460  INFO 11096 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 16:01:53.683  INFO 11096 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 16:01:53.707  INFO 11096 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 16:01:54.668  INFO 11096 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 16:01:54.681  INFO 11096 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 16:01:54.682  INFO 11096 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 16:01:54.821  INFO 11096 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 16:01:54.822  INFO 11096 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2305 ms
+2022-03-11 16:01:55.268 DEBUG 11096 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 16:01:55.268 DEBUG 11096 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 16:01:55.307 DEBUG 11096 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 16:01:55.480  INFO 11096 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 16:01:55.665  INFO 11096 --- [cluster-ClusterId{value='622b01f35c032c18d0612e9b', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1079}] to 101.201.210.248:27017
+2022-03-11 16:01:55.665  INFO 11096 --- [cluster-ClusterId{value='622b01f35c032c18d0612e9b', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=57379300}
+2022-03-11 16:01:55.665  INFO 11096 --- [cluster-rtt-ClusterId{value='622b01f35c032c18d0612e9b', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1080}] to 101.201.210.248:27017
+2022-03-11 16:01:55.689  WARN 11096 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 16:01:55.764  WARN 11096 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 16:01:56.602 DEBUG 11096 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 30 mappings in 'requestMappingHandlerMapping'
+2022-03-11 16:01:56.746  INFO 11096 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 16:01:57.076  INFO 11096 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 16:01:57.280 DEBUG 11096 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 16:01:57.415 DEBUG 11096 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 16:01:57.449 DEBUG 11096 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 16:01:57.904 DEBUG 11096 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 16:01:57.944  INFO 11096 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55597 (http) with context path ''
+2022-03-11 16:01:57.945  INFO 11096 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 16:01:57.973  INFO 11096 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 16:01:58.021  INFO 11096 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 16:01:58.052  INFO 11096 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 5.956 seconds (JVM running for 7.352)
+2022-03-11 16:01:58.537  INFO 11096 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1081}] to 101.201.210.248:27017
+2022-03-11 16:01:58.621  INFO 11096 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 16:01:59.478  WARN 11096 --- [main] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 输出的mongo collection已存在
+2022-03-11 16:02:06.500  WARN 11096 --- [task-1] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 输出的mongo collection已存在
+2022-03-11 16:02:10.571  INFO 11768 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_302 on DESKTOP-RECLP0A with PID 11768 (started by LENOVO in D:\JavaProject\cpuis)
+2022-03-11 16:02:10.573  INFO 11768 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 16:02:11.812  INFO 11768 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 16:02:11.830  INFO 11768 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 16:02:12.713  INFO 11768 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 16:02:12.724  INFO 11768 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 16:02:12.724  INFO 11768 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 16:02:12.857  INFO 11768 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 16:02:12.857  INFO 11768 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2227 ms
+2022-03-11 16:02:13.167 DEBUG 11768 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 16:02:13.167 DEBUG 11768 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 16:02:13.197 DEBUG 11768 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 16:02:13.357  INFO 11768 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 16:02:13.510  INFO 11768 --- [cluster-ClusterId{value='622b020506f033482ebe55b6', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1084}] to 101.201.210.248:27017
+2022-03-11 16:02:13.510  INFO 11768 --- [cluster-rtt-ClusterId{value='622b020506f033482ebe55b6', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1083}] to 101.201.210.248:27017
+2022-03-11 16:02:13.511  INFO 11768 --- [cluster-ClusterId{value='622b020506f033482ebe55b6', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=52386600}
+2022-03-11 16:02:13.514  WARN 11768 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 16:02:13.575  WARN 11768 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 16:02:14.260 DEBUG 11768 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 30 mappings in 'requestMappingHandlerMapping'
+2022-03-11 16:02:14.378  INFO 11768 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 16:02:14.617  INFO 11768 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 16:02:14.774 DEBUG 11768 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 16:02:14.867 DEBUG 11768 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 16:02:14.884 DEBUG 11768 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 16:02:15.339 DEBUG 11768 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 16:02:15.371  INFO 11768 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55617 (http) with context path ''
+2022-03-11 16:02:15.372  INFO 11768 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 16:02:15.395  INFO 11768 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 16:02:15.432  INFO 11768 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 16:02:15.457  INFO 11768 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 5.265 seconds (JVM running for 6.452)
+2022-03-11 16:02:15.776  INFO 11768 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1085}] to 101.201.210.248:27017
+2022-03-11 16:02:15.857  INFO 11768 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 16:02:16.729  WARN 11768 --- [main] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 输出的mongo collection已存在
+2022-03-11 16:02:16.898  WARN 11768 --- [task-1] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 输出的mongo collection已存在
+2022-03-11 16:02:17.050  INFO 11768 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:4, serverValue:1086}] to 101.201.210.248:27017
+2022-03-11 16:03:53.455  INFO 16228 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_302 on DESKTOP-RECLP0A with PID 16228 (started by LENOVO in D:\JavaProject\cpuis)
+2022-03-11 16:03:53.457  INFO 16228 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 16:03:54.659  INFO 16228 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 16:03:54.680  INFO 16228 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 16:03:55.625  INFO 16228 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 16:03:55.637  INFO 16228 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 16:03:55.638  INFO 16228 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 16:03:55.782  INFO 16228 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 16:03:55.783  INFO 16228 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2268 ms
+2022-03-11 16:03:56.163 DEBUG 16228 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 16:03:56.163 DEBUG 16228 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 16:03:56.198 DEBUG 16228 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 16:03:56.385  INFO 16228 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 16:03:56.574  INFO 16228 --- [cluster-ClusterId{value='622b026cf294896064f422cd', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1092}] to 101.201.210.248:27017
+2022-03-11 16:03:56.575  INFO 16228 --- [cluster-rtt-ClusterId{value='622b026cf294896064f422cd', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1091}] to 101.201.210.248:27017
+2022-03-11 16:03:56.575  INFO 16228 --- [cluster-ClusterId{value='622b026cf294896064f422cd', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=51122500}
+2022-03-11 16:03:56.583  WARN 16228 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 16:03:56.648  WARN 16228 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 16:03:57.471 DEBUG 16228 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 30 mappings in 'requestMappingHandlerMapping'
+2022-03-11 16:03:57.619  INFO 16228 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 16:03:57.962  INFO 16228 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 16:03:58.183 DEBUG 16228 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 16:03:58.311 DEBUG 16228 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 16:03:58.347 DEBUG 16228 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 16:03:58.791 DEBUG 16228 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 16:03:58.832  INFO 16228 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55658 (http) with context path ''
+2022-03-11 16:03:58.833  INFO 16228 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 16:03:58.862  INFO 16228 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 16:03:58.905  INFO 16228 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 16:03:58.936  INFO 16228 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 5.86 seconds (JVM running for 8.048)
+2022-03-11 16:03:59.387  INFO 16228 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1093}] to 101.201.210.248:27017
+2022-03-11 16:03:59.473  INFO 16228 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 16:04:00.283  WARN 16228 --- [main] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 输出的mongo collection已存在
+2022-03-11 16:04:27.118  WARN 16228 --- [task-1] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 输出的mongo collection已存在
+2022-03-11 16:07:02.744  INFO 17828 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_302 on DESKTOP-RECLP0A with PID 17828 (started by LENOVO in D:\JavaProject\cpuis)
+2022-03-11 16:07:02.746  INFO 17828 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 16:07:03.750  INFO 17828 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 16:07:03.770  INFO 17828 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 16:07:04.557  INFO 17828 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 16:07:04.570  INFO 17828 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 16:07:04.570  INFO 17828 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 16:07:04.705  INFO 17828 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 16:07:04.706  INFO 17828 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1918 ms
+2022-03-11 16:07:05.000 DEBUG 17828 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 16:07:05.000 DEBUG 17828 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 16:07:05.030 DEBUG 17828 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 16:07:05.179  INFO 17828 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 16:07:05.355  WARN 17828 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 16:07:05.356  INFO 17828 --- [cluster-ClusterId{value='622b03291fa74662395b89d8', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1096}] to 101.201.210.248:27017
+2022-03-11 16:07:05.356  INFO 17828 --- [cluster-ClusterId{value='622b03291fa74662395b89d8', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=51187300}
+2022-03-11 16:07:05.357  INFO 17828 --- [cluster-rtt-ClusterId{value='622b03291fa74662395b89d8', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1095}] to 101.201.210.248:27017
+2022-03-11 16:07:05.403  WARN 17828 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 16:07:06.071 DEBUG 17828 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 30 mappings in 'requestMappingHandlerMapping'
+2022-03-11 16:07:06.200  INFO 17828 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 16:07:06.438  INFO 17828 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 16:07:06.584 DEBUG 17828 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 16:07:06.670 DEBUG 17828 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 16:07:06.686 DEBUG 17828 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 16:07:07.048 DEBUG 17828 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 16:07:07.081  INFO 17828 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 55691 (http) with context path ''
+2022-03-11 16:07:07.082  INFO 17828 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 16:07:07.106  INFO 17828 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 16:07:07.147  INFO 17828 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 16:07:07.174  INFO 17828 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 4.757 seconds (JVM running for 6.164)
+2022-03-11 16:07:07.524  INFO 17828 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1097}] to 101.201.210.248:27017
+2022-03-11 16:07:07.601  INFO 17828 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 16:07:08.388  WARN 17828 --- [main] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 输出的mongo collection已存在
+2022-03-11 16:07:08.703  INFO 17828 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:4, serverValue:1098}] to 101.201.210.248:27017
+2022-03-11 16:07:42.536  INFO 17828 --- [task-1] s.c.train.processor.Stage3PostProcessor  : reversed output test-fs-fb-train-output-0 saved
+2022-03-11 16:08:11.980  INFO 17828 --- [main] s.c.train.processor.Stage3PostProcessor  : test-fb-fs-train-output-0 saved output to mongodb
+2022-03-11 16:08:12.149  INFO 17828 --- [SpringApplicationShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:4, serverValue:1098}] to 101.201.210.248:27017 because the pool has been closed.
+2022-03-11 16:08:12.149  INFO 17828 --- [SpringApplicationShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:3, serverValue:1097}] to 101.201.210.248:27017 because the pool has been closed.

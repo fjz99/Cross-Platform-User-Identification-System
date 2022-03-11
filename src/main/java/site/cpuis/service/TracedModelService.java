@@ -161,7 +161,7 @@ public class TracedModelService {
     }
 
     public Double getPercentage(ModelLocationVO vo) {
-        String name = ModelKeyGenerator.generateKeyWithIncId (vo.getDataset (), vo.getAlgoName (), vo.getPhase (), null, vo.getId ());
+        String name = ModelKeyGenerator.generateKeyWithIncId (vo.getDataset (), vo.getAlgoName (), vo.getPhase (), null, vo.getId (), true);
         TracedProcessWrapper trainProcess = PythonScriptRunner.getTracedProcess (name);
         if (trainProcess == null) {
             return null;
@@ -175,7 +175,7 @@ public class TracedModelService {
         if (id == -1) {
             k = getLatestKey (name, dataset, phase);
         } else {
-            k = ModelKeyGenerator.generateKeyWithIncId (dataset, name, phase, null, id);
+            k = ModelKeyGenerator.generateKeyWithIncId (dataset, name, phase, null, id, true);
         }
         if (!replaceStopped)
             return PythonScriptRunner.getTracedProcess (k) != null;
@@ -185,11 +185,11 @@ public class TracedModelService {
 
     public String getLatestKey(String name, String[] dataset, String phase) {
         int id = getLatestId (name, dataset, phase);
-        return ModelKeyGenerator.generateKeyWithIncId (dataset, name, phase, null, id);
+        return ModelKeyGenerator.generateKeyWithIncId (dataset, name, phase, null, id, true);
     }
 
     public String getKey(String name, String[] dataset, String phase, String type, Integer id) {
-        return ModelKeyGenerator.generateKeyWithIncId (dataset, name, phase, type, id);
+        return ModelKeyGenerator.generateKeyWithIncId (dataset, name, phase, type, id, true);
     }
 
     public int getLatestId(String name, String[] dataset, String phase) {

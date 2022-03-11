@@ -99,14 +99,14 @@ public class MatrixOutputModelService extends AbstractModelService {
     public @NonNull
     PageEntity<MongoOutputEntity> getOutput(@NonNull OutputSearchVO searchVO) {
         final String key = ModelKeyGenerator.generateKey (searchVO.getDataset (),
-                searchVO.getAlgoName (), searchVO.getPhase (), "output");
+                searchVO.getAlgoName (), searchVO.getPhase (), "output", true);
         return getOutput0 (searchVO, key);
     }
 
     public @NonNull
     PageEntity<MongoOutputEntity> getTracedOutput(@NonNull OutputSearchVO searchVO) {
         final String key = ModelKeyGenerator.generateKeyWithIncId (searchVO.getDataset (),
-                searchVO.getAlgoName (), searchVO.getPhase (), "output", searchVO.getId ());
+                searchVO.getAlgoName (), searchVO.getPhase (), "output", searchVO.getId (), true);
         return getOutput0 (searchVO, key);
     }
 

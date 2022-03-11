@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import site.cpuis.entity.ModelInfo;
 import site.cpuis.entity.MongoOutputEntity;
-import site.cpuis.entity.Output;
 import site.cpuis.train.PythonScriptRunner;
 import site.cpuis.train.TracedProcessWrapper;
 import site.cpuis.train.output.Stage3Output;
@@ -16,7 +15,7 @@ import java.util.*;
 @Slf4j
 @Component
 public class Stage3PostProcessor implements ModelPostProcessor {
-    protected Output output;
+    protected Stage3Output output;
     protected int thisId;
     protected String[] dataset;
     protected String algoName;
@@ -33,9 +32,9 @@ public class Stage3PostProcessor implements ModelPostProcessor {
             reversedDataset[1] = dataset[0];
         }
         if (thisId != null)
-            return ModelKeyGenerator.generateKeyWithIncId (reversedDataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, thisId);
+            return ModelKeyGenerator.generateKeyWithIncId (reversedDataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, thisId, false);
         else
-            return ModelKeyGenerator.generateKey (reversedDataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE);
+            return ModelKeyGenerator.generateKey (reversedDataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, false);
     }
 
     private Runnable reversedOutput() {
@@ -50,14 +49,14 @@ public class Stage3PostProcessor implements ModelPostProcessor {
             PythonScriptRunner.mongoService.createTextIndex (key, "userName", false);
             PythonScriptRunner.mongoService.createIndex (key, "userName", false, true);
 
-            Stage3Output output = (Stage3Output) this.output.getOutput ();
+
             Map<String, List<Stage3Output.Element>> map = output.getOutput ();
             Map<String, MongoOutputEntity> result = new HashMap<> ();
             for (Map.Entry<String, List<Stage3Output.Element>> stringObjectEntry : map.entrySet ()) {
                 final String k = stringObjectEntry.getKey ();
                 final List<Stage3Output.Element> v = stringObjectEntry.getValue ();
                 for (Stage3Output.Element element : v) {
-                    String anotherKey = element.getUserName ();
+                    String anotherKey = element.getUser ();
                     if (!result.containsKey (anotherKey)) {
                         MongoOutputEntity mongoOutputEntity = new MongoOutputEntity ();
                         mongoOutputEntity.setUserName (anotherKey);
@@ -82,7 +81,7 @@ public class Stage3PostProcessor implements ModelPostProcessor {
 
     @Override
     public void process(TracedProcessWrapper processWrapper) {
-        this.output = (Output) processWrapper.getOutputData ();
+        this.output = (Stage3Output) processWrapper.getOutputData ();
         this.algoName = processWrapper.getAlgoName ();
         this.dataset = processWrapper.getDataset ();
         this.phase = processWrapper.getPhase ();
@@ -92,7 +91,7 @@ public class Stage3PostProcessor implements ModelPostProcessor {
 
 
         //检查mongoCollection
-        String key = ModelKeyGenerator.generateKeyWithIncId (this.dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, thisId);
+        String key = ModelKeyGenerator.generateKeyWithIncId (this.dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, thisId, true);
         if (PythonScriptRunner.mongoService.collectionExists (key)) {
             PythonScriptRunner.mongoService.deleteCollection (key);
             log.warn ("{} 输出的mongo collection已存在", key);
@@ -100,18 +99,19 @@ public class Stage3PostProcessor implements ModelPostProcessor {
         PythonScriptRunner.mongoService.createCollection (key);
         PythonScriptRunner.mongoService.createTextIndex (key, "userName", false);
         PythonScriptRunner.mongoService.createIndex (key, "userName", false, true);
-        Stage3Output output = (Stage3Output) this.output.getOutput ();
+
+        PythonScriptRunner.executor.submit (reversedOutput ());
 
         for (Map.Entry<String, List<Stage3Output.Element>> stringObjectEntry : output.getOutput ().entrySet ()) {
             final String k = stringObjectEntry.getKey ();
-            final List<Stage3Output.Element> v =  stringObjectEntry.getValue ();
+            final List<Stage3Output.Element> v = stringObjectEntry.getValue ();
 
             MongoOutputEntity mongoOutputEntity = new MongoOutputEntity ();
             mongoOutputEntity.setUserName (k);
             mongoOutputEntity.setOthers (new ArrayList<> ());
             for (Stage3Output.Element x : v) {
                 MongoOutputEntity.OtherUser otherUser = MongoOutputEntity.OtherUser.builder ()
-                        .userName (x.getUserName ())
+                        .userName (x.getUser ())
                         .similarity (x.getSimilarity ())
                         .build ();
                 mongoOutputEntity.getOthers ().add (otherUser);
@@ -123,7 +123,7 @@ public class Stage3PostProcessor implements ModelPostProcessor {
 
 
         log.info ("{} saved output to mongodb", key);
-        PythonScriptRunner.executor.submit (reversedOutput ());
+
 
         //下面保存ModelInfo等
         ModelInfo modelInfo = ModelInfo.builder ()
@@ -131,7 +131,7 @@ public class Stage3PostProcessor implements ModelPostProcessor {
                 .time (LocalDateTime.now ())
                 .dataLocation (directoryPath)
 //                .statisticsCollectionName (key)
-                .outputCollectionName (ModelKeyGenerator.generateKeyWithIncId (this.dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, thisId))
+                .outputCollectionName (ModelKeyGenerator.generateKeyWithIncId (this.dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, thisId, true))
                 .reversedOutputCollectionName (getReversedKey (thisId))
                 .algo (algoName)
                 .dataset (this.dataset)

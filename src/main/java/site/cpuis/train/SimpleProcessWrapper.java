@@ -41,7 +41,7 @@ public class SimpleProcessWrapper extends AbstractProcessWrapper {
     @Override
     protected void cleanupLastOutput() {
 
-        key = ModelKeyGenerator.generateKey (dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE);
+        key = ModelKeyGenerator.generateKey (dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, true);
         PythonScriptRunner.mongoService.deleteCollection (key);
         PythonScriptRunner.mongoService.createCollection (key);
         PythonScriptRunner.mongoService.createIndex (key, "userName", false, true);
@@ -64,7 +64,7 @@ public class SimpleProcessWrapper extends AbstractProcessWrapper {
             reversedDataset[0] = dataset[1];
             reversedDataset[1] = dataset[0];
         }
-        return ModelKeyGenerator.generateKey (reversedDataset, algoName, phase, type);
+        return ModelKeyGenerator.generateKey (reversedDataset, algoName, phase, type, true);
     }
 
     //首先转换成mongoDB的格式，再异步完成逆置操作
@@ -73,7 +73,7 @@ public class SimpleProcessWrapper extends AbstractProcessWrapper {
         for (Map.Entry<String, Object> stringObjectEntry : ((Map<String, Object>) output.getOutput ()).entrySet ()) {
             final String k = stringObjectEntry.getKey ();
             final List<List<String>> v = (List<List<String>>) stringObjectEntry.getValue ();
-            final String key = ModelKeyGenerator.generateKey (dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE);
+            final String key = ModelKeyGenerator.generateKey (dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, true);
             MongoOutputEntity mongoOutputEntity = new MongoOutputEntity ();
             mongoOutputEntity.setUserName (k);
             mongoOutputEntity.setOthers (new ArrayList<> ());
@@ -89,7 +89,7 @@ public class SimpleProcessWrapper extends AbstractProcessWrapper {
 //            log.debug ("{} data is",mongoOutputEntity);
         }
         //存储统计信息
-        String key = ModelKeyGenerator.generateKey (dataset, algoName, phase, "statistics");
+        String key = ModelKeyGenerator.generateKey (dataset, algoName, phase, "statistics", true);
         saveStatisticsToMongoDB (key, output);
         log.info ("{} saved output to mongodb", key);
         PythonScriptRunner.executor.submit (reversedOutput (true));

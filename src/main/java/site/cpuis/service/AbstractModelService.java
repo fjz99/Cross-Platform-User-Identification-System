@@ -23,7 +23,7 @@ public abstract class AbstractModelService {
     public @NonNull
     List<Map> getStatistics(@NonNull OutputSearchVO searchVO, boolean latest) {
         final String key = ModelKeyGenerator.generateKey (searchVO.getDataset (),
-                searchVO.getAlgoName (), searchVO.getPhase (), searchVO.getType ());
+                searchVO.getAlgoName (), searchVO.getPhase (), searchVO.getType (), true);
         log.info ("search for key {}", key);
         List<Map> list = mongoMapService.selectAll (key, Map.class);
         if (list.size () == 0) {

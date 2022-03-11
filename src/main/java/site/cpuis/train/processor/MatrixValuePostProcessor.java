@@ -53,12 +53,12 @@ public class MatrixValuePostProcessor implements ModelPostProcessor {
         }
         if (thisId != null)
             if (type.equals ("statistics"))
-                return ModelKeyGenerator.generateKeyWithIncId (reversedDataset, algoName, phase, type, thisId) + "TRACED_WRAPPER";
-            else return ModelKeyGenerator.generateKeyWithIncId (reversedDataset, algoName, phase, type, thisId);
+                return ModelKeyGenerator.generateKeyWithIncId (reversedDataset, algoName, phase, type, thisId, false) + "TRACED_WRAPPER";
+            else return ModelKeyGenerator.generateKeyWithIncId (reversedDataset, algoName, phase, type, thisId, false);
         else if (type.equals ("statistics"))
             return ModelKeyGenerator.generateKey0 (reversedDataset, algoName, phase, type);
         else
-            return ModelKeyGenerator.generateKey (reversedDataset, algoName, phase, type);
+            return ModelKeyGenerator.generateKey (reversedDataset, algoName, phase, type, false);
     }
 
     private Runnable reversedOutput(final boolean saveStatistics2Mongo) {
@@ -118,7 +118,7 @@ public class MatrixValuePostProcessor implements ModelPostProcessor {
 
 
         //检查mongoCollection
-        String key = ModelKeyGenerator.generateKeyWithIncId (this.dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, thisId);
+        String key = ModelKeyGenerator.generateKeyWithIncId (this.dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, thisId, true);
         if (PythonScriptRunner.mongoService.collectionExists (key)) {
             PythonScriptRunner.mongoService.deleteCollection (key);
             log.warn ("{} 输出的mongo collection已存在", key);
@@ -156,7 +156,7 @@ public class MatrixValuePostProcessor implements ModelPostProcessor {
                 .time (LocalDateTime.now ())
                 .dataLocation (directoryPath)
                 .statisticsCollectionName (key)
-                .outputCollectionName (ModelKeyGenerator.generateKeyWithIncId (this.dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, thisId))
+                .outputCollectionName (ModelKeyGenerator.generateKeyWithIncId (this.dataset, algoName, phase, PythonScriptRunner.OUTPUT_TYPE, thisId, true))
                 .reversedOutputCollectionName (getReversedKey (PythonScriptRunner.OUTPUT_TYPE, thisId))
                 .algo (algoName)
                 .dataset (this.dataset)

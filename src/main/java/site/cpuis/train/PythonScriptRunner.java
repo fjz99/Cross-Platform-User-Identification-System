@@ -98,7 +98,7 @@ public final class PythonScriptRunner {
             log.info ("run script cmd '{}'", cmd);
             Process exec = Runtime.getRuntime ().exec (cmd);
             String[] dataset = datasetNames.toArray (new String[]{});
-            String key = ModelKeyGenerator.generateKey (dataset, algoName, "train", null);
+            String key = ModelKeyGenerator.generateKey (dataset, algoName, "train", null, true);
             SimpleProcessWrapper wrapper = new SimpleProcessWrapper (exec, algoName, dataset);
             processes.put (key, wrapper);
             wrapper.start ();
@@ -126,7 +126,7 @@ public final class PythonScriptRunner {
 //                    .max (Comparator.naturalOrder ())
 //                    .orElse (-1) + 1;
             int thisId = 0;
-            String key = ModelKeyGenerator.generateKeyWithIncId (dataset, algoName, phase, null, thisId);
+            String key = ModelKeyGenerator.generateKeyWithIncId (dataset, algoName, phase, null, thisId, true);
             String path = getDirectoryPath (algoName, dataset, phase, thisId);
             checkDirectory (algoName, dataset, phase, thisId);
             //根据路径生成cmd
