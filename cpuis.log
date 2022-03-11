@@ -654,7 +654,7 @@
 2022-03-11 17:07:32.753 DEBUG 13948 --- [http-nio-8899-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to site.cpuis.controller.TracedModelController#getSimilarity(OutputSearchVO)
 2022-03-11 17:07:32.792 DEBUG 13948 --- [http-nio-8899-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [OutputSearchVO(dataset=[fb, fs], algoName=calculate, pageSize=null, pageNum=null, phase=null, type=n (truncated)...]
 2022-03-11 17:09:39.412 DEBUG 13948 --- [http-nio-8899-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Using @ExceptionHandler site.cpuis.controller.GlobalAdvice#exception(Exception)
-2022-03-11 17:09:39.419 ERROR 13948 --- [http-nio-8899-exec-1] site.cpuis.controller.GlobalAdvice       : global err 
+2022-03-11 17:09:39.419 ERROR 13948 --- [http-nio-8899-exec-1] site.cpuis.controller.GlobalAdvice       : global err
 
 java.lang.NullPointerException: null
 	at site.cpuis.service.MatrixOutputModelService.getTracedOutput(MatrixOutputModelService.java:109) ~[classes/:na]
@@ -929,7 +929,7 @@ java.lang.NullPointerException: null
 2022-03-11 17:14:05.734 DEBUG 14996 --- [http-nio-8899-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [OutputSearchVO(dataset=[fb, fs], algoName=test, pageSize=null, pageNum=null, phase=null, type=null,  (truncated)...]
 2022-03-11 17:14:05.738  INFO 14996 --- [http-nio-8899-exec-3] s.c.service.MatrixOutputModelService     : search for key test-fb-fs-train-output-0
 2022-03-11 17:14:05.828 DEBUG 14996 --- [http-nio-8899-exec-3] .m.m.a.ExceptionHandlerExceptionResolver : Using @ExceptionHandler site.cpuis.controller.GlobalAdvice#exception(Exception)
-2022-03-11 17:14:05.835 ERROR 14996 --- [http-nio-8899-exec-3] site.cpuis.controller.GlobalAdvice       : global err 
+2022-03-11 17:14:05.835 ERROR 14996 --- [http-nio-8899-exec-3] site.cpuis.controller.GlobalAdvice       : global err
 
 org.springframework.data.mongodb.UncategorizedMongoDbException: Query failed with error code 4 and error message 'Missing expected field "$search"' on server 101.201.210.248:27017; nested exception is com.mongodb.MongoQueryException: Query failed with error code 4 and error message 'Missing expected field "$search"' on server 101.201.210.248:27017
 	at org.springframework.data.mongodb.core.MongoExceptionTranslator.translateExceptionIfPossible(MongoExceptionTranslator.java:140) ~[spring-data-mongodb-3.2.3.jar:3.2.3]
@@ -1022,7 +1022,7 @@ Caused by: com.mongodb.MongoQueryException: Query failed with error code 4 and e
 2022-03-11 17:14:57.589 DEBUG 14996 --- [http-nio-8899-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [OutputSearchVO(dataset=[fb, fs], algoName=test, pageSize=null, pageNum=null, phase=null, type=null,  (truncated)...]
 2022-03-11 17:14:57.589  INFO 14996 --- [http-nio-8899-exec-4] s.c.service.MatrixOutputModelService     : search for key test-fb-fs-train-output-0
 2022-03-11 17:14:57.646 DEBUG 14996 --- [http-nio-8899-exec-4] .m.m.a.ExceptionHandlerExceptionResolver : Using @ExceptionHandler site.cpuis.controller.GlobalAdvice#exception(Exception)
-2022-03-11 17:14:57.648 ERROR 14996 --- [http-nio-8899-exec-4] site.cpuis.controller.GlobalAdvice       : global err 
+2022-03-11 17:14:57.648 ERROR 14996 --- [http-nio-8899-exec-4] site.cpuis.controller.GlobalAdvice       : global err
 
 org.springframework.data.mongodb.UncategorizedMongoDbException: Query failed with error code 4 and error message 'Missing expected field "$search"' on server 101.201.210.248:27017; nested exception is com.mongodb.MongoQueryException: Query failed with error code 4 and error message 'Missing expected field "$search"' on server 101.201.210.248:27017
 	at org.springframework.data.mongodb.core.MongoExceptionTranslator.translateExceptionIfPossible(MongoExceptionTranslator.java:140) ~[spring-data-mongodb-3.2.3.jar:3.2.3]
@@ -1215,3 +1215,1119 @@ Caused by: com.mongodb.MongoQueryException: Query failed with error code 4 and e
 2022-03-11 17:16:51.077 DEBUG 10960 --- [http-nio-8899-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [Response{timeStamp=1646990211068, data=masked, success=true, err=SUCCESS}]
 2022-03-11 17:16:51.120 DEBUG 10960 --- [http-nio-8899-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2022-03-11 17:17:36.876  INFO 10960 --- [SpringApplicationShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:3, serverValue:1173}] to 101.201.210.248:27017 because the pool has been closed.
+2022-03-11 18:29:40.041  INFO 8436 --- [restartedMain] site.cpuis.CpuisApplication              : Starting CpuisApplication using Java 1.8.0_201 on PC with PID 8436 (E:\CPUIS\target\classes started by dell in E:\CPUIS)
+2022-03-11 18:29:40.044  INFO 8436 --- [restartedMain] site.cpuis.CpuisApplication              : The following profiles are active: data
+2022-03-11 18:29:40.093  INFO 8436 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\dell\.m2\repository\com\github\junrar\junrar\3.0.0\junrar-3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-logging-1.2.jar,file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-vfs2-2.2.jar
+2022-03-11 18:29:40.093  INFO 8436 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-03-11 18:29:42.252  INFO 8436 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 18:29:42.269  INFO 8436 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 18:29:42.844  INFO 8436 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8899 (http)
+2022-03-11 18:29:42.853  INFO 8436 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 18:29:42.854  INFO 8436 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 18:29:42.856  INFO 8436 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.21] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.30]
+2022-03-11 18:29:42.856  INFO 8436 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
+2022-03-11 18:29:42.857  INFO 8436 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [false].
+2022-03-11 18:29:42.857  INFO 8436 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-03-11 18:29:42.861  INFO 8436 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
+2022-03-11 18:29:42.947  INFO 8436 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 18:29:42.947  INFO 8436 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2853 ms
+2022-03-11 18:29:43.505 DEBUG 8436 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 18:29:43.505 DEBUG 8436 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 18:29:43.527 DEBUG 8436 --- [restartedMain] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 18:29:43.698  INFO 8436 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 18:29:43.846  WARN 8436 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:29:43.852  INFO 8436 --- [cluster-ClusterId{value='622b249714e4657457bcee12', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1233}] to 101.201.210.248:27017
+2022-03-11 18:29:43.852  INFO 8436 --- [cluster-rtt-ClusterId{value='622b249714e4657457bcee12', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1234}] to 101.201.210.248:27017
+2022-03-11 18:29:43.853  INFO 8436 --- [cluster-ClusterId{value='622b249714e4657457bcee12', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=49534300}
+2022-03-11 18:29:43.892  WARN 8436 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:29:44.353 DEBUG 8436 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 31 mappings in 'requestMappingHandlerMapping'
+2022-03-11 18:29:44.601  INFO 8436 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 18:29:44.877  INFO 8436 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 18:29:45.007  INFO 8436 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-03-11 18:29:45.016 DEBUG 8436 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 18:29:45.063 DEBUG 8436 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 18:29:45.072 DEBUG 8436 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 18:29:45.207 DEBUG 8436 --- [restartedMain] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 18:29:45.242  INFO 8436 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8899 (http) with context path ''
+2022-03-11 18:29:45.243  INFO 8436 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 18:29:45.262  INFO 8436 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 18:29:45.292  INFO 8436 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 18:29:45.319  INFO 8436 --- [restartedMain] site.cpuis.CpuisApplication              : Started CpuisApplication in 5.751 seconds (JVM running for 8.058)
+2022-03-11 18:29:46.100  INFO 8436 --- [restartedMain] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1235}] to 101.201.210.248:27017
+2022-03-11 18:29:46.186  INFO 8436 --- [restartedMain] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 18:29:46.568  INFO 8436 --- [RMI TCP Connection(1)-172.19.240.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-03-11 18:29:46.568  INFO 8436 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-03-11 18:29:46.568 DEBUG 8436 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-03-11 18:29:46.568 DEBUG 8436 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-03-11 18:29:46.568 DEBUG 8436 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-03-11 18:29:46.569 DEBUG 8436 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@6584c0d7
+2022-03-11 18:29:46.570 DEBUG 8436 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@10204dd4
+2022-03-11 18:29:46.570 DEBUG 8436 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-03-11 18:29:46.570  INFO 8436 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-03-11 18:29:56.482 DEBUG 8436 --- [http-nio-8899-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/model/traced/calculate/train?dataset=fb,fs", parameters={masked}
+2022-03-11 18:29:56.493 DEBUG 8436 --- [http-nio-8899-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to site.cpuis.controller.TracedModelController#train(String, List)
+2022-03-11 18:29:56.934  INFO 8436 --- [http-nio-8899-exec-2] site.cpuis.train.PythonScriptRunner      : run script cmd 'python /cpuis/algo/calculate/new_kde.py --dirs=[/cpuis/inputs/fb,/cpuis/inputs/fs]'
+2022-03-11 18:29:56.945 ERROR 8436 --- [http-nio-8899-exec-2] site.cpuis.train.PythonScriptRunner      : 
+
+java.io.IOException: Cannot run program "python" (in directory "\cpuis\algo\calculate"): CreateProcess error=267, 目录名称无效。
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1048) ~[na:1.8.0_201]
+	at site.cpuis.train.PythonScriptRunner.runTracedScript(PythonScriptRunner.java:141) ~[classes/:na]
+	at site.cpuis.service.TracedModelService.train(TracedModelService.java:112) [classes/:na]
+	at site.cpuis.service.TracedModelService$$FastClassBySpringCGLIB$$90456907.invoke(<generated>) [classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) [spring-core-5.3.9.jar:5.3.9]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:688) [spring-aop-5.3.9.jar:5.3.9]
+	at site.cpuis.service.TracedModelService$$EnhancerBySpringCGLIB$$df7e1940.train(<generated>) [classes/:na]
+	at site.cpuis.controller.TracedModelController.train(TracedModelController.java:104) [classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_201]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_201]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) [spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) [spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) [spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) [spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1064) [spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) [spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) [spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) [spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655) [tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) [spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) [tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:228) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) [tomcat-embed-websocket-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) [spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+Caused by: java.io.IOException: CreateProcess error=267, 目录名称无效。
+	at java.lang.ProcessImpl.create(Native Method) ~[na:1.8.0_201]
+	at java.lang.ProcessImpl.<init>(ProcessImpl.java:386) ~[na:1.8.0_201]
+	at java.lang.ProcessImpl.start(ProcessImpl.java:137) ~[na:1.8.0_201]
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1029) ~[na:1.8.0_201]
+	... 65 common frames omitted
+
+2022-03-11 18:29:56.948 DEBUG 8436 --- [http-nio-8899-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Using @ExceptionHandler site.cpuis.controller.GlobalAdvice#exception(Exception)
+2022-03-11 18:29:56.950 ERROR 8436 --- [http-nio-8899-exec-2] site.cpuis.controller.GlobalAdvice       : global err 
+
+java.lang.NullPointerException: null
+	at site.cpuis.service.TracedModelService.train(TracedModelService.java:112) ~[classes/:na]
+	at site.cpuis.service.TracedModelService$$FastClassBySpringCGLIB$$90456907.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.9.jar:5.3.9]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:688) ~[spring-aop-5.3.9.jar:5.3.9]
+	at site.cpuis.service.TracedModelService$$EnhancerBySpringCGLIB$$df7e1940.train(<generated>) ~[classes/:na]
+	at site.cpuis.controller.TracedModelController.train(TracedModelController.java:104) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_201]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_201]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1064) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) [spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) [spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655) [tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) [spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) [tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:228) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) [tomcat-embed-websocket-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) [spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+
+2022-03-11 18:29:56.965 DEBUG 8436 --- [http-nio-8899-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-03-11 18:29:56.965 DEBUG 8436 --- [http-nio-8899-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [Response{timeStamp=1646994596952, data=masked, success=false, err=UNKNOWN_ERR}]
+2022-03-11 18:29:56.980  WARN 8436 --- [http-nio-8899-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.NullPointerException]
+2022-03-11 18:29:56.980 DEBUG 8436 --- [http-nio-8899-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 500 INTERNAL_SERVER_ERROR
+2022-03-11 18:30:26.230  INFO 4100 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_201 on PC with PID 4100 (started by dell in E:\CPUIS)
+2022-03-11 18:30:26.232  INFO 4100 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 18:30:27.678  INFO 4100 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 18:30:27.702  INFO 4100 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 18:30:29.174  INFO 4100 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 18:30:29.185  INFO 4100 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 18:30:29.185  INFO 4100 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 18:30:29.186  INFO 4100 --- [main] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.21] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.30]
+2022-03-11 18:30:29.187  INFO 4100 --- [main] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
+2022-03-11 18:30:29.187  INFO 4100 --- [main] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [false].
+2022-03-11 18:30:29.187  INFO 4100 --- [main] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-03-11 18:30:29.190  INFO 4100 --- [main] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
+2022-03-11 18:30:29.334  INFO 4100 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 18:30:29.334  INFO 4100 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3043 ms
+2022-03-11 18:30:29.764 DEBUG 4100 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 18:30:29.764 DEBUG 4100 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 18:30:29.805 DEBUG 4100 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 18:30:30.056  INFO 4100 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 18:30:30.240  WARN 4100 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:30:30.242  INFO 4100 --- [cluster-rtt-ClusterId{value='622b24c629ecc77025f01d11', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1237}] to 101.201.210.248:27017
+2022-03-11 18:30:30.242  INFO 4100 --- [cluster-ClusterId{value='622b24c629ecc77025f01d11', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1236}] to 101.201.210.248:27017
+2022-03-11 18:30:30.243  INFO 4100 --- [cluster-ClusterId{value='622b24c629ecc77025f01d11', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=65602000}
+2022-03-11 18:30:30.310  WARN 4100 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:30:31.174 DEBUG 4100 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 31 mappings in 'requestMappingHandlerMapping'
+2022-03-11 18:30:31.339  INFO 4100 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 18:30:31.656  INFO 4100 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 18:30:31.875 DEBUG 4100 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 18:30:32.027 DEBUG 4100 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 18:30:32.053 DEBUG 4100 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 18:30:33.039 DEBUG 4100 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 18:30:33.076  INFO 4100 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 59798 (http) with context path ''
+2022-03-11 18:30:33.078  INFO 4100 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 18:30:33.119  INFO 4100 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 18:30:33.172  INFO 4100 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 18:30:33.213  INFO 4100 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 7.448 seconds (JVM running for 9.173)
+2022-03-11 18:30:33.802  INFO 4100 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1238}] to 101.201.210.248:27017
+2022-03-11 18:30:33.881  INFO 4100 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 18:30:34.341  WARN 4100 --- [main] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:30:34.399  INFO 4100 --- [main] site.cpuis.train.AbstractProcessWrapper  : cache key calculate-fb-fs-train
+2022-03-11 18:30:34.399  INFO 4100 --- [main] site.cpuis.train.TracedProcessWrapper    : start job model-traced:calculate-fb-fs-train-0
+2022-03-11 18:30:34.400  WARN 4100 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:30:34.400  WARN 4100 --- [task-2] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:30:34.401 ERROR 4100 --- [task-2] site.cpuis.train.AbstractProcessWrapper  : calculate-fb-fs-train 获得标准错误流输出 (null): can't open file '/E:/CPUIS/target/test-classes/new_kde.py': [Errno 22] Invalid argument
+
+2022-03-11 18:30:34.403 ERROR 4100 --- [task-1] site.cpuis.train.AbstractProcessWrapper  : calculate-fb-fs-train python进程返回值为 2 != 0
+2022-03-11 18:30:34.823 ERROR 4100 --- [task-3] site.cpuis.train.AbstractProcessWrapper  : 
+
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method) [na:1.8.0_201]
+	at site.cpuis.train.AbstractProcessWrapper$Daemon.run(AbstractProcessWrapper.java:359) ~[classes/:na]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.run(FutureTask.java) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+
+2022-03-11 18:30:34.853  INFO 4100 --- [SpringApplicationShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:3, serverValue:1238}] to 101.201.210.248:27017 because the pool has been closed.
+2022-03-11 18:31:03.797  INFO 14624 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_201 on PC with PID 14624 (started by dell in E:\CPUIS)
+2022-03-11 18:31:03.798  INFO 14624 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 18:31:05.100  INFO 14624 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 18:31:05.125  INFO 14624 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 18:31:06.438  INFO 14624 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 18:31:06.450  INFO 14624 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 18:31:06.451  INFO 14624 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 18:31:06.452  INFO 14624 --- [main] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.21] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.30]
+2022-03-11 18:31:06.452  INFO 14624 --- [main] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
+2022-03-11 18:31:06.453  INFO 14624 --- [main] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [false].
+2022-03-11 18:31:06.453  INFO 14624 --- [main] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-03-11 18:31:06.455  INFO 14624 --- [main] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
+2022-03-11 18:31:06.582  INFO 14624 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 18:31:06.583  INFO 14624 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2730 ms
+2022-03-11 18:31:07.001 DEBUG 14624 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 18:31:07.001 DEBUG 14624 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 18:31:07.041 DEBUG 14624 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 18:31:07.221  INFO 14624 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 18:31:07.413  INFO 14624 --- [cluster-ClusterId{value='622b24eb079b4e6318c05c48', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1239}] to 101.201.210.248:27017
+2022-03-11 18:31:07.413  INFO 14624 --- [cluster-ClusterId{value='622b24eb079b4e6318c05c48', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=57932000}
+2022-03-11 18:31:07.415  INFO 14624 --- [cluster-rtt-ClusterId{value='622b24eb079b4e6318c05c48', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1240}] to 101.201.210.248:27017
+2022-03-11 18:31:07.421  WARN 14624 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:31:07.490  WARN 14624 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:31:08.388 DEBUG 14624 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 31 mappings in 'requestMappingHandlerMapping'
+2022-03-11 18:31:08.548  INFO 14624 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 18:31:08.894  INFO 14624 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 18:31:09.132 DEBUG 14624 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 18:31:09.268 DEBUG 14624 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 18:31:09.296 DEBUG 14624 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 18:31:10.162 DEBUG 14624 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 18:31:10.205  INFO 14624 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 59818 (http) with context path ''
+2022-03-11 18:31:10.206  INFO 14624 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 18:31:10.234  INFO 14624 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 18:31:10.279  INFO 14624 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 18:31:10.315  INFO 14624 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 6.972 seconds (JVM running for 8.614)
+2022-03-11 18:31:10.873  INFO 14624 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1241}] to 101.201.210.248:27017
+2022-03-11 18:31:10.960  INFO 14624 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 18:31:11.385  WARN 14624 --- [main] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:31:11.423  INFO 14624 --- [main] site.cpuis.train.AbstractProcessWrapper  : cache key calculate-fb-fs-train
+2022-03-11 18:31:11.423  INFO 14624 --- [main] site.cpuis.train.TracedProcessWrapper    : start job model-traced:calculate-fb-fs-train-0
+2022-03-11 18:31:11.424  WARN 14624 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:31:12.642  WARN 14624 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:31:20.544  WARN 14624 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:31:33.637  WARN 14624 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:31:33.727  WARN 14624 --- [task-2] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:31:33.727 ERROR 14624 --- [task-2] site.cpuis.train.AbstractProcessWrapper  : calculate-fb-fs-train 获得标准错误流输出 Traceback (most recent call last):
+  File "E:/CPUIS/target/test-classes/new_kde.py", line 218, in <module>
+    run()
+  File "E:/CPUIS/target/test-classes/new_kde.py", line 213, in run
+    kde(plat_a,plat_b)
+  File "E:/CPUIS/target/test-classes/new_kde.py", line 95, in kde
+    with open("record.json", "r") as file:
+FileNotFoundError: [Errno 2] No such file or directory: 'record.json'
+
+2022-03-11 18:31:33.728 ERROR 14624 --- [task-1] site.cpuis.train.AbstractProcessWrapper  : calculate-fb-fs-train python进程返回值为 1 != 0
+2022-03-11 18:31:34.125 ERROR 14624 --- [task-3] site.cpuis.train.AbstractProcessWrapper  : 
+
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method) [na:1.8.0_201]
+	at site.cpuis.train.AbstractProcessWrapper$Daemon.run(AbstractProcessWrapper.java:359) ~[classes/:na]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.run(FutureTask.java) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+
+2022-03-11 18:31:34.154  INFO 14624 --- [SpringApplicationShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:3, serverValue:1241}] to 101.201.210.248:27017 because the pool has been closed.
+2022-03-11 18:33:11.904  INFO 596 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_201 on PC with PID 596 (started by dell in E:\CPUIS)
+2022-03-11 18:33:11.906  INFO 596 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 18:33:13.532  INFO 596 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 18:33:13.564  INFO 596 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 24 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 18:33:14.987  INFO 596 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 18:33:14.997  INFO 596 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 18:33:14.997  INFO 596 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 18:33:14.998  INFO 596 --- [main] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.21] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.30]
+2022-03-11 18:33:14.999  INFO 596 --- [main] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
+2022-03-11 18:33:14.999  INFO 596 --- [main] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [false].
+2022-03-11 18:33:14.999  INFO 596 --- [main] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-03-11 18:33:15.002  INFO 596 --- [main] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
+2022-03-11 18:33:15.129  INFO 596 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 18:33:15.129  INFO 596 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3136 ms
+2022-03-11 18:33:15.540 DEBUG 596 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 18:33:15.540 DEBUG 596 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 18:33:15.581 DEBUG 596 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 18:33:15.840  INFO 596 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 18:33:16.037  INFO 596 --- [cluster-rtt-ClusterId{value='622b256bc9f9bf1c3f7fdead', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1242}] to 101.201.210.248:27017
+2022-03-11 18:33:16.038  INFO 596 --- [cluster-ClusterId{value='622b256bc9f9bf1c3f7fdead', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1243}] to 101.201.210.248:27017
+2022-03-11 18:33:16.038  INFO 596 --- [cluster-ClusterId{value='622b256bc9f9bf1c3f7fdead', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=63570500}
+2022-03-11 18:33:16.046  WARN 596 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:33:16.142  WARN 596 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:33:17.056 DEBUG 596 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 31 mappings in 'requestMappingHandlerMapping'
+2022-03-11 18:33:17.222  INFO 596 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 18:33:17.525  INFO 596 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 18:33:17.705 DEBUG 596 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 18:33:17.843 DEBUG 596 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 18:33:17.861 DEBUG 596 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 18:33:18.799 DEBUG 596 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 18:33:18.842  INFO 596 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 59858 (http) with context path ''
+2022-03-11 18:33:18.843  INFO 596 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 18:33:18.872  INFO 596 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 18:33:18.916  INFO 596 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 18:33:18.952  INFO 596 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 7.565 seconds (JVM running for 9.279)
+2022-03-11 18:33:19.358  INFO 596 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1244}] to 101.201.210.248:27017
+2022-03-11 18:33:19.577  INFO 596 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 18:33:20.004  WARN 596 --- [main] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:33:20.045  INFO 596 --- [main] site.cpuis.train.AbstractProcessWrapper  : cache key calculate-fb-fs-train
+2022-03-11 18:33:20.045  INFO 596 --- [main] site.cpuis.train.TracedProcessWrapper    : start job model-traced:calculate-fb-fs-train-0
+2022-03-11 18:33:20.046  WARN 596 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:33:20.464  WARN 596 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:33:21.349  WARN 596 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:33:21.831  WARN 596 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:33:21.912  WARN 596 --- [task-2] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:33:21.912 ERROR 596 --- [task-2] site.cpuis.train.AbstractProcessWrapper  : calculate-fb-fs-train 获得标准错误流输出 Traceback (most recent call last):
+  File "E:/CPUIS/target/test-classes/new_kde.py", line 218, in <module>
+    run()
+  File "E:/CPUIS/target/test-classes/new_kde.py", line 213, in run
+    kde(plat_a,plat_b)
+  File "E:/CPUIS/target/test-classes/new_kde.py", line 95, in kde
+    with open("record.json", "r") as file:
+FileNotFoundError: [Errno 2] No such file or directory: 'record.json'
+
+2022-03-11 18:33:21.913 ERROR 596 --- [task-1] site.cpuis.train.AbstractProcessWrapper  : calculate-fb-fs-train python进程返回值为 1 != 0
+2022-03-11 18:33:22.309 ERROR 596 --- [task-3] site.cpuis.train.AbstractProcessWrapper  : 
+
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method) [na:1.8.0_201]
+	at site.cpuis.train.AbstractProcessWrapper$Daemon.run(AbstractProcessWrapper.java:359) ~[classes/:na]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+
+2022-03-11 18:33:22.337  INFO 596 --- [SpringApplicationShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:3, serverValue:1244}] to 101.201.210.248:27017 because the pool has been closed.
+2022-03-11 18:33:30.705  INFO 6092 --- [restartedMain] site.cpuis.CpuisApplication              : Starting CpuisApplication using Java 1.8.0_201 on PC with PID 6092 (E:\CPUIS\target\classes started by dell in E:\CPUIS)
+2022-03-11 18:33:30.707  INFO 6092 --- [restartedMain] site.cpuis.CpuisApplication              : The following profiles are active: data
+2022-03-11 18:33:30.754  INFO 6092 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\dell\.m2\repository\com\github\junrar\junrar\3.0.0\junrar-3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-logging-1.2.jar,file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-vfs2-2.2.jar
+2022-03-11 18:33:30.754  INFO 6092 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-03-11 18:33:31.767  INFO 6092 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 18:33:31.784  INFO 6092 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 18:33:32.275  INFO 6092 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8899 (http)
+2022-03-11 18:33:32.282  INFO 6092 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 18:33:32.282  INFO 6092 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 18:33:32.285  INFO 6092 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.21] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.30]
+2022-03-11 18:33:32.285  INFO 6092 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
+2022-03-11 18:33:32.285  INFO 6092 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [false].
+2022-03-11 18:33:32.285  INFO 6092 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-03-11 18:33:32.288  INFO 6092 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
+2022-03-11 18:33:32.355  INFO 6092 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 18:33:32.355  INFO 6092 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1600 ms
+2022-03-11 18:33:32.519 DEBUG 6092 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 18:33:32.519 DEBUG 6092 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 18:33:32.541 DEBUG 6092 --- [restartedMain] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 18:33:32.638  INFO 6092 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 18:33:32.747  WARN 6092 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:33:32.780  WARN 6092 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:33:32.789  INFO 6092 --- [cluster-ClusterId{value='622b257ccd55864224dab530', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1246}] to 101.201.210.248:27017
+2022-03-11 18:33:32.790  INFO 6092 --- [cluster-ClusterId{value='622b257ccd55864224dab530', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=54502900}
+2022-03-11 18:33:32.790  INFO 6092 --- [cluster-rtt-ClusterId{value='622b257ccd55864224dab530', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1245}] to 101.201.210.248:27017
+2022-03-11 18:33:33.162 DEBUG 6092 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 31 mappings in 'requestMappingHandlerMapping'
+2022-03-11 18:33:33.243  INFO 6092 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 18:33:33.337  INFO 6092 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 18:33:33.423  INFO 6092 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-03-11 18:33:33.430 DEBUG 6092 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 18:33:33.481 DEBUG 6092 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 18:33:33.489 DEBUG 6092 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 18:33:33.596 DEBUG 6092 --- [restartedMain] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 18:33:33.621  INFO 6092 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8899 (http) with context path ''
+2022-03-11 18:33:33.622  INFO 6092 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 18:33:33.633  INFO 6092 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 18:33:33.660  INFO 6092 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 18:33:33.690  INFO 6092 --- [restartedMain] site.cpuis.CpuisApplication              : Started CpuisApplication in 3.603 seconds (JVM running for 5.08)
+2022-03-11 18:33:34.416  INFO 6092 --- [restartedMain] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1247}] to 101.201.210.248:27017
+2022-03-11 18:33:34.492  INFO 6092 --- [restartedMain] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 18:33:34.990  INFO 6092 --- [RMI TCP Connection(1)-172.19.240.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-03-11 18:33:34.990  INFO 6092 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-03-11 18:33:34.990 DEBUG 6092 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-03-11 18:33:34.990 DEBUG 6092 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-03-11 18:33:34.990 DEBUG 6092 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-03-11 18:33:34.991 DEBUG 6092 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@55bffce9
+2022-03-11 18:33:34.991 DEBUG 6092 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@6624deb
+2022-03-11 18:33:34.991 DEBUG 6092 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-03-11 18:33:34.991  INFO 6092 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-03-11 18:33:39.114  WARN 6092 --- [http-nio-8899-exec-2] org.apache.catalina.connector.Request    : Creating the temporary upload location [C:\Users\dell\AppData\Local\Temp\tomcat.8899.159899473045256952\work\Tomcat\localhost\ROOT\cpuis\tempdir] as it is required by the servlet [dispatcherServlet]
+2022-03-11 18:33:39.135 DEBUG 6092 --- [http-nio-8899-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/algo/uploadInputs", parameters={masked}
+2022-03-11 18:33:39.149 DEBUG 6092 --- [http-nio-8899-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to site.cpuis.controller.AlgoController#uploadInputs(MultipartFile, MultipartFile, MultipartFile, String, String, String, String, String)
+2022-03-11 18:33:39.163 DEBUG 6092 --- [http-nio-8899-exec-2] .m.m.a.RequestPartMethodArgumentResolver : Read "application/octet-stream" to ["calculate"]
+2022-03-11 18:33:39.234  INFO 6092 --- [http-nio-8899-exec-2] site.cpuis.service.AlgoService           : Delete algo calculate from collection algo,/cpuis/algo/calculate/ ok.
+2022-03-11 18:33:39.234  WARN 6092 --- [http-nio-8899-exec-2] site.cpuis.controller.AlgoController     : 算法文件覆盖
+2022-03-11 18:33:39.237 DEBUG 6092 --- [http-nio-8899-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Using @ExceptionHandler site.cpuis.controller.GlobalAdvice#exception(Exception)
+2022-03-11 18:33:39.240 ERROR 6092 --- [http-nio-8899-exec-2] site.cpuis.controller.GlobalAdvice       : global err 
+
+java.io.IOException: java.io.FileNotFoundException: C:\Users\dell\AppData\Local\Temp\tomcat.8899.159899473045256952\work\Tomcat\localhost\ROOT\cpuis\tempdir\cpuis\algo\calculate\new_kde.py (系统找不到指定的路径。)
+	at org.apache.catalina.core.ApplicationPart.write(ApplicationPart.java:122) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile.transferTo(StandardMultipartHttpServletRequest.java:256) ~[spring-web-5.3.9.jar:5.3.9]
+	at site.cpuis.controller.AlgoController.saveFile(AlgoController.java:94) ~[classes/:na]
+	at site.cpuis.controller.AlgoController.uploadInputs(AlgoController.java:79) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_201]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_201]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1064) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) [spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) [spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681) [tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) [spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) [tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:228) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) [tomcat-embed-websocket-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) [spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+Caused by: java.io.FileNotFoundException: C:\Users\dell\AppData\Local\Temp\tomcat.8899.159899473045256952\work\Tomcat\localhost\ROOT\cpuis\tempdir\cpuis\algo\calculate\new_kde.py (系统找不到指定的路径。)
+	at java.io.FileOutputStream.open0(Native Method) ~[na:1.8.0_201]
+	at java.io.FileOutputStream.open(FileOutputStream.java:270) ~[na:1.8.0_201]
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:213) ~[na:1.8.0_201]
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:162) ~[na:1.8.0_201]
+	at org.apache.tomcat.util.http.fileupload.disk.DiskFileItem.write(DiskFileItem.java:406) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationPart.write(ApplicationPart.java:120) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	... 61 common frames omitted
+
+2022-03-11 18:33:39.249 DEBUG 6092 --- [http-nio-8899-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-03-11 18:33:39.250 DEBUG 6092 --- [http-nio-8899-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [Response{timeStamp=1646994819235, data=masked, success=false, err=UNKNOWN_ERR}]
+2022-03-11 18:33:39.258  WARN 6092 --- [http-nio-8899-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.io.IOException: java.io.FileNotFoundException: C:\Users\dell\AppData\Local\Temp\tomcat.8899.159899473045256952\work\Tomcat\localhost\ROOT\cpuis\tempdir\cpuis\algo\calculate\new_kde.py (系统找不到指定的路径。)]
+2022-03-11 18:33:39.259 DEBUG 6092 --- [http-nio-8899-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 500 INTERNAL_SERVER_ERROR
+2022-03-11 18:33:57.431 DEBUG 6092 --- [http-nio-8899-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/algo/uploadInputs", parameters={masked}
+2022-03-11 18:33:57.431 DEBUG 6092 --- [http-nio-8899-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to site.cpuis.controller.AlgoController#uploadInputs(MultipartFile, MultipartFile, MultipartFile, String, String, String, String, String)
+2022-03-11 18:33:57.432 DEBUG 6092 --- [http-nio-8899-exec-4] .m.m.a.RequestPartMethodArgumentResolver : Read "application/octet-stream" to ["calculate"]
+2022-03-11 18:33:57.433 DEBUG 6092 --- [http-nio-8899-exec-4] .m.m.a.ExceptionHandlerExceptionResolver : Using @ExceptionHandler site.cpuis.controller.GlobalAdvice#exception(Exception)
+2022-03-11 18:33:57.434 ERROR 6092 --- [http-nio-8899-exec-4] site.cpuis.controller.GlobalAdvice       : global err 
+
+java.io.IOException: java.io.FileNotFoundException: C:\Users\dell\AppData\Local\Temp\tomcat.8899.159899473045256952\work\Tomcat\localhost\ROOT\cpuis\tempdir\cpuis\algo\calculate\new_kde.py (系统找不到指定的路径。)
+	at org.apache.catalina.core.ApplicationPart.write(ApplicationPart.java:122) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile.transferTo(StandardMultipartHttpServletRequest.java:256) ~[spring-web-5.3.9.jar:5.3.9]
+	at site.cpuis.controller.AlgoController.saveFile(AlgoController.java:94) ~[classes/:na]
+	at site.cpuis.controller.AlgoController.uploadInputs(AlgoController.java:79) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_201]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_201]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1064) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) [spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) [spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681) [tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) [spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) [tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:228) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) [tomcat-embed-websocket-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) [spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+Caused by: java.io.FileNotFoundException: C:\Users\dell\AppData\Local\Temp\tomcat.8899.159899473045256952\work\Tomcat\localhost\ROOT\cpuis\tempdir\cpuis\algo\calculate\new_kde.py (系统找不到指定的路径。)
+	at java.io.FileOutputStream.open0(Native Method) ~[na:1.8.0_201]
+	at java.io.FileOutputStream.open(FileOutputStream.java:270) ~[na:1.8.0_201]
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:213) ~[na:1.8.0_201]
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:162) ~[na:1.8.0_201]
+	at org.apache.tomcat.util.http.fileupload.disk.DiskFileItem.write(DiskFileItem.java:406) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationPart.write(ApplicationPart.java:120) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	... 61 common frames omitted
+
+2022-03-11 18:33:57.435 DEBUG 6092 --- [http-nio-8899-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-03-11 18:33:57.435 DEBUG 6092 --- [http-nio-8899-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [Response{timeStamp=1646994819235, data=masked, success=false, err=UNKNOWN_ERR}]
+2022-03-11 18:33:57.436  WARN 6092 --- [http-nio-8899-exec-4] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.io.IOException: java.io.FileNotFoundException: C:\Users\dell\AppData\Local\Temp\tomcat.8899.159899473045256952\work\Tomcat\localhost\ROOT\cpuis\tempdir\cpuis\algo\calculate\new_kde.py (系统找不到指定的路径。)]
+2022-03-11 18:33:57.437 DEBUG 6092 --- [http-nio-8899-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 500 INTERNAL_SERVER_ERROR
+2022-03-11 18:34:57.567  INFO 6092 --- [SpringApplicationShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:3, serverValue:1247}] to 101.201.210.248:27017 because the pool has been closed.
+2022-03-11 18:35:00.768  INFO 12416 --- [restartedMain] site.cpuis.CpuisApplication              : Starting CpuisApplication using Java 1.8.0_201 on PC with PID 12416 (E:\CPUIS\target\classes started by dell in E:\CPUIS)
+2022-03-11 18:35:00.770  INFO 12416 --- [restartedMain] site.cpuis.CpuisApplication              : The following profiles are active: data
+2022-03-11 18:35:00.815  INFO 12416 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\dell\.m2\repository\com\github\junrar\junrar\3.0.0\junrar-3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-logging-1.2.jar,file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-vfs2-2.2.jar
+2022-03-11 18:35:00.815  INFO 12416 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-03-11 18:35:01.724  INFO 12416 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 18:35:01.739  INFO 12416 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 18:35:02.190  INFO 12416 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8899 (http)
+2022-03-11 18:35:02.198  INFO 12416 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 18:35:02.198  INFO 12416 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 18:35:02.199  INFO 12416 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.21] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.30]
+2022-03-11 18:35:02.200  INFO 12416 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
+2022-03-11 18:35:02.200  INFO 12416 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [false].
+2022-03-11 18:35:02.200  INFO 12416 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-03-11 18:35:02.202  INFO 12416 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
+2022-03-11 18:35:02.275  INFO 12416 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 18:35:02.275  INFO 12416 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1460 ms
+2022-03-11 18:35:02.459 DEBUG 12416 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 18:35:02.459 DEBUG 12416 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 18:35:02.477 DEBUG 12416 --- [restartedMain] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 18:35:02.578  INFO 12416 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 18:35:02.692  WARN 12416 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:35:02.716  INFO 12416 --- [cluster-ClusterId{value='622b25d62161c97e8ae39c51', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1248}] to 101.201.210.248:27017
+2022-03-11 18:35:02.716  INFO 12416 --- [cluster-ClusterId{value='622b25d62161c97e8ae39c51', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=46372800}
+2022-03-11 18:35:02.717  INFO 12416 --- [cluster-rtt-ClusterId{value='622b25d62161c97e8ae39c51', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1249}] to 101.201.210.248:27017
+2022-03-11 18:35:02.731  WARN 12416 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:35:03.126 DEBUG 12416 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 31 mappings in 'requestMappingHandlerMapping'
+2022-03-11 18:35:03.224  INFO 12416 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 18:35:03.325  INFO 12416 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 18:35:03.437  INFO 12416 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-03-11 18:35:03.445 DEBUG 12416 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 18:35:03.488 DEBUG 12416 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 18:35:03.497 DEBUG 12416 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 18:35:03.612 DEBUG 12416 --- [restartedMain] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 18:35:03.643  INFO 12416 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8899 (http) with context path ''
+2022-03-11 18:35:03.644  INFO 12416 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 18:35:03.659  INFO 12416 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 18:35:03.688  INFO 12416 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 18:35:03.714  INFO 12416 --- [restartedMain] site.cpuis.CpuisApplication              : Started CpuisApplication in 3.364 seconds (JVM running for 5.044)
+2022-03-11 18:35:04.412  INFO 12416 --- [restartedMain] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1250}] to 101.201.210.248:27017
+2022-03-11 18:35:04.487  INFO 12416 --- [restartedMain] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 18:35:05.100  INFO 12416 --- [RMI TCP Connection(2)-172.19.240.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-03-11 18:35:05.100  INFO 12416 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-03-11 18:35:05.101 DEBUG 12416 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-03-11 18:35:05.101 DEBUG 12416 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-03-11 18:35:05.101 DEBUG 12416 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-03-11 18:35:05.102 DEBUG 12416 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@22a585b6
+2022-03-11 18:35:05.103 DEBUG 12416 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@7eead56b
+2022-03-11 18:35:05.103 DEBUG 12416 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-03-11 18:35:05.103  INFO 12416 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2022-03-11 18:35:05.932  WARN 12416 --- [http-nio-8899-exec-2] org.apache.catalina.connector.Request    : Creating the temporary upload location [C:\Users\dell\AppData\Local\Temp\tomcat.8899.1774312606521794060\work\Tomcat\localhost\ROOT\cpuis\tempdir] as it is required by the servlet [dispatcherServlet]
+2022-03-11 18:35:05.946 DEBUG 12416 --- [http-nio-8899-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/algo/uploadInputs", parameters={masked}
+2022-03-11 18:35:05.960 DEBUG 12416 --- [http-nio-8899-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to site.cpuis.controller.AlgoController#uploadInputs(MultipartFile, MultipartFile, MultipartFile, String, String, String, String, String)
+2022-03-11 18:35:05.974 DEBUG 12416 --- [http-nio-8899-exec-2] .m.m.a.RequestPartMethodArgumentResolver : Read "application/octet-stream" to ["calculate"]
+2022-03-11 18:35:08.554 DEBUG 12416 --- [http-nio-8899-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Using @ExceptionHandler site.cpuis.controller.GlobalAdvice#exception(Exception)
+2022-03-11 18:35:08.561 ERROR 12416 --- [http-nio-8899-exec-2] site.cpuis.controller.GlobalAdvice       : global err 
+
+java.io.IOException: java.io.FileNotFoundException: C:\Users\dell\AppData\Local\Temp\tomcat.8899.1774312606521794060\work\Tomcat\localhost\ROOT\cpuis\tempdir\cpuis\algo\calculate\new_kde.py (系统找不到指定的路径。)
+	at org.apache.catalina.core.ApplicationPart.write(ApplicationPart.java:122) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile.transferTo(StandardMultipartHttpServletRequest.java:256) ~[spring-web-5.3.9.jar:5.3.9]
+	at site.cpuis.controller.AlgoController.saveFile(AlgoController.java:94) ~[classes/:na]
+	at site.cpuis.controller.AlgoController.uploadInputs(AlgoController.java:79) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_201]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_201]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1064) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) [spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) [spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681) [tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) [spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) [tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:228) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) [tomcat-embed-websocket-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) [spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+Caused by: java.io.FileNotFoundException: C:\Users\dell\AppData\Local\Temp\tomcat.8899.1774312606521794060\work\Tomcat\localhost\ROOT\cpuis\tempdir\cpuis\algo\calculate\new_kde.py (系统找不到指定的路径。)
+	at java.io.FileOutputStream.open0(Native Method) ~[na:1.8.0_201]
+	at java.io.FileOutputStream.open(FileOutputStream.java:270) ~[na:1.8.0_201]
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:213) ~[na:1.8.0_201]
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:162) ~[na:1.8.0_201]
+	at org.apache.tomcat.util.http.fileupload.disk.DiskFileItem.write(DiskFileItem.java:406) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationPart.write(ApplicationPart.java:120) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	... 61 common frames omitted
+
+2022-03-11 18:35:08.571 DEBUG 12416 --- [http-nio-8899-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-03-11 18:35:08.573 DEBUG 12416 --- [http-nio-8899-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [Response{timeStamp=1646994905985, data=masked, success=false, err=UNKNOWN_ERR}]
+2022-03-11 18:35:08.582  WARN 12416 --- [http-nio-8899-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.io.IOException: java.io.FileNotFoundException: C:\Users\dell\AppData\Local\Temp\tomcat.8899.1774312606521794060\work\Tomcat\localhost\ROOT\cpuis\tempdir\cpuis\algo\calculate\new_kde.py (系统找不到指定的路径。)]
+2022-03-11 18:35:08.583 DEBUG 12416 --- [http-nio-8899-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 500 INTERNAL_SERVER_ERROR
+2022-03-11 18:35:22.830  INFO 12416 --- [SpringApplicationShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:3, serverValue:1250}] to 101.201.210.248:27017 because the pool has been closed.
+2022-03-11 18:35:26.604  INFO 7816 --- [restartedMain] site.cpuis.CpuisApplication              : Starting CpuisApplication using Java 1.8.0_201 on PC with PID 7816 (E:\CPUIS\target\classes started by dell in E:\CPUIS)
+2022-03-11 18:35:26.606  INFO 7816 --- [restartedMain] site.cpuis.CpuisApplication              : The following profiles are active: data
+2022-03-11 18:35:26.653  INFO 7816 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\dell\.m2\repository\com\github\junrar\junrar\3.0.0\junrar-3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-logging-1.2.jar,file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-vfs2-2.2.jar
+2022-03-11 18:35:26.653  INFO 7816 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-03-11 18:35:27.737  INFO 7816 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 18:35:27.752  INFO 7816 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 18:35:28.264  INFO 7816 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8899 (http)
+2022-03-11 18:35:28.271  INFO 7816 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 18:35:28.272  INFO 7816 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 18:35:28.273  INFO 7816 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.21] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.30]
+2022-03-11 18:35:28.274  INFO 7816 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
+2022-03-11 18:35:28.274  INFO 7816 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [false].
+2022-03-11 18:35:28.274  INFO 7816 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-03-11 18:35:28.277  INFO 7816 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
+2022-03-11 18:35:28.353  INFO 7816 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 18:35:28.353  INFO 7816 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1699 ms
+2022-03-11 18:35:28.547 DEBUG 7816 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 18:35:28.548 DEBUG 7816 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 18:35:28.582 DEBUG 7816 --- [restartedMain] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 18:35:28.685  INFO 7816 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 18:35:28.824  WARN 7816 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:35:28.828  INFO 7816 --- [cluster-rtt-ClusterId{value='622b25f04192db452093a718', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1251}] to 101.201.210.248:27017
+2022-03-11 18:35:28.828  INFO 7816 --- [cluster-ClusterId{value='622b25f04192db452093a718', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1252}] to 101.201.210.248:27017
+2022-03-11 18:35:28.829  INFO 7816 --- [cluster-ClusterId{value='622b25f04192db452093a718', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=47121900}
+2022-03-11 18:35:28.863  WARN 7816 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:35:29.263 DEBUG 7816 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 31 mappings in 'requestMappingHandlerMapping'
+2022-03-11 18:35:29.369  INFO 7816 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 18:35:29.474  INFO 7816 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 18:35:29.594  INFO 7816 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-03-11 18:35:29.602 DEBUG 7816 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 18:35:29.658 DEBUG 7816 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 18:35:29.669 DEBUG 7816 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 18:35:29.778 DEBUG 7816 --- [restartedMain] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 18:35:29.809  INFO 7816 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8899 (http) with context path ''
+2022-03-11 18:35:29.811  INFO 7816 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 18:35:29.827  INFO 7816 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 18:35:29.855  INFO 7816 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 18:35:29.881  INFO 7816 --- [restartedMain] site.cpuis.CpuisApplication              : Started CpuisApplication in 3.821 seconds (JVM running for 5.097)
+2022-03-11 18:35:30.572  INFO 7816 --- [restartedMain] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1253}] to 101.201.210.248:27017
+2022-03-11 18:35:30.647  INFO 7816 --- [restartedMain] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 18:35:31.177  INFO 7816 --- [RMI TCP Connection(1)-172.19.240.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-03-11 18:35:31.177  INFO 7816 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-03-11 18:35:31.177 DEBUG 7816 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-03-11 18:35:31.177 DEBUG 7816 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-03-11 18:35:31.177 DEBUG 7816 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-03-11 18:35:31.178 DEBUG 7816 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@659ca169
+2022-03-11 18:35:31.179 DEBUG 7816 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@11b9f9cc
+2022-03-11 18:35:31.179 DEBUG 7816 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-03-11 18:35:31.179  INFO 7816 --- [RMI TCP Connection(1)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-03-11 18:35:32.772  WARN 7816 --- [http-nio-8899-exec-5] org.apache.catalina.connector.Request    : Creating the temporary upload location [C:\Users\dell\AppData\Local\Temp\tomcat.8899.2477992032056801494\work\Tomcat\localhost\ROOT\cpuis\tempdir] as it is required by the servlet [dispatcherServlet]
+2022-03-11 18:35:32.789 DEBUG 7816 --- [http-nio-8899-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/algo/uploadInputs", parameters={masked}
+2022-03-11 18:35:32.804 DEBUG 7816 --- [http-nio-8899-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to site.cpuis.controller.AlgoController#uploadInputs(MultipartFile, MultipartFile, MultipartFile, String, String, String, String, String)
+2022-03-11 18:35:32.819 DEBUG 7816 --- [http-nio-8899-exec-5] .m.m.a.RequestPartMethodArgumentResolver : Read "application/octet-stream" to ["calculate"]
+2022-03-11 18:36:24.166 DEBUG 7816 --- [http-nio-8899-exec-5] .m.m.a.ExceptionHandlerExceptionResolver : Using @ExceptionHandler site.cpuis.controller.GlobalAdvice#exception(Exception)
+2022-03-11 18:36:24.173 ERROR 7816 --- [http-nio-8899-exec-5] site.cpuis.controller.GlobalAdvice       : global err 
+
+java.io.IOException: java.io.FileNotFoundException: C:\Users\dell\AppData\Local\Temp\tomcat.8899.2477992032056801494\work\Tomcat\localhost\ROOT\cpuis\tempdir\cpuis\algo\calculate\new_kde.py (系统找不到指定的路径。)
+	at org.apache.catalina.core.ApplicationPart.write(ApplicationPart.java:122) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile.transferTo(StandardMultipartHttpServletRequest.java:256) ~[spring-web-5.3.9.jar:5.3.9]
+	at site.cpuis.controller.AlgoController.saveFile(AlgoController.java:94) ~[classes/:na]
+	at site.cpuis.controller.AlgoController.uploadInputs(AlgoController.java:79) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_201]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_201]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1064) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) [spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) [spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681) [tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) [spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) [tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:228) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) [tomcat-embed-websocket-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) [spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) [spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+Caused by: java.io.FileNotFoundException: C:\Users\dell\AppData\Local\Temp\tomcat.8899.2477992032056801494\work\Tomcat\localhost\ROOT\cpuis\tempdir\cpuis\algo\calculate\new_kde.py (系统找不到指定的路径。)
+	at java.io.FileOutputStream.open0(Native Method) ~[na:1.8.0_201]
+	at java.io.FileOutputStream.open(FileOutputStream.java:270) ~[na:1.8.0_201]
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:213) ~[na:1.8.0_201]
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:162) ~[na:1.8.0_201]
+	at org.apache.tomcat.util.http.fileupload.disk.DiskFileItem.write(DiskFileItem.java:406) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationPart.write(ApplicationPart.java:120) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	... 61 common frames omitted
+
+2022-03-11 18:36:24.187 DEBUG 7816 --- [http-nio-8899-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-03-11 18:36:24.187 DEBUG 7816 --- [http-nio-8899-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [Response{timeStamp=1646994932830, data=masked, success=false, err=UNKNOWN_ERR}]
+2022-03-11 18:36:24.201  WARN 7816 --- [http-nio-8899-exec-5] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.io.IOException: java.io.FileNotFoundException: C:\Users\dell\AppData\Local\Temp\tomcat.8899.2477992032056801494\work\Tomcat\localhost\ROOT\cpuis\tempdir\cpuis\algo\calculate\new_kde.py (系统找不到指定的路径。)]
+2022-03-11 18:36:24.202 DEBUG 7816 --- [http-nio-8899-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 500 INTERNAL_SERVER_ERROR
+2022-03-11 18:36:24.683  INFO 7816 --- [SpringApplicationShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:3, serverValue:1253}] to 101.201.210.248:27017 because the pool has been closed.
+2022-03-11 18:36:28.261  INFO 2616 --- [restartedMain] site.cpuis.CpuisApplication              : Starting CpuisApplication using Java 1.8.0_201 on PC with PID 2616 (E:\CPUIS\target\classes started by dell in E:\CPUIS)
+2022-03-11 18:36:28.263  INFO 2616 --- [restartedMain] site.cpuis.CpuisApplication              : The following profiles are active: data
+2022-03-11 18:36:28.298  INFO 2616 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\dell\.m2\repository\com\github\junrar\junrar\3.0.0\junrar-3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-logging-1.2.jar,file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-vfs2-2.2.jar
+2022-03-11 18:36:28.298  INFO 2616 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-03-11 18:36:29.131  INFO 2616 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 18:36:29.151  INFO 2616 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 18:36:29.565  INFO 2616 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8899 (http)
+2022-03-11 18:36:29.573  INFO 2616 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 18:36:29.575  INFO 2616 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 18:36:29.577  INFO 2616 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.21] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.30]
+2022-03-11 18:36:29.577  INFO 2616 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
+2022-03-11 18:36:29.577  INFO 2616 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [false].
+2022-03-11 18:36:29.578  INFO 2616 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-03-11 18:36:29.580  INFO 2616 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
+2022-03-11 18:36:29.648  INFO 2616 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 18:36:29.649  INFO 2616 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1350 ms
+2022-03-11 18:36:29.808 DEBUG 2616 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 18:36:29.808 DEBUG 2616 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 18:36:29.824 DEBUG 2616 --- [restartedMain] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 18:36:29.918  INFO 2616 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 18:36:30.018  WARN 2616 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:36:30.050  WARN 2616 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:36:30.053  INFO 2616 --- [cluster-ClusterId{value='622b262d959edb02c60e55cd', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1254}] to 101.201.210.248:27017
+2022-03-11 18:36:30.054  INFO 2616 --- [cluster-ClusterId{value='622b262d959edb02c60e55cd', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=48795500}
+2022-03-11 18:36:30.054  INFO 2616 --- [cluster-rtt-ClusterId{value='622b262d959edb02c60e55cd', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1255}] to 101.201.210.248:27017
+2022-03-11 18:36:30.387 DEBUG 2616 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 31 mappings in 'requestMappingHandlerMapping'
+2022-03-11 18:36:30.474  INFO 2616 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 18:36:30.560  INFO 2616 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 18:36:30.642  INFO 2616 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-03-11 18:36:30.648 DEBUG 2616 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 18:36:30.683 DEBUG 2616 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 18:36:30.690 DEBUG 2616 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 18:36:30.795 DEBUG 2616 --- [restartedMain] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 18:36:30.819  INFO 2616 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8899 (http) with context path ''
+2022-03-11 18:36:30.820  INFO 2616 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 18:36:30.831  INFO 2616 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 18:36:30.852  INFO 2616 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 18:36:30.874  INFO 2616 --- [restartedMain] site.cpuis.CpuisApplication              : Started CpuisApplication in 3.043 seconds (JVM running for 4.167)
+2022-03-11 18:36:31.515  INFO 2616 --- [restartedMain] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1256}] to 101.201.210.248:27017
+2022-03-11 18:36:31.582  INFO 2616 --- [restartedMain] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 18:36:32.414  INFO 2616 --- [RMI TCP Connection(3)-172.19.240.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-03-11 18:36:32.415  INFO 2616 --- [RMI TCP Connection(3)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-03-11 18:36:32.415 DEBUG 2616 --- [RMI TCP Connection(3)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-03-11 18:36:32.415 DEBUG 2616 --- [RMI TCP Connection(3)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-03-11 18:36:32.415 DEBUG 2616 --- [RMI TCP Connection(3)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-03-11 18:36:32.416 DEBUG 2616 --- [RMI TCP Connection(3)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@51f3ad69
+2022-03-11 18:36:32.416 DEBUG 2616 --- [RMI TCP Connection(3)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@51243234
+2022-03-11 18:36:32.417 DEBUG 2616 --- [RMI TCP Connection(3)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-03-11 18:36:32.417  INFO 2616 --- [RMI TCP Connection(3)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-03-11 18:36:43.656 DEBUG 2616 --- [http-nio-8899-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/algo/uploadInputs", parameters={masked}
+2022-03-11 18:36:43.668 DEBUG 2616 --- [http-nio-8899-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to site.cpuis.controller.AlgoController#uploadInputs(MultipartFile, MultipartFile, MultipartFile, String, String, String, String, String)
+2022-03-11 18:36:43.680 DEBUG 2616 --- [http-nio-8899-exec-3] .m.m.a.RequestPartMethodArgumentResolver : Read "application/octet-stream" to ["calculate"]
+2022-03-11 18:36:43.843 DEBUG 2616 --- [http-nio-8899-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-03-11 18:36:43.844 DEBUG 2616 --- [http-nio-8899-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [Response{timeStamp=1646995003688, data=masked, success=true, err=SUCCESS}]
+2022-03-11 18:36:43.854 DEBUG 2616 --- [http-nio-8899-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-03-11 18:36:57.158 DEBUG 2616 --- [http-nio-8899-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/model/traced/calculate/train?dataset=fb,fs", parameters={masked}
+2022-03-11 18:36:57.159 DEBUG 2616 --- [http-nio-8899-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to site.cpuis.controller.TracedModelController#train(String, List)
+2022-03-11 18:36:57.447  INFO 2616 --- [http-nio-8899-exec-2] site.cpuis.train.PythonScriptRunner      : run script cmd 'python E:/algo/calculate/new_kde.py --dirs=[E:/inputs/fb,E:/inputs/fs]'
+2022-03-11 18:36:57.517  WARN 2616 --- [http-nio-8899-exec-2] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:36:57.529  INFO 2616 --- [http-nio-8899-exec-2] site.cpuis.train.AbstractProcessWrapper  : cache key calculate-fb-fs-train
+2022-03-11 18:36:57.530  INFO 2616 --- [http-nio-8899-exec-2] site.cpuis.train.TracedProcessWrapper    : start job model-traced:calculate-fb-fs-train-0
+2022-03-11 18:36:57.531  WARN 2616 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:36:57.531 DEBUG 2616 --- [http-nio-8899-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-03-11 18:36:57.531 DEBUG 2616 --- [http-nio-8899-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [Response{timeStamp=1646995017531, data=masked, success=true, err=SUCCESS}]
+2022-03-11 18:36:57.534 DEBUG 2616 --- [http-nio-8899-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-03-11 18:36:57.993  WARN 2616 --- [task-2] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:36:57.994 ERROR 2616 --- [task-2] site.cpuis.train.AbstractProcessWrapper  : calculate-fb-fs-train 获得标准错误流输出 Traceback (most recent call last):
+  File "E:/algo/calculate/new_kde.py", line 70, in <module>
+    dict_name = To_dict()
+  File "E:/algo/calculate/new_kde.py", line 62, in To_dict
+    with open("number_name.txt", "r", encoding="utf-8") as f_input:
+FileNotFoundError: [Errno 2] No such file or directory: 'number_name.txt'
+
+2022-03-11 18:36:57.995 ERROR 2616 --- [task-1] site.cpuis.train.AbstractProcessWrapper  : calculate-fb-fs-train python进程返回值为 1 != 0
+2022-03-11 18:39:27.577  INFO 17148 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Starting Stage3PostProcessorTest using Java 1.8.0_201 on PC with PID 17148 (started by dell in E:\CPUIS)
+2022-03-11 18:39:27.579  INFO 17148 --- [main] s.c.t.processor.Stage3PostProcessorTest  : The following profiles are active: data
+2022-03-11 18:39:28.718  INFO 17148 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 18:39:28.741  INFO 17148 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 18:39:30.025  INFO 17148 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-03-11 18:39:30.037  INFO 17148 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 18:39:30.037  INFO 17148 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 18:39:30.038  INFO 17148 --- [main] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.21] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.30]
+2022-03-11 18:39:30.039  INFO 17148 --- [main] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
+2022-03-11 18:39:30.039  INFO 17148 --- [main] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [false].
+2022-03-11 18:39:30.039  INFO 17148 --- [main] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-03-11 18:39:30.042  INFO 17148 --- [main] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
+2022-03-11 18:39:30.159  INFO 17148 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 18:39:30.159  INFO 17148 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2528 ms
+2022-03-11 18:39:30.559 DEBUG 17148 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 18:39:30.559 DEBUG 17148 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 18:39:30.600 DEBUG 17148 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 18:39:30.779  INFO 17148 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 18:39:30.959  INFO 17148 --- [cluster-rtt-ClusterId{value='622b26e2a373c809114dcd34', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1257}] to 101.201.210.248:27017
+2022-03-11 18:39:30.961  INFO 17148 --- [cluster-ClusterId{value='622b26e2a373c809114dcd34', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1258}] to 101.201.210.248:27017
+2022-03-11 18:39:30.962  INFO 17148 --- [cluster-ClusterId{value='622b26e2a373c809114dcd34', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=59201100}
+2022-03-11 18:39:30.977  WARN 17148 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:39:31.042  WARN 17148 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:39:31.868 DEBUG 17148 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 31 mappings in 'requestMappingHandlerMapping'
+2022-03-11 18:39:32.013  INFO 17148 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 18:39:32.349  INFO 17148 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 18:39:32.573 DEBUG 17148 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 18:39:32.691 DEBUG 17148 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 18:39:32.713 DEBUG 17148 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 18:39:33.581 DEBUG 17148 --- [main] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 18:39:33.627  INFO 17148 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 59986 (http) with context path ''
+2022-03-11 18:39:33.628  INFO 17148 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 18:39:33.656  INFO 17148 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 18:39:33.701  INFO 17148 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 18:39:33.730  INFO 17148 --- [main] s.c.t.processor.Stage3PostProcessorTest  : Started Stage3PostProcessorTest in 6.639 seconds (JVM running for 8.043)
+2022-03-11 18:39:34.271  INFO 17148 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1259}] to 101.201.210.248:27017
+2022-03-11 18:39:34.358  INFO 17148 --- [main] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 18:39:34.728  WARN 17148 --- [main] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:39:34.767  INFO 17148 --- [main] site.cpuis.train.AbstractProcessWrapper  : cache key calculate-fb-fs-train
+2022-03-11 18:39:34.768  INFO 17148 --- [main] site.cpuis.train.TracedProcessWrapper    : start job model-traced:calculate-fb-fs-train-0
+2022-03-11 18:39:34.769  WARN 17148 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:39:35.182  WARN 17148 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:39:36.046  WARN 17148 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:39:36.513  WARN 17148 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:39:36.593  WARN 17148 --- [task-2] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:39:36.593 ERROR 17148 --- [task-2] site.cpuis.train.AbstractProcessWrapper  : calculate-fb-fs-train 获得标准错误流输出 Traceback (most recent call last):
+  File "E:/CPUIS/target/test-classes/new_kde.py", line 218, in <module>
+    run()
+  File "E:/CPUIS/target/test-classes/new_kde.py", line 213, in run
+    kde(plat_a,plat_b)
+  File "E:/CPUIS/target/test-classes/new_kde.py", line 95, in kde
+    with open("record.json", "r") as file:
+FileNotFoundError: [Errno 2] No such file or directory: 'record.json'
+
+2022-03-11 18:39:36.594 ERROR 17148 --- [task-1] site.cpuis.train.AbstractProcessWrapper  : calculate-fb-fs-train python进程返回值为 1 != 0
+2022-03-11 18:39:36.974 ERROR 17148 --- [task-3] site.cpuis.train.AbstractProcessWrapper  : 
+
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method) [na:1.8.0_201]
+	at site.cpuis.train.AbstractProcessWrapper$Daemon.run(AbstractProcessWrapper.java:359) ~[classes/:na]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.run(FutureTask.java) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+
+2022-03-11 18:39:37.002  INFO 17148 --- [SpringApplicationShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:3, serverValue:1259}] to 101.201.210.248:27017 because the pool has been closed.
+2022-03-11 18:39:52.314  INFO 6396 --- [restartedMain] site.cpuis.CpuisApplication              : Starting CpuisApplication using Java 1.8.0_201 on PC with PID 6396 (E:\CPUIS\target\classes started by dell in E:\CPUIS)
+2022-03-11 18:39:52.317  INFO 6396 --- [restartedMain] site.cpuis.CpuisApplication              : The following profiles are active: data
+2022-03-11 18:39:52.368  INFO 6396 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\dell\.m2\repository\com\github\junrar\junrar\3.0.0\junrar-3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-logging-1.2.jar,file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-vfs2-2.2.jar
+2022-03-11 18:39:52.369  INFO 6396 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-03-11 18:39:53.394  INFO 6396 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 18:39:53.409  INFO 6396 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 18:39:53.890  INFO 6396 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8899 (http)
+2022-03-11 18:39:53.898  INFO 6396 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 18:39:53.898  INFO 6396 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 18:39:53.900  INFO 6396 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.21] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.30]
+2022-03-11 18:39:53.900  INFO 6396 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
+2022-03-11 18:39:53.900  INFO 6396 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [false].
+2022-03-11 18:39:53.900  INFO 6396 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-03-11 18:39:53.903  INFO 6396 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
+2022-03-11 18:39:53.980  INFO 6396 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 18:39:53.980  INFO 6396 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1611 ms
+2022-03-11 18:39:54.215 DEBUG 6396 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 18:39:54.215 DEBUG 6396 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 18:39:54.231 DEBUG 6396 --- [restartedMain] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 18:39:54.317  INFO 6396 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 18:39:54.425  WARN 6396 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:39:54.459  INFO 6396 --- [cluster-rtt-ClusterId{value='622b26fa4442f76de0987bd1', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1261}] to 101.201.210.248:27017
+2022-03-11 18:39:54.459  INFO 6396 --- [cluster-ClusterId{value='622b26fa4442f76de0987bd1', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1260}] to 101.201.210.248:27017
+2022-03-11 18:39:54.459  INFO 6396 --- [cluster-ClusterId{value='622b26fa4442f76de0987bd1', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=51623400}
+2022-03-11 18:39:54.460  WARN 6396 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:39:54.840 DEBUG 6396 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 31 mappings in 'requestMappingHandlerMapping'
+2022-03-11 18:39:54.934  INFO 6396 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-03-11 18:39:55.041  INFO 6396 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-03-11 18:39:55.131  INFO 6396 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-03-11 18:39:55.137 DEBUG 6396 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-03-11 18:39:55.182 DEBUG 6396 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-03-11 18:39:55.191 DEBUG 6396 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-03-11 18:39:55.300 DEBUG 6396 --- [restartedMain] o.s.w.s.s.s.ServerEndpointExporter       : Registering @ServerEndpoint class: class site.cpuis.websocket.ModelStateServer
+2022-03-11 18:39:55.329  INFO 6396 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8899 (http) with context path ''
+2022-03-11 18:39:55.330  INFO 6396 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-03-11 18:39:55.344  INFO 6396 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-03-11 18:39:55.375  INFO 6396 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-03-11 18:39:55.403  INFO 6396 --- [restartedMain] site.cpuis.CpuisApplication              : Started CpuisApplication in 3.602 seconds (JVM running for 4.673)
+2022-03-11 18:39:56.130  INFO 6396 --- [restartedMain] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1262}] to 101.201.210.248:27017
+2022-03-11 18:39:56.207  INFO 6396 --- [restartedMain] site.cpuis.utils.ApplicationInitializer  : 应用程序启动完成
+2022-03-11 18:39:56.717  INFO 6396 --- [RMI TCP Connection(2)-172.19.240.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-03-11 18:39:56.718  INFO 6396 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-03-11 18:39:56.718 DEBUG 6396 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-03-11 18:39:56.718 DEBUG 6396 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-03-11 18:39:56.718 DEBUG 6396 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-03-11 18:39:56.720 DEBUG 6396 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@574c204d
+2022-03-11 18:39:56.721 DEBUG 6396 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@6eca5de2
+2022-03-11 18:39:56.721 DEBUG 6396 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-03-11 18:39:56.721  INFO 6396 --- [RMI TCP Connection(2)-172.19.240.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2022-03-11 18:40:00.308 DEBUG 6396 --- [http-nio-8899-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/model/traced/calculate/train?dataset=fb,fs", parameters={masked}
+2022-03-11 18:40:00.320 DEBUG 6396 --- [http-nio-8899-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to site.cpuis.controller.TracedModelController#train(String, List)
+2022-03-11 18:40:00.648  INFO 6396 --- [http-nio-8899-exec-1] site.cpuis.train.PythonScriptRunner      : run script cmd 'python E:/algo/calculate/new_kde.py --dirs=[E:/inputs/fb,E:/inputs/fs]'
+2022-03-11 18:40:00.723  WARN 6396 --- [http-nio-8899-exec-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:40:00.737  INFO 6396 --- [http-nio-8899-exec-1] site.cpuis.train.AbstractProcessWrapper  : cache key calculate-fb-fs-train
+2022-03-11 18:40:00.737  INFO 6396 --- [http-nio-8899-exec-1] site.cpuis.train.TracedProcessWrapper    : start job model-traced:calculate-fb-fs-train-0
+2022-03-11 18:40:00.738  WARN 6396 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:40:00.752 DEBUG 6396 --- [http-nio-8899-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-03-11 18:40:00.752 DEBUG 6396 --- [http-nio-8899-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [Response{timeStamp=1646995200739, data=masked, success=true, err=SUCCESS}]
+2022-03-11 18:40:00.769 DEBUG 6396 --- [http-nio-8899-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-03-11 18:40:01.224  WARN 6396 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:40:02.113  WARN 6396 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:40:02.578  WARN 6396 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:40:02.713  WARN 6396 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:40:02.713  WARN 6396 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:44:39.335  WARN 6396 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:44:39.414  WARN 6396 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:44:39.414  WARN 6396 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:44:39.415  WARN 6396 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:44:39.415  WARN 6396 --- [task-1] site.cpuis.websocket.ModelStateServer    : 没有client在监听 calculate-fb-fs-train,当前有监听的有 []
+2022-03-11 18:44:39.655  INFO 6396 --- [task-1] site.cpuis.train.TracedProcessWrapper    : parsed output to site.cpuis.train.output.Stage3Output
+2022-03-11 18:44:39.656  INFO 6396 --- [task-1] s.c.t.processor.SaveModelInfoProcessor   : DoNothingPostProcessor DoNothing
+2022-03-11 18:44:39.830  INFO 6396 --- [task-1] site.cpuis.train.AbstractProcessWrapper  : calculate-fb-fs-train successfully stopped
+2022-03-11 18:47:09.338  INFO 5796 --- [restartedMain] site.cpuis.CpuisApplication              : Starting CpuisApplication using Java 1.8.0_201 on PC with PID 5796 (E:\CPUIS\target\classes started by dell in E:\CPUIS)
+2022-03-11 18:47:09.340  INFO 5796 --- [restartedMain] site.cpuis.CpuisApplication              : The following profiles are active: data
+2022-03-11 18:47:09.387  INFO 5796 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\dell\.m2\repository\com\github\junrar\junrar\3.0.0\junrar-3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-logging-1.2.jar,file:/C:/Users/dell/.m2/repository/com/github/junrar/junrar/3.0.0/commons-vfs2-2.2.jar
+2022-03-11 18:47:09.387  INFO 5796 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-03-11 18:47:10.340  INFO 5796 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-03-11 18:47:10.355  INFO 5796 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 0 MongoDB repository interfaces.
+2022-03-11 18:47:10.817  INFO 5796 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8899 (http)
+2022-03-11 18:47:10.825  INFO 5796 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-11 18:47:10.825  INFO 5796 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-03-11 18:47:10.827  INFO 5796 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.21] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.30]
+2022-03-11 18:47:10.828  INFO 5796 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
+2022-03-11 18:47:10.828  INFO 5796 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [false].
+2022-03-11 18:47:10.828  INFO 5796 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-03-11 18:47:10.831  INFO 5796 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
+2022-03-11 18:47:10.903  INFO 5796 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-11 18:47:10.903  INFO 5796 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1516 ms
+2022-03-11 18:47:11.103 DEBUG 5796 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, corsFilter urls=[/*] order=2147483647
+2022-03-11 18:47:11.103 DEBUG 5796 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2022-03-11 18:47:11.122 DEBUG 5796 --- [restartedMain] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2022-03-11 18:47:11.219  INFO 5796 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[101.201.210.248:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2022-03-11 18:47:11.331  WARN 5796 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2022-03-11 18:47:11.351  INFO 5796 --- [cluster-rtt-ClusterId{value='622b28afea33a73661ee53cf', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1264}] to 101.201.210.248:27017
+2022-03-11 18:47:11.352  INFO 5796 --- [cluster-ClusterId{value='622b28afea33a73661ee53cf', description='null'}-101.201.210.248:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1263}] to 101.201.210.248:27017
+2022-03-11 18:47:11.352  INFO 5796 --- [cluster-ClusterId{value='622b28afea33a73661ee53cf', description='null'}-101.201.210.248:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=101.201.210.248:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=47389100}
+2022-03-11 18:47:11.363  WARN 5796 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.

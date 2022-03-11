@@ -6,18 +6,23 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import site.cpuis.train.processor.ModelPostProcessor;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Component
 @Slf4j
 public final class ProcessorChainFactory {
+    private final Map<Class<?>, ProcessorChain> cache = new HashMap<> ();
     @Autowired
     private ProcessorChainDefinition definition;
     @Autowired
     private ApplicationContext context;
 
-    public ProcessorChain getProcessor(Class<?> outputType) {
+    public synchronized ProcessorChain getProcessor(Class<?> outputType) {
+        if (cache.containsKey (outputType)) {
+            return cache.get (outputType);
+        }
         for (Map.Entry<String, ProcessorChainDefinition.Def> entry : definition.getDef ().entrySet ()) {
             Class<?> type = entry.getValue ().getType ();
             if (type == outputType) {
@@ -36,6 +41,7 @@ public final class ProcessorChainFactory {
                     }
                 }
                 log.info ("use chain {}", chain);
+                cache.put (outputType, chain);
                 return chain;
             }
         }

@@ -1,6 +1,7 @@
 package site.cpuis.train.processor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import site.cpuis.entity.ModelInfo;
 import site.cpuis.entity.MongoOutputEntity;
@@ -14,6 +15,7 @@ import java.util.*;
 
 @Slf4j
 @Component
+@Order(1)
 public class Stage3PostProcessor implements ModelPostProcessor {
     protected Stage3Output output;
     protected int thisId;

@@ -3,7 +3,6 @@ package site.cpuis.train.processor;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import site.cpuis.train.TracedProcessWrapper;
@@ -37,5 +36,15 @@ class Stage3PostProcessorTest {
 
 
         postProcessor.process (mock);
+    }
+
+    @Test
+    void train() throws IOException {
+        String path = getClass ().getClassLoader ().getResource ("new_kde.py").getPath ().substring (1);
+        Process process = Runtime.getRuntime ().exec ("python " + path + " --dirs=[E:/inputs/fb,E:/inputs/fs]");
+        TracedProcessWrapper wrapper = new TracedProcessWrapper (process, "calculate", new String[]{"fb", "fs"}
+                , "train", 0, null, Stage3Output.class);
+        wrapper.start ();
+        wrapper.waitForDone ();
     }
 }

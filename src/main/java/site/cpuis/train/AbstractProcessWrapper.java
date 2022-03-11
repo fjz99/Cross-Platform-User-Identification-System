@@ -305,8 +305,8 @@ public abstract class AbstractProcessWrapper {
                 log.debug ("append {}", sb);
             } else if (NumberUtils.isCreatable (s)) {
                 percentage = Double.parseDouble (s);
-                updateModelTrainingInfo ();
                 log.debug ("{} percentage changed: {}", key, percentage);
+                updateModelTrainingInfo ();
             } else {
                 //不是小数，规定结束符为DONE_LITERAL
                 if (StringUtils.equals (s, DONE_LITERAL)) {
@@ -343,6 +343,7 @@ public abstract class AbstractProcessWrapper {
             return;
         }
 
+        log.info ("model {} state changed to {}", key, state);
         modelTrainingInfo.setState (state);
         modelTrainingInfo.setTrainingTime (prettyTime (System.currentTimeMillis () - startTime));
         modelTrainingInfo.setPercentage (percentage);
