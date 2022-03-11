@@ -9,7 +9,10 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import site.cpuis.entity.*;
+import site.cpuis.entity.AlgoEntity;
+import site.cpuis.entity.ErrCode;
+import site.cpuis.entity.ModelTrainingInfo;
+import site.cpuis.entity.Response;
 import site.cpuis.entity.exception.CpuisException;
 import site.cpuis.entity.vo.ModelLocationVO;
 import site.cpuis.entity.vo.ModelSearchVO;
@@ -186,7 +189,10 @@ public class TracedModelController {
     @RequestMapping(value = "/getSimilarity", method = RequestMethod.POST)
     public Response<?> getSimilarity(@RequestBody OutputSearchVO vo) throws IOException {
         Arrays.sort (vo.getDataset ());
-//        PythonScriptRunner.TracedScriptOutput predict = service.predict (vo);
+//        PythonScriptRunner.TracedScriptOutput pre0dict = service.predict (vo);
+        vo.setId (0);
+        if (vo.getPhase () == null)
+            vo.setPhase ("train");
         return Response.ok (predictionService.search (vo));
     }
 

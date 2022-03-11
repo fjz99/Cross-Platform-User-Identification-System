@@ -77,7 +77,7 @@ public class PredictionService {
 //        search.setPhase ("train");
 //        search.setAlgoName (vo.getAlgoName ());
 //        search.setDataset (vo.getDataset ().toArray (new String[0]));
-        return outputModelService.getOutput (search);
+        return outputModelService.getTracedOutput (search);
     }
 
     private String getTempFileName(PredictVO vo, MultipartFile file) {
