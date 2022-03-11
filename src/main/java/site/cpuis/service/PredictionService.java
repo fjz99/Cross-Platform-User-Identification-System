@@ -98,13 +98,16 @@ public class PredictionService {
             String titles = String.join (",", vo.getDataset ());  // 设置表头
             String keys = "a,b";  // 设置每列字段
             List<Map<String, Object>> data = new ArrayList<> ();
-            Map<String, Object> map = new HashMap<> ();
 
-            final String key = ModelKeyGenerator.generateKey (vo.getDataset (),
-                    vo.getAlgoName (), "train", "output", true);
+
+            final String key = ModelKeyGenerator.generateKeyWithIncId (vo.getDataset (),
+                    vo.getAlgoName (), "train", "output", 0, true);
             List<MongoOutputEntity> entities = mongoOutputService.selectAll (key, MongoOutputEntity.class);
             for (MongoOutputEntity entity : entities) {
+                Map<String, Object> map = new HashMap<> ();
                 map.put ("a", entity.getUserName ());
+                if (entity.getOthers ().size () == 0)
+                    continue;
                 map.put ("b", entity.getOthers ().get (0).getUserName ());
 //                entity.getOthers ().sort (Comparator.comparing (MongoOutputEntity.OtherUser::getSimilarity).reversed ());
 //                if (isId) {
