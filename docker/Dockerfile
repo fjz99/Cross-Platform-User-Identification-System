@@ -1,5 +1,5 @@
 # base image
-FROM java:latest
+FROM java:8
 
 # MAINTAINER
 # MAINTAINER json_hc@163.com
@@ -20,9 +20,9 @@ FROM java:latest
 
 EXPOSE 8899
 
-WORKDIR /cpuis/workdir
+WORKDIR /workdir
 
-COPY /target/CPUIS-0.0.2.jar /cpuis/workdir
-#copy自动创建
+COPY /target/CPUIS.jar /workdir
 
-CMD java -jar CPUIS-0.0.2.jar
+CMD java -server -Dspring.profiles.active=docker \
+-jar CPUIS.jar
