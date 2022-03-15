@@ -164,7 +164,7 @@ public abstract class AbstractProcessWrapper {
         state = phase.equals ("train") ? State.TRAINING : State.PREDICTING;
         startTime = System.currentTimeMillis ();
         modelTrainingInfo.setState (state);
-        modelTrainingInfoService.setCache (modelTrainingInfo);
+        modelTrainingInfoService.setCacheAndMongo (modelTrainingInfo);
         daemon = PythonScriptRunner.executor.submit (new Daemon ());
     }
 
