@@ -1,4 +1,4 @@
-package site.cpuis.entity;
+package site.cpuis.entity.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

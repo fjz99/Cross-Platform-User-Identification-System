@@ -22,8 +22,8 @@ public class ModelTrainingInfo {
     private String id;
     private volatile String trainingTime;//pretty
     private volatile State state;
-    private volatile String message;//err时才有效
-    private volatile String errStreamOutput;
+    private volatile String message = "";//err时才有效
+    private volatile String errStreamOutput = "";
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime submitTime;//训练的时间
     private AlgoEntity algo;
