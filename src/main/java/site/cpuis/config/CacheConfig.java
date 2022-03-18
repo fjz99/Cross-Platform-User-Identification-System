@@ -5,9 +5,7 @@ import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 
-/**
- * @author fujiazheng
- */
+
 public class CacheConfig extends CachingConfigurerSupport {
 
     @Bean

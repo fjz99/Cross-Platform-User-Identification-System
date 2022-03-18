@@ -18,15 +18,15 @@ public class AlgoValidator {
 
         if (entity.getStage () == null ||
                 Integer.parseInt (entity.getStage ()) < 1 ||
-                Integer.parseInt (entity.getStage ()) > 3){
+                Integer.parseInt (entity.getStage ()) > 3) {
             throw new CpuisException (ErrCode.ALGO_VALIDATION_FAILED, "算法阶段错误");
         }
 
-            if (entity.getTrainSource () == null &&
-                    entity.getPredictSource () == null &&
-                    entity.getTestSource () == null) {
+        if (entity.getTrainSource () == null &&
+                entity.getPredictSource () == null &&
+                entity.getTestSource () == null) {
 
-                throw new CpuisException (ErrCode.ALGO_VALIDATION_FAILED, "算法文件不能全为空");
-            }
+            throw new CpuisException (ErrCode.ALGO_VALIDATION_FAILED, "算法文件不能全为空");
+        }
     }
 }
