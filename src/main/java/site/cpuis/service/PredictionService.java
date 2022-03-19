@@ -95,8 +95,8 @@ public class PredictionService {
 
     public void download(ModelLocationVO vo, HttpServletResponse response) {
         try {
-            String titles = String.join (",", vo.getDataset ());  // 设置表头
-            String keys = "a,b";  // 设置每列字段
+            String titles = String.join (",", vo.getDataset ())+",similarity";  // 设置表头
+            String keys = "a,b,c";  // 设置每列字段
             List<Map<String, Object>> data = new ArrayList<> ();
 
 
@@ -108,7 +108,9 @@ public class PredictionService {
                 map.put ("a", entity.getUserName ());
                 if (entity.getOthers ().size () == 0)
                     continue;
-                map.put ("b", entity.getOthers ().get (0).getUserName ());
+                MongoOutputEntity.OtherUser otherUser = entity.getOthers ().get (0);
+                map.put ("b", otherUser.getUserName ());
+                map.put ("c", otherUser.getSimilarity ());
 //                entity.getOthers ().sort (Comparator.comparing (MongoOutputEntity.OtherUser::getSimilarity).reversed ());
 //                if (isId) {
 //                    map.put ("a", entity.getUserName ());
