@@ -29,7 +29,7 @@ import java.util.Map;
 @Service
 public class PredictionService {
     @Resource
-    protected DataBaseService<MongoOutputEntity> mongoOutputService;
+    private DataBaseService<MongoOutputEntity> mongoOutputService;
     @Resource
     private TracedModelService service;
     @Resource
